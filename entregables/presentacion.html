@@ -1,0 +1,176 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Presentación · Ferreycorp</title><style>
+@page { size: 297mm 167mm; margin: 0; }
+*{box-sizing:border-box}
+body{margin:0; font:12pt/1.45 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:#1a202c; background:#fff}
+.slide{width:296mm; height:166mm; padding:12mm 14mm 9mm; break-after:page; position:relative;
+  display:flex; flex-direction:column; overflow:hidden}
+.slide:last-child{break-after:auto}
+.kicker{font-size:8.5pt; color:#2b6cb0; text-transform:uppercase; letter-spacing:.12em;
+  font-weight:700}
+h1{font-size:25pt; margin:2px 0 2px; letter-spacing:-.6px}
+h2{font-size:19pt; margin:2px 0 6px; letter-spacing:-.4px}
+.sub{color:#4a5568; font-size:10.5pt; margin:0 0 8px; max-width:95%}
+.cols{display:flex; gap:12mm; flex:1; min-height:0}
+.col{flex:1; min-width:0}
+.cards{display:flex; gap:7px; flex-wrap:wrap; margin:6px 0}
+.card{flex:1 1 120px; border:1px solid #e2e8f0; border-radius:7px; padding:7px 9px}
+.card b{display:block; font-size:17pt; letter-spacing:-.5px}
+.card span{font-size:7pt; color:#718096; text-transform:uppercase; letter-spacing:.05em}
+.card em{display:block; font-size:7.5pt; color:#4a5568; font-style:normal}
+table{width:100%; border-collapse:collapse; font-size:8.4pt}
+th,td{border-bottom:1px solid #e2e8f0; padding:3.5px 6px; text-align:left}
+th{color:#718096; font-size:7pt; text-transform:uppercase; letter-spacing:.05em}
+td.n,th.n{text-align:right; font-variant-numeric:tabular-nums}
+img{max-width:100%; max-height:100%; object-fit:contain; border:1px solid #e2e8f0; border-radius:5px}
+ul{margin:4px 0; padding-left:16px; font-size:10pt} li{margin:3px 0}
+.callout{border-left:3px solid #dd6b20; background:#fffaf0; padding:6px 10px; font-size:9pt;
+  margin:6px 0}
+.callout.good{border-color:#38a169; background:#f0fff4}
+.foot{position:absolute; bottom:6mm; left:15mm; right:15mm; display:flex;
+  justify-content:space-between; font-size:7.5pt; color:#a0aec0;
+  border-top:1px solid #edf2f7; padding-top:4px}
+.big{font-size:40pt; font-weight:700; letter-spacing:-2px; line-height:1}
+.hero{display:flex; flex-direction:column; justify-content:center; height:100%}
+</style></head><body><section class="slide"><div class="hero">
+  <div class="kicker">Prueba Técnica · Data Scientist · Ferreycorp</div>
+  <h1>Modelo de Propensión de Compra</h1>
+  <p class="sub" style="font-size:13pt">El modelo de propensión es el punto de partida, no el
+  entregable. Lo que el negocio ejecuta son <b>tres decisiones</b>: a quién contactar,
+  qué marca promocionar y a qué precio vender.</p>
+  <div class="cards" style="margin-top:10px">
+    <div class="card"><span>Objetivo de negocio</span><b style="font-size:11pt">Más margen por visita</b>
+      <em>decidiendo mejor targeting, promoción y precio</em></div>
+    <div class="card"><span>Objetivo técnico</span><b style="font-size:11pt">π · q · λ</b>
+      <em>tres modelos que alimentan un optimizador</em></div>
+    <div class="card"><span>Dataset</span><b style="font-size:11pt">58 693 visitas</b>
+      <em>500 clientes · 730 días · 5 marcas</em></div>
+    <div class="card"><span>Entregado</span><b style="font-size:11pt">6 notebooks + dashboard</b>
+      <em>ejecutables de extremo a extremo</em></div>
+  </div>
+  <div class="callout" style="margin-top:12px"><b>La tesis:</b> predecir quién compra no dice a
+  quién contactar con presupuesto limitado. Por eso el problema se estructuró primero como
+  <b>optimización</b>, y el machine learning existe para estimar sus parámetros.</div>
+</div><div class="foot"><span>Modelo de Propensión de Compra · Ferreycorp</span><span>Objetivos</span><span>1 / 7</span></div></section><section class="slide">
+  <div class="kicker">Cronograma</div>
+  <h2>Cinco días, seis fases, todo verificado</h2>
+  <div class="cols"><div class="col">
+  <table class=""><thead><tr><th>Día</th><th>Bloque</th><th>Salida</th><th>Estado</th></tr></thead><tbody><tr><td>D1</td><td>Fases 0–1 · encuadre y EDA</td><td>contrato congelado + 20 figuras</td><td>✓</td></tr><tr><td>D2</td><td>Fases 2–3 · features y segmentación</td><td>83 columnas sin fuga + M0 congelado</td><td>✓</td></tr><tr><td>D3</td><td>Fase 4 · M1, M2, M3</td><td>métricas en test + SHAP</td><td>✓</td></tr><tr><td>D4</td><td>Fases 5–6 · pricing y arquitectura</td><td>P1/P2/P3 + cloud + PoC</td><td>✓</td></tr><tr><td>D5</td><td>Reproducibilidad y entregables</td><td>dashboard + documentación + deck</td><td>✓</td></tr></tbody></table>
+  <div class="callout good" style="margin-top:8px"><b>Criterio de cierre aplicado a cada fase:</b>
+  ninguna decisión se da por buena sin evidencia ejecutada. Cuatro contratos congelados con huella
+  SHA-256 hacen que una deriva aparezca como verificación fallada y no como un número raro.</div>
+  </div><div class="col">
+  <table class=""><thead><tr><th>Fase</th><th>Lo que cierra</th></tr></thead><tbody><tr><td>0 · Encuadre</td><td>split del día 550 congelado antes de ajustar nada</td></tr><tr><td>1 · EDA</td><td>parámetros estimables, con su consecuencia</td></tr><tr><td>2 · Features</td><td>68 variables sin fuga; ajuste solo en train</td></tr><tr><td>3 · M0</td><td>3 segmentos elegidos por estabilidad</td></tr><tr><td>4 · M1/M2/M3</td><td>validación con cliente nuevo y día futuro</td></tr><tr><td>5 · P1/P2/P3</td><td>optimalidad de P1 verificada contra el LP</td></tr><tr><td>6 · Despliegue</td><td>arquitectura multi-cloud + scoring ejecutable</td></tr></tbody></table>
+  </div></div><div class="foot"><span>Modelo de Propensión de Compra · Ferreycorp</span><span>Cronograma</span><span>2 / 7</span></div></section><section class="slide">
+  <div class="kicker">Análisis exploratorio</div>
+  <h2>El hallazgo central: la promoción está donde menos rinde</h2>
+  <div class="cols">
+    <div class="col"><img src="../docs/figuras/eda_promo_incidencia.png" alt="efecto de la promoción"></div>
+    <div class="col">
+      <table class=""><thead><tr><th>Marca</th><th>% ingreso</th><th>% días promo</th><th>Δ incidencia</th></tr></thead><tbody><tr><td>marca 1</td><td>7.6%</td><td>34.4%</td><td>+3.16 pp</td></tr><tr><td>marca 2</td><td>26.3%</td><td>31.6%</td><td>+3.93 pp</td></tr><tr><td>marca 3</td><td>7.3%</td><td>4.3%</td><td>+0.64 pp</td></tr><tr><td>marca 4</td><td>23.0%</td><td>11.8%</td><td>+2.46 pp</td></tr><tr><td>marca 5</td><td>35.8%</td><td>3.6%</td><td>+6.90 pp</td></tr></tbody></table>
+      <div class="callout"><b>Dos preguntas distintas.</b> El lift de share mide canibalización;
+      la Δ incidencia mide si el descuento <b>crea</b> la compra. La marca 3 lidera la primera
+      (×1.86) y no mueve la segunda (z = 0.7).</div>
+      <ul>
+        <li><b>Marca 5:</b> 35.8% del ingreso, el mayor efecto incremental, casi nunca se promociona.</li>
+        <li><b>Sin estacionalidad:</b> lo que lo parecía no se repite entre los dos años del panel.</li>
+        <li><b>El baseline no es trivial:</b> ordenar por tasa histórica ya da ×2.43.</li>
+      </ul>
+    </div></div><div class="foot"><span>Modelo de Propensión de Compra · Ferreycorp</span><span>EDA</span><span>3 / 7</span></div></section><section class="slide">
+  <div class="kicker">Metodología</div>
+  <h2>Optimización como modelo base, ML como capa de estimación</h2>
+  <div class="cols"><div class="col">
+  <pre style="background:#f7fafc;border:1px solid #e2e8f0;border-radius:6px;padding:9px;font-size:8pt;line-height:1.35">
+max Σ x·π·q·λ·m − a·Σx − Σ d·z
+
+x_ijt → P1 · a quién contactar
+z_jt  → P2 · qué promocionar y cuándo
+y_jtk → P3 · a qué precio vender
+
+R1 un precio · R2 presupuesto · R3 una oferta
+R4 fatiga · R5 tope promo · R6 piso de margen
+R7 arquitectura de marcas (activable)</pre>
+  <div class="callout good"><b>P1 es exactamente resoluble</b> y se verificó: el greedy alcanza el
+  óptimo del LP relajado con cero variables fraccionarias.</div>
+  </div><div class="col">
+  <table class=""><thead><tr><th>Modelo</th><th>Entrega</th><th>Universo</th></tr></thead><tbody><tr><td>M1 · incidencia</td><td>π — probabilidad de compra</td><td>58 693 visitas</td></tr><tr><td>M2 · elección de marca</td><td>q + elasticidades cruzadas</td><td>14 638 compras</td></tr><tr><td>M3 · cantidad</td><td>λ — unidades esperadas</td><td>14 638 compras</td></tr></tbody></table>
+  <div class="callout bad"><b>Validación:</b> <code>GroupKFold</code> por cliente <b>no</b> es el
+  límite pesimista en un panel — infla el PR-AUC en 0.24 porque entrena con los mismos días. Todo
+  se decidió cruzando <b>cliente nuevo y día futuro</b>.</div>
+  <ul>
+    <li>PR-AUC como métrica principal; accuracy prohibida (75.1% no comprando nunca).</li>
+    <li>El umbral sale del <b>costo de contacto</b>, no de 0.5.</li>
+    <li>Explicabilidad con SHAP global y local + odds ratios.</li>
+  </ul>
+  </div></div><div class="foot"><span>Modelo de Propensión de Compra · Ferreycorp</span><span>Metodología</span><span>4 / 7</span></div></section><section class="slide">
+  <div class="kicker">Modelos y resultados</div>
+  <h2>La complejidad no paga en M1; sí paga en M2</h2>
+  <div class="cards">
+    <div class="card"><span>M1 · PR-AUC</span><b>0.4776</b>
+      <em>azar 0.2480 · ×1.93</em></div>
+    <div class="card"><span>M2 · accuracy</span><b>0.7822</b>
+      <em>clase mayoritaria 0.3407</em></div>
+    <div class="card"><span>M3 · MAE</span><b>0.9790</b>
+      <em>baseline de la media 1.1768</em></div>
+    <div class="card"><span>Ingreso capturado</span><b>31.7%</b>
+      <em>con el 10% de las visitas · vigente 28.2%</em></div>
+  </div>
+  <div class="cols" style="margin-top:4px">
+    <div class="col"><img src="../docs/figuras/m1_shap.png" alt="SHAP"></div>
+    <div class="col">
+      <ul>
+        <li><b>Comparación pareada fold a fold:</b> el random forest gana +0.0117 con error
+          estándar 0.0139 (t = 0.84). Dentro del ruido → se queda la logística, que además es la
+          que la capa prescriptiva necesita.</li>
+        <li><b>El historial manda:</b> los tres primeros drivers son de comportamiento. Ninguna
+          variable demográfica entra al top 12 — la demografía segmenta pero no predice.</li>
+        <li><b>Umbral por costo:</b> con 0.5 se contactaría el 9.7% de las visitas y se capturaría
+          el 24.5% de las compras. La convención cuesta dinero medible.</li>
+        <li><b>Límite declarado:</b> la elasticidad propia de la marca 3 no está identificada en
+          ninguna de las cinco especificaciones.</li>
+      </ul>
+    </div></div><div class="foot"><span>Modelo de Propensión de Compra · Ferreycorp</span><span>Modelos</span><span>5 / 7</span></div></section><section class="slide">
+  <div class="kicker">Captura de valor</div>
+  <h2>El calendario promocional actual destruye margen</h2>
+  <div class="cols">
+    <div class="col"><img src="../docs/figuras/p5_waterfall.png" alt="captura de valor"></div>
+    <div class="col">
+      <div class="cards">
+        <div class="card"><span>P1 · targeting</span><b>+205.32</b>
+          <em>sobre la política vigente, mismo presupuesto</em></div>
+        <div class="card"><span>P2 · calendario</span><b>+769.06</b>
+          <em>mismos 125 días-promoción</em></div>
+        <div class="card"><span>P3 · pricing</span><b>+579.68</b>
+          <em>banda ±10%, verificado en simulación conjunta</em></div>
+      </div>
+      <div class="callout good"><b>P2 es la palanca más grande y la más barata:</b> no pide
+      presupuesto nuevo. El calendario observado vale <b>-183.84</b> —valor
+      negativo— y reasignado vale <b>585.21</b>.</div>
+      <div class="callout"><b>Esto es una proyección.</b> Cuatro de los cinco KPIs se vuelven
+      captura demostrada solo con A/B o grupo de control: decil superior vs. política actual,
+      10% de la cartera como control para P1, A/B por cartera para P2 y test de precio para P3.</div>
+    </div></div><div class="foot"><span>Modelo de Propensión de Compra · Ferreycorp</span><span>Captura de valor</span><span>6 / 7</span></div></section><section class="slide">
+  <div class="kicker">Arquitectura y siguiente paso</div>
+  <h2>Cómo corre todas las noches, y qué probar primero</h2>
+  <div class="cols"><div class="col">
+  <table class=""><thead><tr><th>Capa</th><th>Servicio</th><th>Por qué</th></tr></thead><tbody><tr><td>Lake</td><td>GCS + BigQuery</td><td>cobra por consulta, no por cluster</td></tr><tr><td><b>Cluster</b></td><td>Dataproc Serverless</td><td>Spark sin administrar, sin egreso</td></tr><tr><td><b>Flow</b></td><td>Cloud Composer / Airflow</td><td>backfill histórico</td></tr><tr><td>Feature store</td><td>offline + online</td><td>el control anti-fuga en producción</td></tr><tr><td>Registro</td><td>Vertex AI + MLflow</td><td>modelo + contrato versionados juntos</td></tr><tr><td>Inferencia</td><td>batch nocturno + REST</td><td>la decisión es diaria</td></tr><tr><td>Identidad / consumo</td><td>Entra ID + Power BI</td><td>donde la organización ya trabaja</td></tr></tbody></table>
+  <div class="callout"><b>Regla del multi-cloud:</b> el dato pesado se queda en una nube; lo que
+  cruza es metadato y resultados. Mover features entre nubes a diario sería la caricatura.</div>
+  </div><div class="col">
+  <h3 style="margin-top:0">PoC de 2 semanas · aceptación binaria</h3>
+  <ul>
+    <li>Features del cluster idénticas <b>fila a fila</b> a las del notebook.</li>
+    <li>El DAG corre 7 días sin intervención y publica antes de las 6 am.</li>
+    <li>PR-AUC sobre dato nuevo dentro del 15% de 0.4776.</li>
+    <li><b>Cortar una fuente produce alerta y no-publicación</b> — el criterio que separa un PoC
+      de una demo.</li>
+  </ul>
+  <h3>Mejoras futuras, por valor desbloqueado</h3>
+  <ul>
+    <li><b>Test A/B de precio en la marca 3</b> — desbloquea P3.</li>
+    <li><b>Grupo de control para P1</b> — convierte proyección en medición.</li>
+    <li><b>Uplift modelling</b> — de <i>¿comprará?</i> a <i>¿comprará porque lo contactamos?</i>.</li>
+  </ul>
+  <div class="callout good"><b>Hoy ya corre:</b> <code>score_batch.py</code> publica la lista de
+  contacto y <code>serve_api.py</code> responde scoring puntual con su explicación SHAP.</div>
+  </div></div><div class="foot"><span>Modelo de Propensión de Compra · Ferreycorp</span><span>Arquitectura</span><span>7 / 7</span></div></section></body></html>

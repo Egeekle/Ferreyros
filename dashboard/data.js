@@ -1,0 +1,5381 @@
+// Generado por src/ferreyros/dashboard.py -- no editar a mano.
+window.FERREYROS_DATA = {
+ "meta": {
+  "proyecto": "Modelo de Propension de Compra · Ferreycorp",
+  "generado": "2026-11-19 00:06",
+  "filas": 58693,
+  "columnas": 26,
+  "clientes": 500,
+  "dias": 730,
+  "split_day": 550,
+  "aviso": "La pagina no ejecuta los modelos en vivo: cada combinacion de los controles se calculo al generar data.js.",
+  "huellas": {
+   "encuadre_train": "47959243b182b9af",
+   "encuadre_test": "842f57dd85e58abc",
+   "segmentos": "c22163cf686ccf32",
+   "modelos": "2026-11-18",
+   "prescriptivo": "2026-11-18"
+  },
+  "fases": [
+   {
+    "fase": "0 · Encuadre",
+    "estado": "congelado",
+    "detalle": "split dia 550 con huella SHA-256"
+   },
+   {
+    "fase": "1 · EDA",
+    "estado": "cerrado",
+    "detalle": "20 figuras, 13/13 controles de tratamiento"
+   },
+   {
+    "fase": "2 · Features",
+    "estado": "cerrado",
+    "detalle": "83 columnas, ajuste solo en train (E10)"
+   },
+   {
+    "fase": "3 · Segmentacion M0",
+    "estado": "congelado",
+    "detalle": "k=3, ARI 1.0, huella c22163cf"
+   },
+   {
+    "fase": "4 · M1/M2/M3",
+    "estado": "cerrado",
+    "detalle": "PR-AUC 0.4776"
+   },
+   {
+    "fase": "5 · P1/P2/P3",
+    "estado": "cerrado",
+    "detalle": "optimalidad de P1 verificada contra el LP"
+   },
+   {
+    "fase": "6 · Despliegue",
+    "estado": "documentado",
+    "detalle": "arquitectura multi-cloud + scoring ejecutable"
+   }
+  ]
+ },
+ "resumen": {
+  "tasa_base": 0.2494,
+  "pr_auc": 0.4776,
+  "pr_auc_azar": 0.248,
+  "lift_top10": 2.5,
+  "lift_baseline": 2.46,
+  "margen_base": 5784.52,
+  "ganancia_p1": 205.32,
+  "ganancia_p2": 769.06,
+  "ganancia_p3": 579.68,
+  "captura_top10": 31.7,
+  "captura_historica_top10": 28.2
+ },
+ "eda": {
+  "marcas": [
+   {
+    "marca": 1,
+    "compras": 1350,
+    "unidades": 4717,
+    "precio_pagado_medio": 1.34,
+    "cantidad_media": 3.49,
+    "ingreso": 6305.65,
+    "share_compras_pct": 9.2,
+    "share_ingreso_pct": 7.6,
+    "frecuencia_promo": 0.3438,
+    "lift": 1.08,
+    "respuesta_vs_inversion": "SOBRE-PROMOCIONADA (baja respuesta, alta inversion)",
+    "delta_pp": 3.16,
+    "z": 8.31,
+    "efecto": "expande el mercado",
+    "n_puntos_precio": 37,
+    "precio_min": 1.1,
+    "precio_max": 1.59
+   },
+   {
+    "marca": 2,
+    "compras": 4542,
+    "unidades": 12828,
+    "precio_pagado_medio": 1.71,
+    "cantidad_media": 2.82,
+    "ingreso": 21768.31,
+    "share_compras_pct": 31.0,
+    "share_ingreso_pct": 26.3,
+    "frecuencia_promo": 0.3156,
+    "lift": 1.39,
+    "respuesta_vs_inversion": "alineada",
+    "delta_pp": 3.93,
+    "z": 10.05,
+    "efecto": "expande el mercado",
+    "n_puntos_precio": 30,
+    "precio_min": 1.26,
+    "precio_max": 1.9
+   },
+   {
+    "marca": 3,
+    "compras": 841,
+    "unidades": 2994,
+    "precio_pagado_medio": 2.01,
+    "cantidad_media": 3.56,
+    "ingreso": 6021.52,
+    "share_compras_pct": 5.7,
+    "share_ingreso_pct": 7.3,
+    "frecuencia_promo": 0.0428,
+    "lift": 1.86,
+    "respuesta_vs_inversion": "SUB-PROMOCIONADA (alta respuesta, baja inversion)",
+    "delta_pp": 0.64,
+    "z": 0.73,
+    "efecto": "no distinguible del ruido",
+    "n_puntos_precio": 21,
+    "precio_min": 1.87,
+    "precio_max": 2.14
+   },
+   {
+    "marca": 4,
+    "compras": 2927,
+    "unidades": 8877,
+    "precio_pagado_medio": 2.15,
+    "cantidad_media": 3.03,
+    "ingreso": 19040.1,
+    "share_compras_pct": 20.0,
+    "share_ingreso_pct": 23.0,
+    "frecuencia_promo": 0.1179,
+    "lift": 1.16,
+    "respuesta_vs_inversion": "alineada",
+    "delta_pp": 2.46,
+    "z": 4.33,
+    "efecto": "expande el mercado",
+    "n_puntos_precio": 26,
+    "precio_min": 1.76,
+    "precio_max": 2.26
+   },
+   {
+    "marca": 5,
+    "compras": 4978,
+    "unidades": 11198,
+    "precio_pagado_medio": 2.64,
+    "cantidad_media": 2.25,
+    "ingreso": 29621.0,
+    "share_compras_pct": 34.0,
+    "share_ingreso_pct": 35.8,
+    "frecuencia_promo": 0.0359,
+    "lift": 1.66,
+    "respuesta_vs_inversion": "SUB-PROMOCIONADA (alta respuesta, baja inversion)",
+    "delta_pp": 6.9,
+    "z": 6.7,
+    "efecto": "expande el mercado",
+    "n_puntos_precio": 44,
+    "precio_min": 2.11,
+    "precio_max": 2.8
+   }
+  ],
+  "brecha_precio": [
+   {
+    "marca": 1,
+    "precio_medio": 1.393,
+    "precio_relativo_medio": 0.696,
+    "precio_relativo_min": 0.561,
+    "precio_relativo_max": 0.781,
+    "desvio_std_relativo": 0.042,
+    "brecha_vs_mas_barata": 0.003,
+    "pct_dias_mas_barata": 96.6
+   },
+   {
+    "marca": 2,
+    "precio_medio": 1.781,
+    "precio_relativo_medio": 0.889,
+    "precio_relativo_min": 0.669,
+    "precio_relativo_max": 0.993,
+    "desvio_std_relativo": 0.0731,
+    "brecha_vs_mas_barata": 0.391,
+    "pct_dias_mas_barata": 3.4
+   },
+   {
+    "marca": 3,
+    "precio_medio": 2.009,
+    "precio_relativo_medio": 1.004,
+    "precio_relativo_min": 0.938,
+    "precio_relativo_max": 1.076,
+    "desvio_std_relativo": 0.0269,
+    "brecha_vs_mas_barata": 0.619,
+    "pct_dias_mas_barata": 0.0
+   },
+   {
+    "marca": 4,
+    "precio_medio": 2.164,
+    "precio_relativo_medio": 1.082,
+    "precio_relativo_min": 0.924,
+    "precio_relativo_max": 1.176,
+    "desvio_std_relativo": 0.0413,
+    "brecha_vs_mas_barata": 0.773,
+    "pct_dias_mas_barata": 0.0
+   },
+   {
+    "marca": 5,
+    "precio_medio": 2.658,
+    "precio_relativo_medio": 1.328,
+    "precio_relativo_min": 1.114,
+    "precio_relativo_max": 1.427,
+    "desvio_std_relativo": 0.0447,
+    "brecha_vs_mas_barata": 1.267,
+    "pct_dias_mas_barata": 0.0
+   }
+  ],
+  "temporal": [
+   {
+    "pregunta": "estacionalidad semanal",
+    "medida": "amplitud 0.0234; 4/7 celdas sobre el ruido; correlacion entre anios +0.096",
+    "veredicto": "no",
+    "consecuencia": "no se crea feature de dia de la semana: el patron no se repite entre anios"
+   },
+   {
+    "pregunta": "estacionalidad mensual",
+    "medida": "amplitud 0.0786; 8/12 celdas sobre el ruido; correlacion entre anios +0.113",
+    "veredicto": "no",
+    "consecuencia": "P2 puede reasignar dias de promocion sin restriccion estacional"
+   },
+   {
+    "pregunta": "regimen de arranque del panel",
+    "medida": "3 bloques hasta el dia 90; tasa 0.1874 vs 0.2594 despues",
+    "veredicto": "si",
+    "consecuencia": "los primeros 90 dias son otro regimen; entran al entrenamiento pero el indicador de ausencia de historial es lo que debe explicarlos, y las metricas se reportan tambien sin ellos"
+   },
+   {
+    "pregunta": "tendencia de la tasa de compra",
+    "medida": "pendiente -0.000840 por bloque tras el arranque (t=-1.16)",
+    "veredicto": "no",
+    "consecuencia": "el split temporal es comparable; semana y mes como indices de tendencia no aportan senal y su extrapolacion en test es riesgo sin beneficio (decision de la Fase 4)"
+   }
+  ],
+  "anomalias": [
+   {
+    "anomalia": "incidencia=1 con cantidad=0 (y las otras 5 incoherencias)",
+    "hallazgo": "0 filas",
+    "decision": "no hay nada que filtrar; el target de M1 se usa tal cual"
+   },
+   {
+    "anomalia": "cantidades extremas (maximo 15)",
+    "hallazgo": "cola >= 6 = 6.62% de las compras y 18.42% de las unidades",
+    "decision": "no se truncan; M3 se evalua con MAE ademas de RMSE para que la cola no dicte el ajuste"
+   },
+   {
+    "anomalia": "clientes con comportamiento atipico",
+    "hallazgo": "14 clientes sobre 3.0 sigmas, 16.43% del ingreso; tasa por cliente de 0.0462 a 0.9222",
+    "decision": "se conservan; la generalizacion a clientes nuevos se mide con GroupKFold por id, que es donde ese riesgo se ve"
+   }
+  ],
+  "demografia": [
+   {
+    "variable": "genero",
+    "nivel": "0",
+    "visitas": 36044,
+    "tasa_compra": 0.261,
+    "lift_vs_base": 1.05
+   },
+   {
+    "variable": "genero",
+    "nivel": "1",
+    "visitas": 22649,
+    "tasa_compra": 0.2309,
+    "lift_vs_base": 0.93
+   },
+   {
+    "variable": "estado_civil",
+    "nivel": "0",
+    "visitas": 35620,
+    "tasa_compra": 0.2527,
+    "lift_vs_base": 1.01
+   },
+   {
+    "variable": "estado_civil",
+    "nivel": "1",
+    "visitas": 23073,
+    "tasa_compra": 0.2444,
+    "lift_vs_base": 0.98
+   },
+   {
+    "variable": "nivel_educacion",
+    "nivel": "0 - Basico",
+    "visitas": 8462,
+    "tasa_compra": 0.2085,
+    "lift_vs_base": 0.84
+   },
+   {
+    "variable": "nivel_educacion",
+    "nivel": "1 - Medio",
+    "visitas": 37161,
+    "tasa_compra": 0.2461,
+    "lift_vs_base": 0.99
+   },
+   {
+    "variable": "nivel_educacion",
+    "nivel": "2 - Superior",
+    "visitas": 11716,
+    "tasa_compra": 0.2975,
+    "lift_vs_base": 1.19
+   },
+   {
+    "variable": "nivel_educacion",
+    "nivel": "3 - Posgrado",
+    "visitas": 1354,
+    "tasa_compra": 0.1809,
+    "lift_vs_base": 0.73
+   },
+   {
+    "variable": "ocupacion",
+    "nivel": "0 - Desempleado/otro",
+    "visitas": 21032,
+    "tasa_compra": 0.2019,
+    "lift_vs_base": 0.81
+   },
+   {
+    "variable": "ocupacion",
+    "nivel": "1 - Empleado",
+    "visitas": 29882,
+    "tasa_compra": 0.2814,
+    "lift_vs_base": 1.13
+   },
+   {
+    "variable": "ocupacion",
+    "nivel": "2 - Directivo/autonomo",
+    "visitas": 7779,
+    "tasa_compra": 0.255,
+    "lift_vs_base": 1.02
+   }
+  ],
+  "baseline": [
+   {
+    "top_pct_clientes": 10,
+    "n_clientes": 50,
+    "tasa_compra_del_grupo": 0.605,
+    "lift_vs_base": 2.43,
+    "share_ingreso_pct": 33.7
+   },
+   {
+    "top_pct_clientes": 20,
+    "n_clientes": 100,
+    "tasa_compra_del_grupo": 0.4937,
+    "lift_vs_base": 1.98,
+    "share_ingreso_pct": 47.7
+   },
+   {
+    "top_pct_clientes": 30,
+    "n_clientes": 150,
+    "tasa_compra_del_grupo": 0.4312,
+    "lift_vs_base": 1.73,
+    "share_ingreso_pct": 62.0
+   },
+   {
+    "top_pct_clientes": 50,
+    "n_clientes": 250,
+    "tasa_compra_del_grupo": 0.3479,
+    "lift_vs_base": 1.4,
+    "share_ingreso_pct": 77.6
+   }
+  ],
+  "lecturas": {
+   "temporal": "Lo que parecia estacionalidad semanal y mensual no se repite entre los dos anios del panel: la unica dinamica temporal real son los primeros 90 dias de arranque. Despues de ellos la tasa de compra es plana, y eso es exactamente lo que el split temporal del dia 550 necesita para ser valido.",
+   "promo": "4 de 5 marcas mueven la incidencia por encima del ruido (marcas 1, 2, 4, 5). El resto redistribuye share sin crear compras: su descuento se paga con unidades que se habrian vendido igual. La funcion objetivo necesita las dos lecturas, porque el termino de promocion resta costo siempre y suma ingreso solo si hay compra incremental.",
+   "anomalias": "Ninguna anomalia se corrige borrando filas. Las tres cambian como se evalua el modelo, no el dato que lo entrena.",
+   "brecha": "La marca 1 es la mas barata el 96.6% de los dias y la marca 2 es la que mueve mas su posicion relativa (desvio 0.0731). La dispersion media del precio relativo es 0.0456: las brechas se mueven, asi que hay palanca de precio que optimizar y variacion suficiente para identificar elasticidades."
+  }
+ },
+ "segmentos": {
+  "k": 3,
+  "silhouette": 0.3534,
+  "nombres": {
+   "1": "Dependiente · ingreso bajo",
+   "2": "Independiente · ingreso medio",
+   "3": "Otra ocupacion · ingreso alto"
+  },
+  "perfil": [
+   {
+    "segmento": 1,
+    "clientes": 184,
+    "edad_media": 36.5,
+    "ingreso_medio": 90914.0,
+    "educacion_media": 0.97,
+    "pct_genero_1": 41.8,
+    "pct_casado": 33.7,
+    "pct_ocupacion_0": 100.0,
+    "pct_ocupacion_1": 0.0,
+    "pct_ocupacion_2": 0.0,
+    "pct_clientes": 36.8
+   },
+   {
+    "segmento": 2,
+    "clientes": 248,
+    "edad_media": 38.9,
+    "ingreso_medio": 127190.0,
+    "educacion_media": 1.1,
+    "pct_genero_1": 39.9,
+    "pct_casado": 41.1,
+    "pct_ocupacion_0": 0.0,
+    "pct_ocupacion_1": 100.0,
+    "pct_ocupacion_2": 0.0,
+    "pct_clientes": 49.6
+   },
+   {
+    "segmento": 3,
+    "clientes": 68,
+    "edad_media": 43.8,
+    "ingreso_medio": 183660.0,
+    "educacion_media": 1.4,
+    "pct_genero_1": 26.5,
+    "pct_casado": 47.1,
+    "pct_ocupacion_0": 0.0,
+    "pct_ocupacion_1": 0.0,
+    "pct_ocupacion_2": 100.0,
+    "pct_clientes": 13.6
+   }
+  ],
+  "comportamiento": [
+   {
+    "segmento": 1,
+    "clientes": 184,
+    "visitas": 21032,
+    "compras": 4246,
+    "tasa_compra": 0.2019,
+    "unidades": 12270,
+    "ingreso": 22001.29,
+    "error_estandar": 0.0028,
+    "ic95_inf": 0.1965,
+    "ic95_sup": 0.2073,
+    "ticket_medio": 5.18,
+    "pct_ingreso": 26.59,
+    "nombre": "Dependiente · ingreso bajo"
+   },
+   {
+    "segmento": 2,
+    "clientes": 248,
+    "visitas": 29882,
+    "compras": 8408,
+    "tasa_compra": 0.2814,
+    "unidades": 22659,
+    "ingreso": 48032.21,
+    "error_estandar": 0.0026,
+    "ic95_inf": 0.2763,
+    "ic95_sup": 0.2865,
+    "ticket_medio": 5.71,
+    "pct_ingreso": 58.04,
+    "nombre": "Independiente · ingreso medio"
+   },
+   {
+    "segmento": 3,
+    "clientes": 68,
+    "visitas": 7779,
+    "compras": 1984,
+    "tasa_compra": 0.255,
+    "unidades": 5685,
+    "ingreso": 12723.08,
+    "error_estandar": 0.0049,
+    "ic95_inf": 0.2454,
+    "ic95_sup": 0.2647,
+    "ticket_medio": 6.41,
+    "pct_ingreso": 15.37,
+    "nombre": "Otra ocupacion · ingreso alto"
+   }
+  ],
+  "marcas": [
+   {
+    "segmento": 1,
+    "marca_1": 14.0,
+    "marca_2": 54.6,
+    "marca_3": 7.9,
+    "marca_4": 10.6,
+    "marca_5": 12.9,
+    "desvio_marca_1": 4.8,
+    "desvio_marca_2": 23.6,
+    "desvio_marca_3": 2.2,
+    "desvio_marca_4": -9.4,
+    "desvio_marca_5": -21.1,
+    "nombre": "Dependiente · ingreso bajo"
+   },
+   {
+    "segmento": 2,
+    "marca_1": 7.7,
+    "marca_2": 23.6,
+    "marca_3": 5.1,
+    "marca_4": 20.0,
+    "marca_5": 43.5,
+    "desvio_marca_1": -1.5,
+    "desvio_marca_2": -7.4,
+    "desvio_marca_3": -0.6,
+    "desvio_marca_4": 0.0,
+    "desvio_marca_5": 9.5,
+    "nombre": "Independiente · ingreso medio"
+   },
+   {
+    "segmento": 3,
+    "marca_1": 5.2,
+    "marca_2": 12.3,
+    "marca_3": 3.6,
+    "marca_4": 40.0,
+    "marca_5": 38.9,
+    "desvio_marca_1": -4.0,
+    "desvio_marca_2": -18.7,
+    "desvio_marca_3": -2.1,
+    "desvio_marca_4": 20.0,
+    "desvio_marca_5": 4.9,
+    "nombre": "Otra ocupacion · ingreso alto"
+   }
+  ],
+  "promo": [
+   {
+    "segmento": 1,
+    "nombre": "Dependiente · ingreso bajo",
+    "visitas_con_promo": 12911,
+    "tasa_con_promo": 0.2233,
+    "tasa_sin_promo": 0.1678,
+    "delta_pp": 5.55,
+    "z": 10.02,
+    "responde": "responde"
+   },
+   {
+    "segmento": 2,
+    "nombre": "Independiente · ingreso medio",
+    "visitas_con_promo": 18313,
+    "tasa_con_promo": 0.3004,
+    "tasa_sin_promo": 0.2513,
+    "delta_pp": 4.91,
+    "z": 9.33,
+    "responde": "responde"
+   },
+   {
+    "segmento": 3,
+    "nombre": "Otra ocupacion · ingreso alto",
+    "visitas_con_promo": 4721,
+    "tasa_con_promo": 0.2722,
+    "tasa_sin_promo": 0.2286,
+    "delta_pp": 4.36,
+    "z": 4.37,
+    "responde": "responde"
+   }
+  ],
+  "seleccion_k": [
+   {
+    "k": 2,
+    "inercia": 2981.42,
+    "silhouette": 0.2787,
+    "davies_bouldin": 1.4992,
+    "calinski_harabasz": 170.1,
+    "delta_inercia": null,
+    "pct_inercia_explicada": 0.0
+   },
+   {
+    "k": 3,
+    "inercia": 2188.6,
+    "silhouette": 0.3534,
+    "davies_bouldin": 1.2277,
+    "calinski_harabasz": 205.7,
+    "delta_inercia": 792.82,
+    "pct_inercia_explicada": 26.6
+   },
+   {
+    "k": 4,
+    "inercia": 1819.16,
+    "silhouette": 0.3403,
+    "davies_bouldin": 1.1222,
+    "calinski_harabasz": 198.2,
+    "delta_inercia": 369.44,
+    "pct_inercia_explicada": 39.0
+   },
+   {
+    "k": 5,
+    "inercia": 1601.93,
+    "silhouette": 0.3364,
+    "davies_bouldin": 1.0965,
+    "calinski_harabasz": 185.3,
+    "delta_inercia": 217.23,
+    "pct_inercia_explicada": 46.3
+   },
+   {
+    "k": 6,
+    "inercia": 1407.62,
+    "silhouette": 0.3498,
+    "davies_bouldin": 1.1574,
+    "calinski_harabasz": 182.0,
+    "delta_inercia": 194.31,
+    "pct_inercia_explicada": 52.8
+   },
+   {
+    "k": 7,
+    "inercia": 1262.49,
+    "silhouette": 0.3524,
+    "davies_bouldin": 1.2155,
+    "calinski_harabasz": 178.2,
+    "delta_inercia": 145.13,
+    "pct_inercia_explicada": 57.7
+   },
+   {
+    "k": 8,
+    "inercia": 1123.36,
+    "silhouette": 0.3747,
+    "davies_bouldin": 1.1599,
+    "calinski_harabasz": 180.0,
+    "delta_inercia": 139.13,
+    "pct_inercia_explicada": 62.3
+   },
+   {
+    "k": 9,
+    "inercia": 1040.85,
+    "silhouette": 0.382,
+    "davies_bouldin": 1.1391,
+    "calinski_harabasz": 174.5,
+    "delta_inercia": 82.51,
+    "pct_inercia_explicada": 65.1
+   },
+   {
+    "k": 10,
+    "inercia": 979.42,
+    "silhouette": 0.3775,
+    "davies_bouldin": 1.0364,
+    "calinski_harabasz": 167.9,
+    "delta_inercia": 61.43,
+    "pct_inercia_explicada": 67.1
+   }
+  ],
+  "pca": [
+   {
+    "id": 200000001,
+    "pc1": 0.331,
+    "pc2": 1.262,
+    "segmento": 2
+   },
+   {
+    "id": 200000002,
+    "pc1": 2.737,
+    "pc2": -2.051,
+    "segmento": 3
+   },
+   {
+    "id": 200000003,
+    "pc1": -0.902,
+    "pc2": 2.072,
+    "segmento": 2
+   },
+   {
+    "id": 200000004,
+    "pc1": -1.19,
+    "pc2": -0.976,
+    "segmento": 1
+   },
+   {
+    "id": 200000005,
+    "pc1": 0.532,
+    "pc2": 1.221,
+    "segmento": 2
+   },
+   {
+    "id": 200000006,
+    "pc1": 0.092,
+    "pc2": 1.414,
+    "segmento": 2
+   },
+   {
+    "id": 200000007,
+    "pc1": -0.148,
+    "pc2": -0.247,
+    "segmento": 3
+   },
+   {
+    "id": 200000008,
+    "pc1": -0.736,
+    "pc2": 2.104,
+    "segmento": 2
+   },
+   {
+    "id": 200000009,
+    "pc1": -2.364,
+    "pc2": -0.296,
+    "segmento": 1
+   },
+   {
+    "id": 200000010,
+    "pc1": -2.648,
+    "pc2": -0.416,
+    "segmento": 1
+   },
+   {
+    "id": 200000011,
+    "pc1": 1.772,
+    "pc2": -1.036,
+    "segmento": 3
+   },
+   {
+    "id": 200000012,
+    "pc1": 0.582,
+    "pc2": 1.202,
+    "segmento": 2
+   },
+   {
+    "id": 200000013,
+    "pc1": -1.326,
+    "pc2": -0.918,
+    "segmento": 1
+   },
+   {
+    "id": 200000014,
+    "pc1": -1.643,
+    "pc2": -1.02,
+    "segmento": 1
+   },
+   {
+    "id": 200000015,
+    "pc1": -2.82,
+    "pc2": -0.462,
+    "segmento": 1
+   },
+   {
+    "id": 200000016,
+    "pc1": 0.34,
+    "pc2": 1.085,
+    "segmento": 2
+   },
+   {
+    "id": 200000017,
+    "pc1": -1.004,
+    "pc2": 2.056,
+    "segmento": 2
+   },
+   {
+    "id": 200000018,
+    "pc1": -2.421,
+    "pc2": -0.294,
+    "segmento": 1
+   },
+   {
+    "id": 200000019,
+    "pc1": -1.826,
+    "pc2": -0.995,
+    "segmento": 1
+   },
+   {
+    "id": 200000020,
+    "pc1": -2.189,
+    "pc2": -1.002,
+    "segmento": 1
+   },
+   {
+    "id": 200000021,
+    "pc1": 1.817,
+    "pc2": 0.502,
+    "segmento": 2
+   },
+   {
+    "id": 200000022,
+    "pc1": -0.668,
+    "pc2": 1.993,
+    "segmento": 2
+   },
+   {
+    "id": 200000023,
+    "pc1": -1.153,
+    "pc2": -1.177,
+    "segmento": 1
+   },
+   {
+    "id": 200000024,
+    "pc1": -1.409,
+    "pc2": -1.291,
+    "segmento": 1
+   },
+   {
+    "id": 200000025,
+    "pc1": -1.102,
+    "pc2": 2.149,
+    "segmento": 2
+   },
+   {
+    "id": 200000026,
+    "pc1": 1.403,
+    "pc2": -0.9,
+    "segmento": 3
+   },
+   {
+    "id": 200000027,
+    "pc1": 0.242,
+    "pc2": 1.108,
+    "segmento": 2
+   },
+   {
+    "id": 200000028,
+    "pc1": -2.087,
+    "pc2": -1.096,
+    "segmento": 1
+   },
+   {
+    "id": 200000029,
+    "pc1": 0.55,
+    "pc2": 1.025,
+    "segmento": 2
+   },
+   {
+    "id": 200000030,
+    "pc1": -1.777,
+    "pc2": -0.96,
+    "segmento": 1
+   },
+   {
+    "id": 200000031,
+    "pc1": -1.637,
+    "pc2": -1.161,
+    "segmento": 1
+   },
+   {
+    "id": 200000032,
+    "pc1": -0.167,
+    "pc2": 1.281,
+    "segmento": 2
+   },
+   {
+    "id": 200000033,
+    "pc1": 0.743,
+    "pc2": 1.471,
+    "segmento": 2
+   },
+   {
+    "id": 200000034,
+    "pc1": -1.84,
+    "pc2": -0.995,
+    "segmento": 1
+   },
+   {
+    "id": 200000035,
+    "pc1": 0.534,
+    "pc2": 1.221,
+    "segmento": 2
+   },
+   {
+    "id": 200000036,
+    "pc1": -1.397,
+    "pc2": -1.203,
+    "segmento": 1
+   },
+   {
+    "id": 200000037,
+    "pc1": 0.488,
+    "pc2": 1.331,
+    "segmento": 2
+   },
+   {
+    "id": 200000038,
+    "pc1": 0.642,
+    "pc2": 1.182,
+    "segmento": 2
+   },
+   {
+    "id": 200000039,
+    "pc1": 0.051,
+    "pc2": 1.49,
+    "segmento": 2
+   },
+   {
+    "id": 200000040,
+    "pc1": -0.051,
+    "pc2": 1.453,
+    "segmento": 2
+   },
+   {
+    "id": 200000041,
+    "pc1": -0.084,
+    "pc2": 1.472,
+    "segmento": 2
+   },
+   {
+    "id": 200000042,
+    "pc1": -2.701,
+    "pc2": -0.27,
+    "segmento": 1
+   },
+   {
+    "id": 200000043,
+    "pc1": -1.807,
+    "pc2": -1.157,
+    "segmento": 1
+   },
+   {
+    "id": 200000044,
+    "pc1": -1.707,
+    "pc2": -1.037,
+    "segmento": 1
+   },
+   {
+    "id": 200000045,
+    "pc1": -1.505,
+    "pc2": -0.914,
+    "segmento": 1
+   },
+   {
+    "id": 200000046,
+    "pc1": 0.695,
+    "pc2": -2.633,
+    "segmento": 1
+   },
+   {
+    "id": 200000047,
+    "pc1": 0.256,
+    "pc2": 1.483,
+    "segmento": 2
+   },
+   {
+    "id": 200000048,
+    "pc1": -2.66,
+    "pc2": -0.307,
+    "segmento": 1
+   },
+   {
+    "id": 200000049,
+    "pc1": 1.264,
+    "pc2": -1.04,
+    "segmento": 3
+   },
+   {
+    "id": 200000050,
+    "pc1": -1.951,
+    "pc2": -1.297,
+    "segmento": 1
+   },
+   {
+    "id": 200000051,
+    "pc1": -1.038,
+    "pc2": 1.916,
+    "segmento": 2
+   },
+   {
+    "id": 200000052,
+    "pc1": 0.757,
+    "pc2": 1.187,
+    "segmento": 2
+   },
+   {
+    "id": 200000053,
+    "pc1": -3.204,
+    "pc2": -0.276,
+    "segmento": 1
+   },
+   {
+    "id": 200000054,
+    "pc1": 0.992,
+    "pc2": 1.228,
+    "segmento": 2
+   },
+   {
+    "id": 200000055,
+    "pc1": 0.45,
+    "pc2": -0.914,
+    "segmento": 3
+   },
+   {
+    "id": 200000056,
+    "pc1": -1.722,
+    "pc2": -0.982,
+    "segmento": 1
+   },
+   {
+    "id": 200000057,
+    "pc1": 3.217,
+    "pc2": -1.757,
+    "segmento": 3
+   },
+   {
+    "id": 200000058,
+    "pc1": -0.051,
+    "pc2": 1.526,
+    "segmento": 2
+   },
+   {
+    "id": 200000059,
+    "pc1": -0.085,
+    "pc2": 1.261,
+    "segmento": 2
+   },
+   {
+    "id": 200000060,
+    "pc1": 1.721,
+    "pc2": -1.197,
+    "segmento": 3
+   },
+   {
+    "id": 200000061,
+    "pc1": -0.053,
+    "pc2": 1.508,
+    "segmento": 2
+   },
+   {
+    "id": 200000062,
+    "pc1": 0.366,
+    "pc2": 1.173,
+    "segmento": 2
+   },
+   {
+    "id": 200000063,
+    "pc1": 1.644,
+    "pc2": 0.295,
+    "segmento": 2
+   },
+   {
+    "id": 200000064,
+    "pc1": -0.401,
+    "pc2": -2.004,
+    "segmento": 1
+   },
+   {
+    "id": 200000065,
+    "pc1": -0.038,
+    "pc2": 1.333,
+    "segmento": 2
+   },
+   {
+    "id": 200000066,
+    "pc1": 1.195,
+    "pc2": 1.096,
+    "segmento": 2
+   },
+   {
+    "id": 200000067,
+    "pc1": -2.877,
+    "pc2": -0.32,
+    "segmento": 1
+   },
+   {
+    "id": 200000068,
+    "pc1": -2.085,
+    "pc2": -0.916,
+    "segmento": 1
+   },
+   {
+    "id": 200000069,
+    "pc1": 0.372,
+    "pc2": 1.225,
+    "segmento": 2
+   },
+   {
+    "id": 200000070,
+    "pc1": -1.408,
+    "pc2": -1.312,
+    "segmento": 1
+   },
+   {
+    "id": 200000071,
+    "pc1": 1.486,
+    "pc2": -1.009,
+    "segmento": 3
+   },
+   {
+    "id": 200000072,
+    "pc1": -1.217,
+    "pc2": 2.17,
+    "segmento": 2
+   },
+   {
+    "id": 200000073,
+    "pc1": 1.265,
+    "pc2": -0.952,
+    "segmento": 3
+   },
+   {
+    "id": 200000074,
+    "pc1": -1.696,
+    "pc2": -0.941,
+    "segmento": 1
+   },
+   {
+    "id": 200000075,
+    "pc1": 0.021,
+    "pc2": 1.452,
+    "segmento": 2
+   },
+   {
+    "id": 200000076,
+    "pc1": -0.151,
+    "pc2": -1.831,
+    "segmento": 1
+   },
+   {
+    "id": 200000077,
+    "pc1": -1.353,
+    "pc2": -1.329,
+    "segmento": 1
+   },
+   {
+    "id": 200000078,
+    "pc1": 4.126,
+    "pc2": -1.763,
+    "segmento": 3
+   },
+   {
+    "id": 200000079,
+    "pc1": 0.22,
+    "pc2": 1.465,
+    "segmento": 2
+   },
+   {
+    "id": 200000080,
+    "pc1": 1.558,
+    "pc2": 0.601,
+    "segmento": 2
+   },
+   {
+    "id": 200000081,
+    "pc1": 1.775,
+    "pc2": 0.474,
+    "segmento": 2
+   },
+   {
+    "id": 200000082,
+    "pc1": 0.534,
+    "pc2": 1.239,
+    "segmento": 2
+   },
+   {
+    "id": 200000083,
+    "pc1": 1.036,
+    "pc2": -0.892,
+    "segmento": 3
+   },
+   {
+    "id": 200000084,
+    "pc1": -0.503,
+    "pc2": -1.77,
+    "segmento": 1
+   },
+   {
+    "id": 200000085,
+    "pc1": 0.185,
+    "pc2": -0.237,
+    "segmento": 3
+   },
+   {
+    "id": 200000086,
+    "pc1": -2.774,
+    "pc2": -0.341,
+    "segmento": 1
+   },
+   {
+    "id": 200000087,
+    "pc1": -2.644,
+    "pc2": -0.594,
+    "segmento": 1
+   },
+   {
+    "id": 200000088,
+    "pc1": 2.823,
+    "pc2": -1.896,
+    "segmento": 3
+   },
+   {
+    "id": 200000089,
+    "pc1": 0.317,
+    "pc2": 1.142,
+    "segmento": 2
+   },
+   {
+    "id": 200000090,
+    "pc1": 0.735,
+    "pc2": 1.125,
+    "segmento": 2
+   },
+   {
+    "id": 200000091,
+    "pc1": 0.712,
+    "pc2": 1.308,
+    "segmento": 2
+   },
+   {
+    "id": 200000092,
+    "pc1": -0.093,
+    "pc2": 1.332,
+    "segmento": 2
+   },
+   {
+    "id": 200000093,
+    "pc1": -1.678,
+    "pc2": -1.037,
+    "segmento": 1
+   },
+   {
+    "id": 200000094,
+    "pc1": -0.069,
+    "pc2": 1.243,
+    "segmento": 2
+   },
+   {
+    "id": 200000095,
+    "pc1": 0.074,
+    "pc2": 1.185,
+    "segmento": 2
+   },
+   {
+    "id": 200000096,
+    "pc1": 1.644,
+    "pc2": 0.506,
+    "segmento": 2
+   },
+   {
+    "id": 200000097,
+    "pc1": -0.795,
+    "pc2": -1.095,
+    "segmento": 1
+   },
+   {
+    "id": 200000098,
+    "pc1": -1.649,
+    "pc2": -1.195,
+    "segmento": 1
+   },
+   {
+    "id": 200000099,
+    "pc1": -1.498,
+    "pc2": -1.255,
+    "segmento": 1
+   },
+   {
+    "id": 200000100,
+    "pc1": -1.354,
+    "pc2": -0.863,
+    "segmento": 1
+   },
+   {
+    "id": 200000101,
+    "pc1": 1.76,
+    "pc2": -0.854,
+    "segmento": 3
+   },
+   {
+    "id": 200000102,
+    "pc1": 0.592,
+    "pc2": 1.202,
+    "segmento": 2
+   },
+   {
+    "id": 200000103,
+    "pc1": -1.586,
+    "pc2": -0.967,
+    "segmento": 1
+   },
+   {
+    "id": 200000104,
+    "pc1": 2.015,
+    "pc2": 0.408,
+    "segmento": 2
+   },
+   {
+    "id": 200000105,
+    "pc1": -2.006,
+    "pc2": -0.955,
+    "segmento": 1
+   },
+   {
+    "id": 200000106,
+    "pc1": -2.119,
+    "pc2": -0.804,
+    "segmento": 1
+   },
+   {
+    "id": 200000107,
+    "pc1": 0.231,
+    "pc2": -2.238,
+    "segmento": 1
+   },
+   {
+    "id": 200000108,
+    "pc1": 1.883,
+    "pc2": 0.18,
+    "segmento": 2
+   },
+   {
+    "id": 200000109,
+    "pc1": 1.804,
+    "pc2": 0.429,
+    "segmento": 2
+   },
+   {
+    "id": 200000110,
+    "pc1": 0.138,
+    "pc2": 1.256,
+    "segmento": 2
+   },
+   {
+    "id": 200000111,
+    "pc1": 0.45,
+    "pc2": 1.405,
+    "segmento": 2
+   },
+   {
+    "id": 200000112,
+    "pc1": 2.92,
+    "pc2": -2.109,
+    "segmento": 3
+   },
+   {
+    "id": 200000113,
+    "pc1": 3.834,
+    "pc2": -2.084,
+    "segmento": 3
+   },
+   {
+    "id": 200000114,
+    "pc1": -0.681,
+    "pc2": 1.994,
+    "segmento": 2
+   },
+   {
+    "id": 200000115,
+    "pc1": 3.051,
+    "pc2": -2.06,
+    "segmento": 3
+   },
+   {
+    "id": 200000116,
+    "pc1": -0.389,
+    "pc2": 1.396,
+    "segmento": 2
+   },
+   {
+    "id": 200000117,
+    "pc1": -0.139,
+    "pc2": 1.388,
+    "segmento": 2
+   },
+   {
+    "id": 200000118,
+    "pc1": 1.056,
+    "pc2": 0.527,
+    "segmento": 2
+   },
+   {
+    "id": 200000119,
+    "pc1": 1.488,
+    "pc2": 0.582,
+    "segmento": 2
+   },
+   {
+    "id": 200000120,
+    "pc1": 2.377,
+    "pc2": 0.15,
+    "segmento": 2
+   },
+   {
+    "id": 200000121,
+    "pc1": -1.477,
+    "pc2": -1.147,
+    "segmento": 1
+   },
+   {
+    "id": 200000122,
+    "pc1": 0.413,
+    "pc2": 1.497,
+    "segmento": 2
+   },
+   {
+    "id": 200000123,
+    "pc1": 4.137,
+    "pc2": -1.763,
+    "segmento": 3
+   },
+   {
+    "id": 200000124,
+    "pc1": 4.026,
+    "pc2": -2.788,
+    "segmento": 3
+   },
+   {
+    "id": 200000125,
+    "pc1": -0.999,
+    "pc2": 2.019,
+    "segmento": 2
+   },
+   {
+    "id": 200000126,
+    "pc1": -1.477,
+    "pc2": 2.231,
+    "segmento": 2
+   },
+   {
+    "id": 200000127,
+    "pc1": -2.216,
+    "pc2": -1.181,
+    "segmento": 1
+   },
+   {
+    "id": 200000128,
+    "pc1": -1.651,
+    "pc2": -1.142,
+    "segmento": 1
+   },
+   {
+    "id": 200000129,
+    "pc1": -0.746,
+    "pc2": 2.013,
+    "segmento": 2
+   },
+   {
+    "id": 200000130,
+    "pc1": -0.643,
+    "pc2": -1.28,
+    "segmento": 1
+   },
+   {
+    "id": 200000131,
+    "pc1": -1.716,
+    "pc2": -0.927,
+    "segmento": 1
+   },
+   {
+    "id": 200000132,
+    "pc1": -2.789,
+    "pc2": -0.322,
+    "segmento": 1
+   },
+   {
+    "id": 200000133,
+    "pc1": -1.885,
+    "pc2": -0.976,
+    "segmento": 1
+   },
+   {
+    "id": 200000134,
+    "pc1": 0.181,
+    "pc2": 1.219,
+    "segmento": 2
+   },
+   {
+    "id": 200000135,
+    "pc1": 0.223,
+    "pc2": 1.486,
+    "segmento": 2
+   },
+   {
+    "id": 200000136,
+    "pc1": 1.781,
+    "pc2": 0.237,
+    "segmento": 2
+   },
+   {
+    "id": 200000137,
+    "pc1": 3.365,
+    "pc2": -1.267,
+    "segmento": 3
+   },
+   {
+    "id": 200000138,
+    "pc1": 0.705,
+    "pc2": 1.144,
+    "segmento": 2
+   },
+   {
+    "id": 200000139,
+    "pc1": 1.816,
+    "pc2": 0.218,
+    "segmento": 2
+   },
+   {
+    "id": 200000140,
+    "pc1": -1.015,
+    "pc2": -1.253,
+    "segmento": 1
+   },
+   {
+    "id": 200000141,
+    "pc1": 3.102,
+    "pc2": -1.903,
+    "segmento": 3
+   },
+   {
+    "id": 200000142,
+    "pc1": -0.138,
+    "pc2": 1.354,
+    "segmento": 2
+   },
+   {
+    "id": 200000143,
+    "pc1": 0.703,
+    "pc2": 0.951,
+    "segmento": 2
+   },
+   {
+    "id": 200000144,
+    "pc1": 1.674,
+    "pc2": 0.487,
+    "segmento": 2
+   },
+   {
+    "id": 200000145,
+    "pc1": -0.844,
+    "pc2": 2.107,
+    "segmento": 2
+   },
+   {
+    "id": 200000146,
+    "pc1": -0.193,
+    "pc2": 1.405,
+    "segmento": 2
+   },
+   {
+    "id": 200000147,
+    "pc1": -0.441,
+    "pc2": 1.504,
+    "segmento": 2
+   },
+   {
+    "id": 200000148,
+    "pc1": 0.26,
+    "pc2": 1.373,
+    "segmento": 2
+   },
+   {
+    "id": 200000149,
+    "pc1": 0.828,
+    "pc2": 1.378,
+    "segmento": 2
+   },
+   {
+    "id": 200000150,
+    "pc1": -0.43,
+    "pc2": 1.397,
+    "segmento": 2
+   },
+   {
+    "id": 200000151,
+    "pc1": 0.075,
+    "pc2": -0.344,
+    "segmento": 3
+   },
+   {
+    "id": 200000152,
+    "pc1": 0.704,
+    "pc2": -2.126,
+    "segmento": 1
+   },
+   {
+    "id": 200000153,
+    "pc1": -0.021,
+    "pc2": 1.33,
+    "segmento": 2
+   },
+   {
+    "id": 200000154,
+    "pc1": -2.704,
+    "pc2": -0.324,
+    "segmento": 1
+   },
+   {
+    "id": 200000155,
+    "pc1": -2.85,
+    "pc2": -0.284,
+    "segmento": 1
+   },
+   {
+    "id": 200000156,
+    "pc1": -2.983,
+    "pc2": -0.281,
+    "segmento": 1
+   },
+   {
+    "id": 200000157,
+    "pc1": -0.175,
+    "pc2": 1.245,
+    "segmento": 2
+   },
+   {
+    "id": 200000158,
+    "pc1": 1.465,
+    "pc2": -1.1,
+    "segmento": 3
+   },
+   {
+    "id": 200000159,
+    "pc1": 0.243,
+    "pc2": 1.41,
+    "segmento": 2
+   },
+   {
+    "id": 200000160,
+    "pc1": -0.085,
+    "pc2": 1.243,
+    "segmento": 2
+   },
+   {
+    "id": 200000161,
+    "pc1": -0.301,
+    "pc2": 1.373,
+    "segmento": 2
+   },
+   {
+    "id": 200000162,
+    "pc1": -0.476,
+    "pc2": -1.168,
+    "segmento": 1
+   },
+   {
+    "id": 200000163,
+    "pc1": -1.757,
+    "pc2": -1.031,
+    "segmento": 1
+   },
+   {
+    "id": 200000164,
+    "pc1": 0.257,
+    "pc2": 1.144,
+    "segmento": 2
+   },
+   {
+    "id": 200000165,
+    "pc1": -1.49,
+    "pc2": -1.133,
+    "segmento": 1
+   },
+   {
+    "id": 200000166,
+    "pc1": -1.414,
+    "pc2": -1.2,
+    "segmento": 1
+   },
+   {
+    "id": 200000167,
+    "pc1": 3.821,
+    "pc2": -1.949,
+    "segmento": 3
+   },
+   {
+    "id": 200000168,
+    "pc1": 1.19,
+    "pc2": -1.002,
+    "segmento": 3
+   },
+   {
+    "id": 200000169,
+    "pc1": 1.672,
+    "pc2": 0.437,
+    "segmento": 2
+   },
+   {
+    "id": 200000170,
+    "pc1": -2.003,
+    "pc2": -1.132,
+    "segmento": 1
+   },
+   {
+    "id": 200000171,
+    "pc1": 0.625,
+    "pc2": 1.185,
+    "segmento": 2
+   },
+   {
+    "id": 200000172,
+    "pc1": 3.362,
+    "pc2": 0.556,
+    "segmento": 2
+   },
+   {
+    "id": 200000173,
+    "pc1": 0.768,
+    "pc2": 0.932,
+    "segmento": 2
+   },
+   {
+    "id": 200000174,
+    "pc1": -2.361,
+    "pc2": -0.332,
+    "segmento": 1
+   },
+   {
+    "id": 200000175,
+    "pc1": -2.829,
+    "pc2": -0.303,
+    "segmento": 1
+   },
+   {
+    "id": 200000176,
+    "pc1": 0.275,
+    "pc2": 1.336,
+    "segmento": 2
+   },
+   {
+    "id": 200000177,
+    "pc1": -0.358,
+    "pc2": -1.808,
+    "segmento": 1
+   },
+   {
+    "id": 200000178,
+    "pc1": -1.242,
+    "pc2": -0.829,
+    "segmento": 1
+   },
+   {
+    "id": 200000179,
+    "pc1": 0.071,
+    "pc2": 1.505,
+    "segmento": 2
+   },
+   {
+    "id": 200000180,
+    "pc1": -1.378,
+    "pc2": -0.917,
+    "segmento": 1
+   },
+   {
+    "id": 200000181,
+    "pc1": 0.656,
+    "pc2": 1.255,
+    "segmento": 2
+   },
+   {
+    "id": 200000182,
+    "pc1": -1.598,
+    "pc2": -1.198,
+    "segmento": 1
+   },
+   {
+    "id": 200000183,
+    "pc1": -0.572,
+    "pc2": 2.118,
+    "segmento": 2
+   },
+   {
+    "id": 200000184,
+    "pc1": -1.723,
+    "pc2": -0.891,
+    "segmento": 1
+   },
+   {
+    "id": 200000185,
+    "pc1": -1.508,
+    "pc2": -1.273,
+    "segmento": 1
+   },
+   {
+    "id": 200000186,
+    "pc1": 0.087,
+    "pc2": 1.487,
+    "segmento": 2
+   },
+   {
+    "id": 200000187,
+    "pc1": 0.185,
+    "pc2": 1.448,
+    "segmento": 2
+   },
+   {
+    "id": 200000188,
+    "pc1": 2.806,
+    "pc2": -2.086,
+    "segmento": 3
+   },
+   {
+    "id": 200000189,
+    "pc1": -0.037,
+    "pc2": 1.494,
+    "segmento": 2
+   },
+   {
+    "id": 200000190,
+    "pc1": -1.186,
+    "pc2": -1.067,
+    "segmento": 1
+   },
+   {
+    "id": 200000191,
+    "pc1": -1.253,
+    "pc2": 2.207,
+    "segmento": 2
+   },
+   {
+    "id": 200000192,
+    "pc1": 1.778,
+    "pc2": 0.221,
+    "segmento": 2
+   },
+   {
+    "id": 200000193,
+    "pc1": -1.703,
+    "pc2": -1.019,
+    "segmento": 1
+   },
+   {
+    "id": 200000194,
+    "pc1": -2.874,
+    "pc2": -0.461,
+    "segmento": 1
+   },
+   {
+    "id": 200000195,
+    "pc1": 3.092,
+    "pc2": -1.773,
+    "segmento": 3
+   },
+   {
+    "id": 200000196,
+    "pc1": -0.732,
+    "pc2": 1.995,
+    "segmento": 2
+   },
+   {
+    "id": 200000197,
+    "pc1": 0.587,
+    "pc2": 1.329,
+    "segmento": 2
+   },
+   {
+    "id": 200000198,
+    "pc1": -1.272,
+    "pc2": -1.156,
+    "segmento": 1
+   },
+   {
+    "id": 200000199,
+    "pc1": -0.138,
+    "pc2": -1.872,
+    "segmento": 1
+   },
+   {
+    "id": 200000200,
+    "pc1": 0.313,
+    "pc2": 1.336,
+    "segmento": 2
+   },
+   {
+    "id": 200000201,
+    "pc1": 0.33,
+    "pc2": -0.818,
+    "segmento": 3
+   },
+   {
+    "id": 200000202,
+    "pc1": 0.037,
+    "pc2": 1.47,
+    "segmento": 2
+   },
+   {
+    "id": 200000203,
+    "pc1": -0.93,
+    "pc2": -1.11,
+    "segmento": 1
+   },
+   {
+    "id": 200000204,
+    "pc1": 3.296,
+    "pc2": -1.814,
+    "segmento": 3
+   },
+   {
+    "id": 200000205,
+    "pc1": -1.057,
+    "pc2": 2.021,
+    "segmento": 2
+   },
+   {
+    "id": 200000206,
+    "pc1": 0.761,
+    "pc2": 1.161,
+    "segmento": 2
+   },
+   {
+    "id": 200000207,
+    "pc1": -1.247,
+    "pc2": -1.35,
+    "segmento": 1
+   },
+   {
+    "id": 200000208,
+    "pc1": 0.252,
+    "pc2": 1.342,
+    "segmento": 2
+   },
+   {
+    "id": 200000209,
+    "pc1": 1.906,
+    "pc2": -0.967,
+    "segmento": 3
+   },
+   {
+    "id": 200000210,
+    "pc1": 0.425,
+    "pc2": 1.244,
+    "segmento": 2
+   },
+   {
+    "id": 200000211,
+    "pc1": -1.924,
+    "pc2": -1.115,
+    "segmento": 1
+   },
+   {
+    "id": 200000212,
+    "pc1": 1.121,
+    "pc2": 1.153,
+    "segmento": 2
+   },
+   {
+    "id": 200000213,
+    "pc1": -0.003,
+    "pc2": 1.278,
+    "segmento": 2
+   },
+   {
+    "id": 200000214,
+    "pc1": -1.464,
+    "pc2": -1.115,
+    "segmento": 1
+   },
+   {
+    "id": 200000215,
+    "pc1": -1.541,
+    "pc2": -1.093,
+    "segmento": 1
+   },
+   {
+    "id": 200000216,
+    "pc1": 0.354,
+    "pc2": 1.196,
+    "segmento": 2
+   },
+   {
+    "id": 200000217,
+    "pc1": 0.314,
+    "pc2": -0.349,
+    "segmento": 3
+   },
+   {
+    "id": 200000218,
+    "pc1": 2.427,
+    "pc2": -0.961,
+    "segmento": 3
+   },
+   {
+    "id": 200000219,
+    "pc1": 0.611,
+    "pc2": 1.238,
+    "segmento": 2
+   },
+   {
+    "id": 200000220,
+    "pc1": 0.299,
+    "pc2": 1.299,
+    "segmento": 2
+   },
+   {
+    "id": 200000221,
+    "pc1": 1.6,
+    "pc2": 0.332,
+    "segmento": 2
+   },
+   {
+    "id": 200000222,
+    "pc1": -1.764,
+    "pc2": -0.942,
+    "segmento": 1
+   },
+   {
+    "id": 200000223,
+    "pc1": -0.93,
+    "pc2": -0.946,
+    "segmento": 1
+   },
+   {
+    "id": 200000224,
+    "pc1": 0.649,
+    "pc2": 1.437,
+    "segmento": 2
+   },
+   {
+    "id": 200000225,
+    "pc1": 0.331,
+    "pc2": -0.313,
+    "segmento": 3
+   },
+   {
+    "id": 200000226,
+    "pc1": 0.138,
+    "pc2": 1.397,
+    "segmento": 2
+   },
+   {
+    "id": 200000227,
+    "pc1": 1.25,
+    "pc2": -0.933,
+    "segmento": 3
+   },
+   {
+    "id": 200000228,
+    "pc1": 2.825,
+    "pc2": -0.386,
+    "segmento": 2
+   },
+   {
+    "id": 200000229,
+    "pc1": 0.792,
+    "pc2": 1.022,
+    "segmento": 2
+   },
+   {
+    "id": 200000230,
+    "pc1": -1.907,
+    "pc2": -0.975,
+    "segmento": 1
+   },
+   {
+    "id": 200000231,
+    "pc1": -2.573,
+    "pc2": -0.577,
+    "segmento": 1
+   },
+   {
+    "id": 200000232,
+    "pc1": -0.679,
+    "pc2": -1.243,
+    "segmento": 1
+   },
+   {
+    "id": 200000233,
+    "pc1": 0.248,
+    "pc2": 1.394,
+    "segmento": 2
+   },
+   {
+    "id": 200000234,
+    "pc1": -0.886,
+    "pc2": 2.071,
+    "segmento": 2
+   },
+   {
+    "id": 200000235,
+    "pc1": -1.059,
+    "pc2": -1.125,
+    "segmento": 1
+   },
+   {
+    "id": 200000236,
+    "pc1": -1.361,
+    "pc2": -0.429,
+    "segmento": 1
+   },
+   {
+    "id": 200000237,
+    "pc1": -0.092,
+    "pc2": 1.473,
+    "segmento": 2
+   },
+   {
+    "id": 200000238,
+    "pc1": -1.264,
+    "pc2": -1.349,
+    "segmento": 1
+   },
+   {
+    "id": 200000239,
+    "pc1": 1.37,
+    "pc2": -0.338,
+    "segmento": 3
+   },
+   {
+    "id": 200000240,
+    "pc1": -0.526,
+    "pc2": -1.622,
+    "segmento": 1
+   },
+   {
+    "id": 200000241,
+    "pc1": 1.967,
+    "pc2": 0.141,
+    "segmento": 2
+   },
+   {
+    "id": 200000242,
+    "pc1": -1.46,
+    "pc2": -1.241,
+    "segmento": 1
+   },
+   {
+    "id": 200000243,
+    "pc1": 0.254,
+    "pc2": 1.071,
+    "segmento": 2
+   },
+   {
+    "id": 200000244,
+    "pc1": -0.94,
+    "pc2": 2.0,
+    "segmento": 2
+   },
+   {
+    "id": 200000245,
+    "pc1": 1.791,
+    "pc2": -1.201,
+    "segmento": 3
+   },
+   {
+    "id": 200000246,
+    "pc1": -1.652,
+    "pc2": -0.965,
+    "segmento": 1
+   },
+   {
+    "id": 200000247,
+    "pc1": 1.133,
+    "pc2": 1.134,
+    "segmento": 2
+   },
+   {
+    "id": 200000248,
+    "pc1": 0.372,
+    "pc2": 1.123,
+    "segmento": 2
+   },
+   {
+    "id": 200000249,
+    "pc1": -0.187,
+    "pc2": 1.3,
+    "segmento": 2
+   },
+   {
+    "id": 200000250,
+    "pc1": -0.065,
+    "pc2": 1.49,
+    "segmento": 2
+   },
+   {
+    "id": 200000251,
+    "pc1": -0.017,
+    "pc2": 1.275,
+    "segmento": 2
+   },
+   {
+    "id": 200000252,
+    "pc1": -1.048,
+    "pc2": -1.123,
+    "segmento": 1
+   },
+   {
+    "id": 200000253,
+    "pc1": -1.549,
+    "pc2": -1.093,
+    "segmento": 1
+   },
+   {
+    "id": 200000254,
+    "pc1": 0.082,
+    "pc2": 1.221,
+    "segmento": 2
+   },
+   {
+    "id": 200000255,
+    "pc1": 1.978,
+    "pc2": 0.378,
+    "segmento": 2
+   },
+   {
+    "id": 200000256,
+    "pc1": -0.38,
+    "pc2": 1.448,
+    "segmento": 2
+   },
+   {
+    "id": 200000257,
+    "pc1": -1.0,
+    "pc2": 1.933,
+    "segmento": 2
+   },
+   {
+    "id": 200000258,
+    "pc1": -1.951,
+    "pc2": -0.974,
+    "segmento": 1
+   },
+   {
+    "id": 200000259,
+    "pc1": 0.402,
+    "pc2": -1.94,
+    "segmento": 1
+   },
+   {
+    "id": 200000260,
+    "pc1": 1.697,
+    "pc2": -1.123,
+    "segmento": 3
+   },
+   {
+    "id": 200000261,
+    "pc1": 0.49,
+    "pc2": 1.331,
+    "segmento": 2
+   },
+   {
+    "id": 200000262,
+    "pc1": -2.882,
+    "pc2": -0.479,
+    "segmento": 1
+   },
+   {
+    "id": 200000263,
+    "pc1": 0.17,
+    "pc2": -2.057,
+    "segmento": 1
+   },
+   {
+    "id": 200000264,
+    "pc1": 0.241,
+    "pc2": 1.392,
+    "segmento": 2
+   },
+   {
+    "id": 200000265,
+    "pc1": 1.891,
+    "pc2": -1.201,
+    "segmento": 3
+   },
+   {
+    "id": 200000266,
+    "pc1": 1.032,
+    "pc2": -0.819,
+    "segmento": 3
+   },
+   {
+    "id": 200000267,
+    "pc1": 0.997,
+    "pc2": -0.854,
+    "segmento": 3
+   },
+   {
+    "id": 200000268,
+    "pc1": -1.019,
+    "pc2": 2.038,
+    "segmento": 2
+   },
+   {
+    "id": 200000269,
+    "pc1": 0.961,
+    "pc2": 1.211,
+    "segmento": 2
+   },
+   {
+    "id": 200000270,
+    "pc1": 1.114,
+    "pc2": 1.153,
+    "segmento": 2
+   },
+   {
+    "id": 200000271,
+    "pc1": -2.597,
+    "pc2": -0.613,
+    "segmento": 1
+   },
+   {
+    "id": 200000272,
+    "pc1": 1.653,
+    "pc2": -1.179,
+    "segmento": 3
+   },
+   {
+    "id": 200000273,
+    "pc1": 0.236,
+    "pc2": 1.269,
+    "segmento": 2
+   },
+   {
+    "id": 200000274,
+    "pc1": 0.463,
+    "pc2": 1.332,
+    "segmento": 2
+   },
+   {
+    "id": 200000275,
+    "pc1": 0.189,
+    "pc2": 1.218,
+    "segmento": 2
+   },
+   {
+    "id": 200000276,
+    "pc1": -1.711,
+    "pc2": -1.037,
+    "segmento": 1
+   },
+   {
+    "id": 200000277,
+    "pc1": 0.151,
+    "pc2": 1.451,
+    "segmento": 2
+   },
+   {
+    "id": 200000278,
+    "pc1": 0.439,
+    "pc2": 1.496,
+    "segmento": 2
+   },
+   {
+    "id": 200000279,
+    "pc1": 0.582,
+    "pc2": 1.256,
+    "segmento": 2
+   },
+   {
+    "id": 200000280,
+    "pc1": -1.723,
+    "pc2": -0.909,
+    "segmento": 1
+   },
+   {
+    "id": 200000281,
+    "pc1": 2.364,
+    "pc2": 0.4,
+    "segmento": 2
+   },
+   {
+    "id": 200000282,
+    "pc1": 0.47,
+    "pc2": 1.459,
+    "segmento": 2
+   },
+   {
+    "id": 200000283,
+    "pc1": 0.237,
+    "pc2": 1.199,
+    "segmento": 2
+   },
+   {
+    "id": 200000284,
+    "pc1": 3.788,
+    "pc2": -2.046,
+    "segmento": 3
+   },
+   {
+    "id": 200000285,
+    "pc1": -0.038,
+    "pc2": 1.401,
+    "segmento": 2
+   },
+   {
+    "id": 200000286,
+    "pc1": -0.015,
+    "pc2": 1.434,
+    "segmento": 2
+   },
+   {
+    "id": 200000287,
+    "pc1": 1.549,
+    "pc2": 0.529,
+    "segmento": 2
+   },
+   {
+    "id": 200000288,
+    "pc1": -0.114,
+    "pc2": 2.017,
+    "segmento": 2
+   },
+   {
+    "id": 200000289,
+    "pc1": 1.099,
+    "pc2": -0.875,
+    "segmento": 3
+   },
+   {
+    "id": 200000290,
+    "pc1": -0.96,
+    "pc2": -1.414,
+    "segmento": 1
+   },
+   {
+    "id": 200000291,
+    "pc1": -0.135,
+    "pc2": 1.474,
+    "segmento": 2
+   },
+   {
+    "id": 200000292,
+    "pc1": -1.735,
+    "pc2": -0.89,
+    "segmento": 1
+   },
+   {
+    "id": 200000293,
+    "pc1": -0.375,
+    "pc2": -1.794,
+    "segmento": 1
+   },
+   {
+    "id": 200000294,
+    "pc1": 1.663,
+    "pc2": 0.458,
+    "segmento": 2
+   },
+   {
+    "id": 200000295,
+    "pc1": -2.49,
+    "pc2": -0.366,
+    "segmento": 1
+   },
+   {
+    "id": 200000296,
+    "pc1": 4.676,
+    "pc2": -2.877,
+    "segmento": 3
+   },
+   {
+    "id": 200000297,
+    "pc1": 0.197,
+    "pc2": 1.429,
+    "segmento": 2
+   },
+   {
+    "id": 200000298,
+    "pc1": -0.578,
+    "pc2": 1.991,
+    "segmento": 2
+   },
+   {
+    "id": 200000299,
+    "pc1": -0.8,
+    "pc2": -1.345,
+    "segmento": 1
+   },
+   {
+    "id": 200000300,
+    "pc1": -1.009,
+    "pc2": -1.465,
+    "segmento": 1
+   },
+   {
+    "id": 200000301,
+    "pc1": -1.673,
+    "pc2": -1.176,
+    "segmento": 1
+   },
+   {
+    "id": 200000302,
+    "pc1": 1.671,
+    "pc2": 0.312,
+    "segmento": 2
+   },
+   {
+    "id": 200000303,
+    "pc1": -1.548,
+    "pc2": -1.27,
+    "segmento": 1
+   },
+   {
+    "id": 200000304,
+    "pc1": 0.014,
+    "pc2": -2.014,
+    "segmento": 1
+   },
+   {
+    "id": 200000305,
+    "pc1": -1.823,
+    "pc2": -1.191,
+    "segmento": 1
+   },
+   {
+    "id": 200000306,
+    "pc1": -1.282,
+    "pc2": -1.115,
+    "segmento": 1
+   },
+   {
+    "id": 200000307,
+    "pc1": 0.994,
+    "pc2": -0.836,
+    "segmento": 3
+   },
+   {
+    "id": 200000308,
+    "pc1": 1.417,
+    "pc2": 1.273,
+    "segmento": 2
+   },
+   {
+    "id": 200000309,
+    "pc1": 0.314,
+    "pc2": -2.021,
+    "segmento": 1
+   },
+   {
+    "id": 200000310,
+    "pc1": 0.266,
+    "pc2": -2.119,
+    "segmento": 1
+   },
+   {
+    "id": 200000311,
+    "pc1": -1.879,
+    "pc2": -1.189,
+    "segmento": 1
+   },
+   {
+    "id": 200000312,
+    "pc1": -1.68,
+    "pc2": -0.928,
+    "segmento": 1
+   },
+   {
+    "id": 200000313,
+    "pc1": 4.929,
+    "pc2": -2.248,
+    "segmento": 3
+   },
+   {
+    "id": 200000314,
+    "pc1": 2.686,
+    "pc2": -2.031,
+    "segmento": 3
+   },
+   {
+    "id": 200000315,
+    "pc1": 2.059,
+    "pc2": 0.371,
+    "segmento": 2
+   },
+   {
+    "id": 200000316,
+    "pc1": 0.155,
+    "pc2": 1.146,
+    "segmento": 2
+   },
+   {
+    "id": 200000317,
+    "pc1": -1.751,
+    "pc2": -1.018,
+    "segmento": 1
+   },
+   {
+    "id": 200000318,
+    "pc1": 1.167,
+    "pc2": -0.315,
+    "segmento": 3
+   },
+   {
+    "id": 200000319,
+    "pc1": 4.216,
+    "pc2": -1.874,
+    "segmento": 3
+   },
+   {
+    "id": 200000320,
+    "pc1": 0.276,
+    "pc2": 1.143,
+    "segmento": 2
+   },
+   {
+    "id": 200000321,
+    "pc1": 1.712,
+    "pc2": 0.402,
+    "segmento": 2
+   },
+   {
+    "id": 200000322,
+    "pc1": 0.271,
+    "pc2": 1.144,
+    "segmento": 2
+   },
+   {
+    "id": 200000323,
+    "pc1": -0.076,
+    "pc2": 1.297,
+    "segmento": 2
+   },
+   {
+    "id": 200000324,
+    "pc1": 3.356,
+    "pc2": 0.556,
+    "segmento": 2
+   },
+   {
+    "id": 200000325,
+    "pc1": 1.944,
+    "pc2": 0.426,
+    "segmento": 2
+   },
+   {
+    "id": 200000326,
+    "pc1": 1.741,
+    "pc2": 0.503,
+    "segmento": 2
+   },
+   {
+    "id": 200000327,
+    "pc1": -1.552,
+    "pc2": -1.199,
+    "segmento": 1
+   },
+   {
+    "id": 200000328,
+    "pc1": 2.225,
+    "pc2": 0.37,
+    "segmento": 2
+   },
+   {
+    "id": 200000329,
+    "pc1": 0.569,
+    "pc2": 1.241,
+    "segmento": 2
+   },
+   {
+    "id": 200000330,
+    "pc1": 1.923,
+    "pc2": -1.004,
+    "segmento": 3
+   },
+   {
+    "id": 200000331,
+    "pc1": -0.995,
+    "pc2": 2.056,
+    "segmento": 2
+   },
+   {
+    "id": 200000332,
+    "pc1": -0.805,
+    "pc2": 2.088,
+    "segmento": 2
+   },
+   {
+    "id": 200000333,
+    "pc1": 0.137,
+    "pc2": 1.201,
+    "segmento": 2
+   },
+   {
+    "id": 200000334,
+    "pc1": -3.048,
+    "pc2": -0.207,
+    "segmento": 1
+   },
+   {
+    "id": 200000335,
+    "pc1": -2.379,
+    "pc2": -0.314,
+    "segmento": 1
+   },
+   {
+    "id": 200000336,
+    "pc1": 0.364,
+    "pc2": 1.014,
+    "segmento": 2
+   },
+   {
+    "id": 200000337,
+    "pc1": -0.089,
+    "pc2": -1.946,
+    "segmento": 1
+   },
+   {
+    "id": 200000338,
+    "pc1": -1.534,
+    "pc2": -1.111,
+    "segmento": 1
+   },
+   {
+    "id": 200000339,
+    "pc1": 0.057,
+    "pc2": 1.328,
+    "segmento": 2
+   },
+   {
+    "id": 200000340,
+    "pc1": -1.05,
+    "pc2": -1.264,
+    "segmento": 1
+   },
+   {
+    "id": 200000341,
+    "pc1": -1.715,
+    "pc2": -1.018,
+    "segmento": 1
+   },
+   {
+    "id": 200000342,
+    "pc1": 1.851,
+    "pc2": 0.501,
+    "segmento": 2
+   },
+   {
+    "id": 200000343,
+    "pc1": -2.002,
+    "pc2": -1.114,
+    "segmento": 1
+   },
+   {
+    "id": 200000344,
+    "pc1": -0.971,
+    "pc2": -1.359,
+    "segmento": 1
+   },
+   {
+    "id": 200000345,
+    "pc1": -0.222,
+    "pc2": 1.476,
+    "segmento": 2
+   },
+   {
+    "id": 200000346,
+    "pc1": -1.433,
+    "pc2": -1.025,
+    "segmento": 1
+   },
+   {
+    "id": 200000347,
+    "pc1": -0.985,
+    "pc2": -1.017,
+    "segmento": 1
+   },
+   {
+    "id": 200000348,
+    "pc1": -1.52,
+    "pc2": -1.161,
+    "segmento": 1
+   },
+   {
+    "id": 200000349,
+    "pc1": 0.242,
+    "pc2": 1.071,
+    "segmento": 2
+   },
+   {
+    "id": 200000350,
+    "pc1": 0.874,
+    "pc2": -2.326,
+    "segmento": 1
+   },
+   {
+    "id": 200000351,
+    "pc1": 0.326,
+    "pc2": 1.124,
+    "segmento": 2
+   },
+   {
+    "id": 200000352,
+    "pc1": -0.841,
+    "pc2": -1.359,
+    "segmento": 1
+   },
+   {
+    "id": 200000353,
+    "pc1": -1.163,
+    "pc2": -1.388,
+    "segmento": 1
+   },
+   {
+    "id": 200000354,
+    "pc1": -0.473,
+    "pc2": 1.468,
+    "segmento": 2
+   },
+   {
+    "id": 200000355,
+    "pc1": 1.855,
+    "pc2": 0.501,
+    "segmento": 2
+   },
+   {
+    "id": 200000356,
+    "pc1": 0.544,
+    "pc2": 0.989,
+    "segmento": 2
+   },
+   {
+    "id": 200000357,
+    "pc1": -2.263,
+    "pc2": -0.964,
+    "segmento": 1
+   },
+   {
+    "id": 200000358,
+    "pc1": -1.309,
+    "pc2": -1.262,
+    "segmento": 1
+   },
+   {
+    "id": 200000359,
+    "pc1": -0.409,
+    "pc2": 1.521,
+    "segmento": 2
+   },
+   {
+    "id": 200000360,
+    "pc1": -1.349,
+    "pc2": -1.027,
+    "segmento": 1
+   },
+   {
+    "id": 200000361,
+    "pc1": 1.091,
+    "pc2": -0.82,
+    "segmento": 3
+   },
+   {
+    "id": 200000362,
+    "pc1": 1.048,
+    "pc2": 1.282,
+    "segmento": 2
+   },
+   {
+    "id": 200000363,
+    "pc1": 1.562,
+    "pc2": 0.424,
+    "segmento": 2
+   },
+   {
+    "id": 200000364,
+    "pc1": 0.129,
+    "pc2": 1.324,
+    "segmento": 2
+   },
+   {
+    "id": 200000365,
+    "pc1": 0.397,
+    "pc2": 1.138,
+    "segmento": 2
+   },
+   {
+    "id": 200000366,
+    "pc1": 1.896,
+    "pc2": 0.463,
+    "segmento": 2
+   },
+   {
+    "id": 200000367,
+    "pc1": -0.561,
+    "pc2": 1.991,
+    "segmento": 2
+   },
+   {
+    "id": 200000368,
+    "pc1": 0.028,
+    "pc2": 1.259,
+    "segmento": 2
+   },
+   {
+    "id": 200000369,
+    "pc1": 2.779,
+    "pc2": -1.804,
+    "segmento": 3
+   },
+   {
+    "id": 200000370,
+    "pc1": -1.533,
+    "pc2": -1.216,
+    "segmento": 1
+   },
+   {
+    "id": 200000371,
+    "pc1": -0.77,
+    "pc2": -1.205,
+    "segmento": 1
+   },
+   {
+    "id": 200000372,
+    "pc1": 1.351,
+    "pc2": 0.556,
+    "segmento": 2
+   },
+   {
+    "id": 200000373,
+    "pc1": 0.308,
+    "pc2": -1.937,
+    "segmento": 1
+   },
+   {
+    "id": 200000374,
+    "pc1": 0.834,
+    "pc2": -2.023,
+    "segmento": 1
+   },
+   {
+    "id": 200000375,
+    "pc1": -1.447,
+    "pc2": -1.095,
+    "segmento": 1
+   },
+   {
+    "id": 200000376,
+    "pc1": 0.711,
+    "pc2": -2.811,
+    "segmento": 1
+   },
+   {
+    "id": 200000377,
+    "pc1": 3.981,
+    "pc2": -1.739,
+    "segmento": 3
+   },
+   {
+    "id": 200000378,
+    "pc1": 1.034,
+    "pc2": 1.173,
+    "segmento": 2
+   },
+   {
+    "id": 200000379,
+    "pc1": 0.578,
+    "pc2": 1.293,
+    "segmento": 2
+   },
+   {
+    "id": 200000380,
+    "pc1": 0.488,
+    "pc2": 1.295,
+    "segmento": 2
+   },
+   {
+    "id": 200000381,
+    "pc1": -1.138,
+    "pc2": -1.373,
+    "segmento": 1
+   },
+   {
+    "id": 200000382,
+    "pc1": -2.006,
+    "pc2": -0.341,
+    "segmento": 1
+   },
+   {
+    "id": 200000383,
+    "pc1": -1.244,
+    "pc2": -0.975,
+    "segmento": 1
+   },
+   {
+    "id": 200000384,
+    "pc1": -1.775,
+    "pc2": -1.121,
+    "segmento": 1
+   },
+   {
+    "id": 200000385,
+    "pc1": -0.105,
+    "pc2": 1.527,
+    "segmento": 2
+   },
+   {
+    "id": 200000386,
+    "pc1": -0.688,
+    "pc2": 1.976,
+    "segmento": 2
+   },
+   {
+    "id": 200000387,
+    "pc1": -0.49,
+    "pc2": -1.211,
+    "segmento": 1
+   },
+   {
+    "id": 200000388,
+    "pc1": -1.647,
+    "pc2": -1.158,
+    "segmento": 1
+   },
+   {
+    "id": 200000389,
+    "pc1": 0.448,
+    "pc2": 1.121,
+    "segmento": 2
+   },
+   {
+    "id": 200000390,
+    "pc1": 1.934,
+    "pc2": 0.483,
+    "segmento": 2
+   },
+   {
+    "id": 200000391,
+    "pc1": 3.445,
+    "pc2": -0.51,
+    "segmento": 2
+   },
+   {
+    "id": 200000392,
+    "pc1": 0.763,
+    "pc2": 1.252,
+    "segmento": 2
+   },
+   {
+    "id": 200000393,
+    "pc1": 0.137,
+    "pc2": 1.342,
+    "segmento": 2
+   },
+   {
+    "id": 200000394,
+    "pc1": -0.518,
+    "pc2": -1.874,
+    "segmento": 1
+   },
+   {
+    "id": 200000395,
+    "pc1": 1.389,
+    "pc2": -1.111,
+    "segmento": 3
+   },
+   {
+    "id": 200000396,
+    "pc1": -1.958,
+    "pc2": -1.133,
+    "segmento": 1
+   },
+   {
+    "id": 200000397,
+    "pc1": -1.792,
+    "pc2": -1.137,
+    "segmento": 1
+   },
+   {
+    "id": 200000398,
+    "pc1": 2.029,
+    "pc2": 0.426,
+    "segmento": 2
+   },
+   {
+    "id": 200000399,
+    "pc1": 1.36,
+    "pc2": -1.256,
+    "segmento": 3
+   },
+   {
+    "id": 200000400,
+    "pc1": -1.458,
+    "pc2": -1.006,
+    "segmento": 1
+   },
+   {
+    "id": 200000401,
+    "pc1": 0.135,
+    "pc2": 1.292,
+    "segmento": 2
+   },
+   {
+    "id": 200000402,
+    "pc1": -1.127,
+    "pc2": -1.051,
+    "segmento": 1
+   },
+   {
+    "id": 200000403,
+    "pc1": 2.222,
+    "pc2": 0.044,
+    "segmento": 2
+   },
+   {
+    "id": 200000404,
+    "pc1": 1.852,
+    "pc2": 0.41,
+    "segmento": 2
+   },
+   {
+    "id": 200000405,
+    "pc1": -2.759,
+    "pc2": -0.323,
+    "segmento": 1
+   },
+   {
+    "id": 200000406,
+    "pc1": 1.533,
+    "pc2": -2.867,
+    "segmento": 1
+   },
+   {
+    "id": 200000407,
+    "pc1": -0.077,
+    "pc2": 1.386,
+    "segmento": 2
+   },
+   {
+    "id": 200000408,
+    "pc1": -2.677,
+    "pc2": -0.398,
+    "segmento": 1
+   },
+   {
+    "id": 200000409,
+    "pc1": 0.096,
+    "pc2": 1.468,
+    "segmento": 2
+   },
+   {
+    "id": 200000410,
+    "pc1": 2.662,
+    "pc2": 0.143,
+    "segmento": 2
+   },
+   {
+    "id": 200000411,
+    "pc1": 1.352,
+    "pc2": 0.445,
+    "segmento": 2
+   },
+   {
+    "id": 200000412,
+    "pc1": -1.455,
+    "pc2": -1.181,
+    "segmento": 1
+   },
+   {
+    "id": 200000413,
+    "pc1": -0.973,
+    "pc2": -0.854,
+    "segmento": 1
+   },
+   {
+    "id": 200000414,
+    "pc1": 0.502,
+    "pc2": 1.37,
+    "segmento": 2
+   },
+   {
+    "id": 200000415,
+    "pc1": 2.786,
+    "pc2": -1.859,
+    "segmento": 3
+   },
+   {
+    "id": 200000416,
+    "pc1": -1.567,
+    "pc2": -1.217,
+    "segmento": 1
+   },
+   {
+    "id": 200000417,
+    "pc1": 2.483,
+    "pc2": -1.722,
+    "segmento": 3
+   },
+   {
+    "id": 200000418,
+    "pc1": 1.625,
+    "pc2": 0.615,
+    "segmento": 2
+   },
+   {
+    "id": 200000419,
+    "pc1": -2.909,
+    "pc2": -0.283,
+    "segmento": 1
+   },
+   {
+    "id": 200000420,
+    "pc1": 1.399,
+    "pc2": 0.587,
+    "segmento": 2
+   },
+   {
+    "id": 200000421,
+    "pc1": 1.672,
+    "pc2": 0.617,
+    "segmento": 2
+   },
+   {
+    "id": 200000422,
+    "pc1": 2.575,
+    "pc2": 0.236,
+    "segmento": 2
+   },
+   {
+    "id": 200000423,
+    "pc1": 0.017,
+    "pc2": 1.397,
+    "segmento": 2
+   },
+   {
+    "id": 200000424,
+    "pc1": 2.746,
+    "pc2": -1.785,
+    "segmento": 3
+   },
+   {
+    "id": 200000425,
+    "pc1": 1.729,
+    "pc2": 0.488,
+    "segmento": 2
+   },
+   {
+    "id": 200000426,
+    "pc1": 0.181,
+    "pc2": 1.448,
+    "segmento": 2
+   },
+   {
+    "id": 200000427,
+    "pc1": -2.578,
+    "pc2": -0.4,
+    "segmento": 1
+   },
+   {
+    "id": 200000428,
+    "pc1": -1.019,
+    "pc2": 2.093,
+    "segmento": 2
+   },
+   {
+    "id": 200000429,
+    "pc1": -0.358,
+    "pc2": -1.883,
+    "segmento": 1
+   },
+   {
+    "id": 200000430,
+    "pc1": 0.93,
+    "pc2": 1.214,
+    "segmento": 2
+   },
+   {
+    "id": 200000431,
+    "pc1": 0.479,
+    "pc2": 1.204,
+    "segmento": 2
+   },
+   {
+    "id": 200000432,
+    "pc1": 1.838,
+    "pc2": -1.085,
+    "segmento": 3
+   },
+   {
+    "id": 200000433,
+    "pc1": -1.297,
+    "pc2": -1.263,
+    "segmento": 1
+   },
+   {
+    "id": 200000434,
+    "pc1": 0.742,
+    "pc2": 1.18,
+    "segmento": 2
+   },
+   {
+    "id": 200000435,
+    "pc1": -1.643,
+    "pc2": -0.984,
+    "segmento": 1
+   },
+   {
+    "id": 200000436,
+    "pc1": 0.514,
+    "pc2": 1.101,
+    "segmento": 2
+   },
+   {
+    "id": 200000437,
+    "pc1": -1.979,
+    "pc2": -0.934,
+    "segmento": 1
+   },
+   {
+    "id": 200000438,
+    "pc1": 1.348,
+    "pc2": 0.502,
+    "segmento": 2
+   },
+   {
+    "id": 200000439,
+    "pc1": 0.293,
+    "pc2": -2.294,
+    "segmento": 1
+   },
+   {
+    "id": 200000440,
+    "pc1": -1.312,
+    "pc2": -1.007,
+    "segmento": 1
+   },
+   {
+    "id": 200000441,
+    "pc1": 3.051,
+    "pc2": -2.131,
+    "segmento": 3
+   },
+   {
+    "id": 200000442,
+    "pc1": -1.741,
+    "pc2": -0.958,
+    "segmento": 1
+   },
+   {
+    "id": 200000443,
+    "pc1": 1.806,
+    "pc2": 0.465,
+    "segmento": 2
+   },
+   {
+    "id": 200000444,
+    "pc1": -0.383,
+    "pc2": -1.987,
+    "segmento": 1
+   },
+   {
+    "id": 200000445,
+    "pc1": -0.738,
+    "pc2": 1.818,
+    "segmento": 2
+   },
+   {
+    "id": 200000446,
+    "pc1": -0.115,
+    "pc2": 1.262,
+    "segmento": 2
+   },
+   {
+    "id": 200000447,
+    "pc1": -2.874,
+    "pc2": -0.338,
+    "segmento": 1
+   },
+   {
+    "id": 200000448,
+    "pc1": -1.52,
+    "pc2": -1.237,
+    "segmento": 1
+   },
+   {
+    "id": 200000449,
+    "pc1": -2.885,
+    "pc2": -0.265,
+    "segmento": 1
+   },
+   {
+    "id": 200000450,
+    "pc1": -1.333,
+    "pc2": -0.936,
+    "segmento": 1
+   },
+   {
+    "id": 200000451,
+    "pc1": 0.182,
+    "pc2": 1.18,
+    "segmento": 2
+   },
+   {
+    "id": 200000452,
+    "pc1": -0.736,
+    "pc2": 2.068,
+    "segmento": 2
+   },
+   {
+    "id": 200000453,
+    "pc1": 0.178,
+    "pc2": 1.287,
+    "segmento": 2
+   },
+   {
+    "id": 200000454,
+    "pc1": 4.951,
+    "pc2": -2.267,
+    "segmento": 3
+   },
+   {
+    "id": 200000455,
+    "pc1": 1.896,
+    "pc2": 0.216,
+    "segmento": 2
+   },
+   {
+    "id": 200000456,
+    "pc1": -0.121,
+    "pc2": 1.351,
+    "segmento": 2
+   },
+   {
+    "id": 200000457,
+    "pc1": 3.359,
+    "pc2": -2.156,
+    "segmento": 3
+   },
+   {
+    "id": 200000458,
+    "pc1": -1.17,
+    "pc2": -1.013,
+    "segmento": 1
+   },
+   {
+    "id": 200000459,
+    "pc1": 0.206,
+    "pc2": 1.466,
+    "segmento": 2
+   },
+   {
+    "id": 200000460,
+    "pc1": -0.215,
+    "pc2": 1.228,
+    "segmento": 2
+   },
+   {
+    "id": 200000461,
+    "pc1": -0.798,
+    "pc2": 2.015,
+    "segmento": 2
+   },
+   {
+    "id": 200000462,
+    "pc1": 0.243,
+    "pc2": 1.288,
+    "segmento": 2
+   },
+   {
+    "id": 200000463,
+    "pc1": -1.273,
+    "pc2": 1.994,
+    "segmento": 2
+   },
+   {
+    "id": 200000464,
+    "pc1": -0.387,
+    "pc2": 2.005,
+    "segmento": 2
+   },
+   {
+    "id": 200000465,
+    "pc1": -2.434,
+    "pc2": -0.258,
+    "segmento": 1
+   },
+   {
+    "id": 200000466,
+    "pc1": 0.228,
+    "pc2": 1.338,
+    "segmento": 2
+   },
+   {
+    "id": 200000467,
+    "pc1": 0.249,
+    "pc2": 1.089,
+    "segmento": 2
+   },
+   {
+    "id": 200000468,
+    "pc1": 0.441,
+    "pc2": 1.267,
+    "segmento": 2
+   },
+   {
+    "id": 200000469,
+    "pc1": 0.223,
+    "pc2": 1.285,
+    "segmento": 2
+   },
+   {
+    "id": 200000470,
+    "pc1": 2.975,
+    "pc2": -1.947,
+    "segmento": 3
+   },
+   {
+    "id": 200000471,
+    "pc1": 2.003,
+    "pc2": 0.359,
+    "segmento": 2
+   },
+   {
+    "id": 200000472,
+    "pc1": -1.965,
+    "pc2": -0.989,
+    "segmento": 1
+   },
+   {
+    "id": 200000473,
+    "pc1": 2.305,
+    "pc2": 0.461,
+    "segmento": 2
+   },
+   {
+    "id": 200000474,
+    "pc1": -0.053,
+    "pc2": 1.224,
+    "segmento": 2
+   },
+   {
+    "id": 200000475,
+    "pc1": -0.453,
+    "pc2": 2.025,
+    "segmento": 2
+   },
+   {
+    "id": 200000476,
+    "pc1": -1.47,
+    "pc2": -0.933,
+    "segmento": 1
+   },
+   {
+    "id": 200000477,
+    "pc1": 0.6,
+    "pc2": 1.42,
+    "segmento": 2
+   },
+   {
+    "id": 200000478,
+    "pc1": -1.746,
+    "pc2": -0.438,
+    "segmento": 1
+   },
+   {
+    "id": 200000479,
+    "pc1": -2.942,
+    "pc2": -0.282,
+    "segmento": 1
+   },
+   {
+    "id": 200000480,
+    "pc1": -0.029,
+    "pc2": 1.489,
+    "segmento": 2
+   },
+   {
+    "id": 200000481,
+    "pc1": -0.242,
+    "pc2": 1.301,
+    "segmento": 2
+   },
+   {
+    "id": 200000482,
+    "pc1": 1.088,
+    "pc2": 1.051,
+    "segmento": 2
+   },
+   {
+    "id": 200000483,
+    "pc1": 0.745,
+    "pc2": 1.125,
+    "segmento": 2
+   },
+   {
+    "id": 200000484,
+    "pc1": 2.827,
+    "pc2": -1.896,
+    "segmento": 3
+   },
+   {
+    "id": 200000485,
+    "pc1": -1.368,
+    "pc2": -1.365,
+    "segmento": 1
+   },
+   {
+    "id": 200000486,
+    "pc1": 1.732,
+    "pc2": 0.558,
+    "segmento": 2
+   },
+   {
+    "id": 200000487,
+    "pc1": -0.012,
+    "pc2": -1.855,
+    "segmento": 1
+   },
+   {
+    "id": 200000488,
+    "pc1": -1.504,
+    "pc2": -1.057,
+    "segmento": 1
+   },
+   {
+    "id": 200000489,
+    "pc1": 2.927,
+    "pc2": -1.909,
+    "segmento": 3
+   },
+   {
+    "id": 200000490,
+    "pc1": -2.943,
+    "pc2": -0.264,
+    "segmento": 1
+   },
+   {
+    "id": 200000491,
+    "pc1": 1.083,
+    "pc2": -0.856,
+    "segmento": 3
+   },
+   {
+    "id": 200000492,
+    "pc1": -0.137,
+    "pc2": 1.262,
+    "segmento": 2
+   },
+   {
+    "id": 200000493,
+    "pc1": 1.065,
+    "pc2": -1.049,
+    "segmento": 3
+   },
+   {
+    "id": 200000494,
+    "pc1": -1.531,
+    "pc2": -1.163,
+    "segmento": 1
+   },
+   {
+    "id": 200000495,
+    "pc1": 0.044,
+    "pc2": 1.397,
+    "segmento": 2
+   },
+   {
+    "id": 200000496,
+    "pc1": -1.827,
+    "pc2": -1.172,
+    "segmento": 1
+   },
+   {
+    "id": 200000497,
+    "pc1": -0.187,
+    "pc2": -1.853,
+    "segmento": 1
+   },
+   {
+    "id": 200000498,
+    "pc1": 0.144,
+    "pc2": 1.183,
+    "segmento": 2
+   },
+   {
+    "id": 200000499,
+    "pc1": -1.834,
+    "pc2": -1.102,
+    "segmento": 1
+   },
+   {
+    "id": 200000500,
+    "pc1": 0.3,
+    "pc2": 1.354,
+    "segmento": 2
+   }
+  ],
+  "lecturas": {
+   "comportamiento": "La tasa de compra va de 0.2019 (segmento 1) a 0.2814 (segmento 2): amplitud 0.0795. Los intervalos al 95% no se solapan entre los extremos, asi que el segmento si separa comportamiento. Para comparar: entre clientes individuales la amplitud es 0.876, y eso es lo que mide D3 al concluir que la demografia segmenta pero no predice.",
+   "marcas": "El mayor desvio frente al share global es de 23.6 puntos (marca_2 en el segmento 1). Hay preferencia de marca diferenciada: P3 puede diferenciar precio por segmento.",
+   "promo": "3 de 3 segmentos mueven la incidencia con promocion por encima del ruido; el efecto va de +4.36 a +5.55 puntos. P2 tiene con esto a quien dirigir el calendario promocional.",
+   "seleccion_k": "El codo cae en k=3 y la silhouette maxima en k=9 (valor 0.3820); Davies-Bouldin prefiere k=10. Los dos criterios del brief no coinciden. La regla declarada rompe el empate: entre los k cuya silhouette queda a menos de 0.03 del maximo, el mas pequenio -> k=3. Una silhouette de 0.38 sobre demografia mixta indica grupos razonablemente separados, asi que el valor de la particion se prueba con la estabilidad y con el comportamiento, no con la metrica de cohesion."
+  }
+ },
+ "modelos": {
+  "m1": {
+   "modelo": "logistica C=0.03",
+   "filas": 13196,
+   "tasa_base": 0.248,
+   "pr_auc": 0.4776,
+   "pr_auc_azar": 0.248,
+   "roc_auc": 0.6931,
+   "brier": 0.1671,
+   "log_loss": 0.5164,
+   "accuracy_en_0.5": 0.7761,
+   "accuracy_de_no_comprar_nunca": 0.752,
+   "metrica_principal": "PR-AUC",
+   "metrica_prohibida": "accuracy (75.1% prediciendo siempre no-compra)"
+  },
+  "m2": {
+   "filas": 3273.0,
+   "clases": 5.0,
+   "log_loss": 0.7418,
+   "log_loss_uniforme": 1.6094,
+   "accuracy": 0.7822,
+   "accuracy_clase_mayoritaria": 0.3407,
+   "balanced_accuracy": 0.7129,
+   "f1_macro": 0.7383
+  },
+  "m3": {
+   "filas": 3273.0,
+   "media_real": 2.828,
+   "media_predicha": 2.7245,
+   "mae": 0.979,
+   "rmse": 1.3959,
+   "mae_baseline_media": 1.1768,
+   "rmse_baseline_media": 1.6787
+  },
+  "lift": [
+   {
+    "top": "10%",
+    "visitas": 1320,
+    "compras_capturadas": 817,
+    "tasa_en_el_grupo": 0.6189,
+    "lift": 2.5,
+    "recall": 0.2496
+   },
+   {
+    "top": "20%",
+    "visitas": 2640,
+    "compras_capturadas": 1278,
+    "tasa_en_el_grupo": 0.4841,
+    "lift": 1.95,
+    "recall": 0.3905
+   },
+   {
+    "top": "30%",
+    "visitas": 3959,
+    "compras_capturadas": 1687,
+    "tasa_en_el_grupo": 0.4261,
+    "lift": 1.72,
+    "recall": 0.5154
+   },
+   {
+    "top": "50%",
+    "visitas": 6598,
+    "compras_capturadas": 2299,
+    "tasa_en_el_grupo": 0.3484,
+    "lift": 1.4,
+    "recall": 0.7024
+   }
+  ],
+  "contra_baseline": [
+   {
+    "top": "10%",
+    "politica": "politica historica",
+    "visitas": 1320,
+    "compras": 805,
+    "tasa": 0.6098,
+    "lift": 2.46
+   },
+   {
+    "top": "10%",
+    "politica": "modelo M1",
+    "visitas": 1320,
+    "compras": 817,
+    "tasa": 0.6189,
+    "lift": 2.5
+   },
+   {
+    "top": "20%",
+    "politica": "politica historica",
+    "visitas": 2640,
+    "compras": 1258,
+    "tasa": 0.4765,
+    "lift": 1.92
+   },
+   {
+    "top": "20%",
+    "politica": "modelo M1",
+    "visitas": 2640,
+    "compras": 1278,
+    "tasa": 0.4841,
+    "lift": 1.95
+   },
+   {
+    "top": "30%",
+    "politica": "politica historica",
+    "visitas": 3959,
+    "compras": 1681,
+    "tasa": 0.4246,
+    "lift": 1.71
+   },
+   {
+    "top": "30%",
+    "politica": "modelo M1",
+    "visitas": 3959,
+    "compras": 1687,
+    "tasa": 0.4261,
+    "lift": 1.72
+   },
+   {
+    "top": "50%",
+    "politica": "politica historica",
+    "visitas": 6598,
+    "compras": 2253,
+    "tasa": 0.3415,
+    "lift": 1.38
+   },
+   {
+    "top": "50%",
+    "politica": "modelo M1",
+    "visitas": 6598,
+    "compras": 2299,
+    "tasa": 0.3484,
+    "lift": 1.4
+   }
+  ],
+  "umbral": [
+   {
+    "ratio_costo_margen": 0.05,
+    "umbral_optimo": 0.05,
+    "contactos": 12884,
+    "pct_visitas_contactadas": 97.6,
+    "compras_capturadas": 3242,
+    "precision": 0.2516,
+    "recall": 0.9905,
+    "valor_neto_por_1000": 196.86
+   },
+   {
+    "ratio_costo_margen": 0.1,
+    "umbral_optimo": 0.1,
+    "contactos": 11171,
+    "pct_visitas_contactadas": 84.7,
+    "compras_capturadas": 3018,
+    "precision": 0.2702,
+    "recall": 0.9221,
+    "valor_neto_por_1000": 144.05
+   },
+   {
+    "ratio_costo_margen": 0.15,
+    "umbral_optimo": 0.15,
+    "contactos": 7966,
+    "pct_visitas_contactadas": 60.4,
+    "compras_capturadas": 2541,
+    "precision": 0.319,
+    "recall": 0.7764,
+    "valor_neto_por_1000": 102.01
+   },
+   {
+    "ratio_costo_margen": 0.2,
+    "umbral_optimo": 0.2,
+    "contactos": 5461,
+    "pct_visitas_contactadas": 41.4,
+    "compras_capturadas": 2066,
+    "precision": 0.3783,
+    "recall": 0.6312,
+    "valor_neto_por_1000": 73.8
+   },
+   {
+    "ratio_costo_margen": 0.3,
+    "umbral_optimo": 0.3,
+    "contactos": 2994,
+    "pct_visitas_contactadas": 22.7,
+    "compras_capturadas": 1399,
+    "precision": 0.4673,
+    "recall": 0.4274,
+    "valor_neto_por_1000": 37.95
+   },
+   {
+    "ratio_costo_margen": 0.4,
+    "umbral_optimo": 0.4,
+    "contactos": 1747,
+    "pct_visitas_contactadas": 13.2,
+    "compras_capturadas": 947,
+    "precision": 0.5421,
+    "recall": 0.2893,
+    "valor_neto_por_1000": 18.81
+   },
+   {
+    "ratio_costo_margen": 0.5,
+    "umbral_optimo": 0.5,
+    "contactos": 1284,
+    "pct_visitas_contactadas": 9.7,
+    "compras_capturadas": 801,
+    "precision": 0.6238,
+    "recall": 0.2447,
+    "valor_neto_por_1000": 12.05
+   }
+  ],
+  "shap": [
+   {
+    "feature": "tasa_compra_historica",
+    "importancia_shap": 0.3551,
+    "efecto_medio": 0.0069,
+    "direccion": "sube la probabilidad"
+   },
+   {
+    "feature": "n_compras_previas",
+    "importancia_shap": 0.251,
+    "efecto_medio": 0.0513,
+    "direccion": "sube la probabilidad"
+   },
+   {
+    "feature": "dias_desde_ultima_compra",
+    "importancia_shap": 0.1111,
+    "efecto_medio": 0.0081,
+    "direccion": "sube la probabilidad"
+   },
+   {
+    "feature": "gap_vs_ultima_marca",
+    "importancia_shap": 0.0893,
+    "efecto_medio": 0.0029,
+    "direccion": "sube la probabilidad"
+   },
+   {
+    "feature": "precio_relativo_1",
+    "importancia_shap": 0.085,
+    "efecto_medio": 0.0074,
+    "direccion": "sube la probabilidad"
+   },
+   {
+    "feature": "n_visitas_previas",
+    "importancia_shap": 0.0797,
+    "efecto_medio": -0.0106,
+    "direccion": "la baja"
+   },
+   {
+    "feature": "racha_sin_comprar",
+    "importancia_shap": 0.078,
+    "efecto_medio": 0.0005,
+    "direccion": "sube la probabilidad"
+   },
+   {
+    "feature": "ultima_marca_comprada_5",
+    "importancia_shap": 0.0754,
+    "efecto_medio": -0.0082,
+    "direccion": "la baja"
+   },
+   {
+    "feature": "precio_min_dia",
+    "importancia_shap": 0.0702,
+    "efecto_medio": -0.0052,
+    "direccion": "la baja"
+   },
+   {
+    "feature": "precio_max_dia",
+    "importancia_shap": 0.0659,
+    "efecto_medio": -0.0046,
+    "direccion": "la baja"
+   },
+   {
+    "feature": "lealtad_marca_1",
+    "importancia_shap": 0.0657,
+    "efecto_medio": 0.0032,
+    "direccion": "sube la probabilidad"
+   },
+   {
+    "feature": "n_promos_dia",
+    "importancia_shap": 0.0595,
+    "efecto_medio": -0.0042,
+    "direccion": "la baja"
+   }
+  ],
+  "curva_pr": [
+   {
+    "recall": 1.0,
+    "precision": 0.248
+   },
+   {
+    "recall": 0.9942,
+    "precision": 0.2508
+   },
+   {
+    "recall": 0.9841,
+    "precision": 0.2526
+   },
+   {
+    "recall": 0.9756,
+    "precision": 0.2549
+   },
+   {
+    "recall": 0.9704,
+    "precision": 0.2582
+   },
+   {
+    "recall": 0.9646,
+    "precision": 0.2614
+   },
+   {
+    "recall": 0.9554,
+    "precision": 0.2638
+   },
+   {
+    "recall": 0.9429,
+    "precision": 0.2653
+   },
+   {
+    "recall": 0.9325,
+    "precision": 0.2676
+   },
+   {
+    "recall": 0.923,
+    "precision": 0.2701
+   },
+   {
+    "recall": 0.9105,
+    "precision": 0.2719
+   },
+   {
+    "recall": 0.9022,
+    "precision": 0.2751
+   },
+   {
+    "recall": 0.8918,
+    "precision": 0.2777
+   },
+   {
+    "recall": 0.8808,
+    "precision": 0.2802
+   },
+   {
+    "recall": 0.8692,
+    "precision": 0.2827
+   },
+   {
+    "recall": 0.8625,
+    "precision": 0.2868
+   },
+   {
+    "recall": 0.8533,
+    "precision": 0.2904
+   },
+   {
+    "recall": 0.8427,
+    "precision": 0.2936
+   },
+   {
+    "recall": 0.8323,
+    "precision": 0.297
+   },
+   {
+    "recall": 0.824,
+    "precision": 0.3014
+   },
+   {
+    "recall": 0.8118,
+    "precision": 0.3046
+   },
+   {
+    "recall": 0.8008,
+    "precision": 0.3084
+   },
+   {
+    "recall": 0.7916,
+    "precision": 0.3131
+   },
+   {
+    "recall": 0.7794,
+    "precision": 0.3168
+   },
+   {
+    "recall": 0.7712,
+    "precision": 0.3224
+   },
+   {
+    "recall": 0.7608,
+    "precision": 0.3274
+   },
+   {
+    "recall": 0.7464,
+    "precision": 0.331
+   },
+   {
+    "recall": 0.733,
+    "precision": 0.3351
+   },
+   {
+    "recall": 0.7211,
+    "precision": 0.3404
+   },
+   {
+    "recall": 0.7076,
+    "precision": 0.3452
+   },
+   {
+    "recall": 0.6951,
+    "precision": 0.3507
+   },
+   {
+    "recall": 0.6844,
+    "precision": 0.3577
+   },
+   {
+    "recall": 0.6688,
+    "precision": 0.3625
+   },
+   {
+    "recall": 0.6526,
+    "precision": 0.3673
+   },
+   {
+    "recall": 0.6398,
+    "precision": 0.3745
+   },
+   {
+    "recall": 0.6233,
+    "precision": 0.38
+   },
+   {
+    "recall": 0.6101,
+    "precision": 0.3881
+   },
+   {
+    "recall": 0.5949,
+    "precision": 0.3957
+   },
+   {
+    "recall": 0.5787,
+    "precision": 0.4032
+   },
+   {
+    "recall": 0.5594,
+    "precision": 0.4093
+   },
+   {
+    "recall": 0.5411,
+    "precision": 0.4167
+   },
+   {
+    "recall": 0.5222,
+    "precision": 0.4245
+   },
+   {
+    "recall": 0.5029,
+    "precision": 0.4328
+   },
+   {
+    "recall": 0.484,
+    "precision": 0.4426
+   },
+   {
+    "recall": 0.4656,
+    "precision": 0.4542
+   },
+   {
+    "recall": 0.4427,
+    "precision": 0.4626
+   },
+   {
+    "recall": 0.4204,
+    "precision": 0.4732
+   },
+   {
+    "recall": 0.396,
+    "precision": 0.4829
+   },
+   {
+    "recall": 0.3706,
+    "precision": 0.4929
+   },
+   {
+    "recall": 0.3452,
+    "precision": 0.5051
+   },
+   {
+    "recall": 0.3181,
+    "precision": 0.5171
+   },
+   {
+    "recall": 0.2942,
+    "precision": 0.538
+   },
+   {
+    "recall": 0.2719,
+    "precision": 0.5683
+   },
+   {
+    "recall": 0.2505,
+    "precision": 0.611
+   },
+   {
+    "recall": 0.2215,
+    "precision": 0.6479
+   },
+   {
+    "recall": 0.1812,
+    "precision": 0.6626
+   },
+   {
+    "recall": 0.1378,
+    "precision": 0.6721
+   },
+   {
+    "recall": 0.099,
+    "precision": 0.7232
+   },
+   {
+    "recall": 0.0577,
+    "precision": 0.8438
+   },
+   {
+    "recall": 0.0,
+    "precision": 1.0
+   }
+  ],
+  "calibracion": [
+   {
+    "predicha": 0.0626,
+    "observada": 0.1098,
+    "n": 1320
+   },
+   {
+    "predicha": 0.0989,
+    "observada": 0.1545,
+    "n": 1320
+   },
+   {
+    "predicha": 0.1206,
+    "observada": 0.1433,
+    "n": 1319
+   },
+   {
+    "predicha": 0.1405,
+    "observada": 0.1508,
+    "n": 1320
+   },
+   {
+    "predicha": 0.1618,
+    "observada": 0.1797,
+    "n": 1319
+   },
+   {
+    "predicha": 0.1885,
+    "observada": 0.2098,
+    "n": 1320
+   },
+   {
+    "predicha": 0.2279,
+    "observada": 0.254,
+    "n": 1319
+   },
+   {
+    "predicha": 0.2843,
+    "observada": 0.3106,
+    "n": 1320
+   },
+   {
+    "predicha": 0.3814,
+    "observada": 0.3487,
+    "n": 1319
+   },
+   {
+    "predicha": 0.704,
+    "observada": 0.6189,
+    "n": 1320
+   }
+  ],
+  "captura": [
+   {
+    "presupuesto": "top 10%",
+    "politica": "azar (proporcional)",
+    "visitas": 1320,
+    "ingreso_capturado": 1883.63,
+    "pct_del_ingreso": 10.0,
+    "lift_vs_azar": 1.0
+   },
+   {
+    "presupuesto": "top 10%",
+    "politica": "politica historica",
+    "visitas": 1320,
+    "ingreso_capturado": 5305.63,
+    "pct_del_ingreso": 28.2,
+    "lift_vs_azar": 2.82
+   },
+   {
+    "presupuesto": "top 10%",
+    "politica": "solo propension (M1)",
+    "visitas": 1320,
+    "ingreso_capturado": 5465.59,
+    "pct_del_ingreso": 29.0,
+    "lift_vs_azar": 2.9
+   },
+   {
+    "presupuesto": "top 10%",
+    "politica": "valor esperado (M1xM2xM3)",
+    "visitas": 1320,
+    "ingreso_capturado": 5966.01,
+    "pct_del_ingreso": 31.7,
+    "lift_vs_azar": 3.17
+   },
+   {
+    "presupuesto": "top 20%",
+    "politica": "azar (proporcional)",
+    "visitas": 2640,
+    "ingreso_capturado": 3767.27,
+    "pct_del_ingreso": 20.0,
+    "lift_vs_azar": 1.0
+   },
+   {
+    "presupuesto": "top 20%",
+    "politica": "politica historica",
+    "visitas": 2640,
+    "ingreso_capturado": 7901.7,
+    "pct_del_ingreso": 41.9,
+    "lift_vs_azar": 2.1
+   },
+   {
+    "presupuesto": "top 20%",
+    "politica": "solo propension (M1)",
+    "visitas": 2640,
+    "ingreso_capturado": 8453.87,
+    "pct_del_ingreso": 44.9,
+    "lift_vs_azar": 2.24
+   },
+   {
+    "presupuesto": "top 20%",
+    "politica": "valor esperado (M1xM2xM3)",
+    "visitas": 2640,
+    "ingreso_capturado": 8710.72,
+    "pct_del_ingreso": 46.2,
+    "lift_vs_azar": 2.31
+   },
+   {
+    "presupuesto": "top 30%",
+    "politica": "azar (proporcional)",
+    "visitas": 3959,
+    "ingreso_capturado": 5650.9,
+    "pct_del_ingreso": 30.0,
+    "lift_vs_azar": 1.0
+   },
+   {
+    "presupuesto": "top 30%",
+    "politica": "politica historica",
+    "visitas": 3959,
+    "ingreso_capturado": 10999.9,
+    "pct_del_ingreso": 58.4,
+    "lift_vs_azar": 1.95
+   },
+   {
+    "presupuesto": "top 30%",
+    "politica": "solo propension (M1)",
+    "visitas": 3959,
+    "ingreso_capturado": 11023.11,
+    "pct_del_ingreso": 58.5,
+    "lift_vs_azar": 1.95
+   },
+   {
+    "presupuesto": "top 30%",
+    "politica": "valor esperado (M1xM2xM3)",
+    "visitas": 3959,
+    "ingreso_capturado": 10806.89,
+    "pct_del_ingreso": 57.4,
+    "lift_vs_azar": 1.91
+   }
+  ],
+  "elasticidades": [
+   {
+    "share": "share marca 1",
+    "precio marca 1": -8.93,
+    "precio marca 2": 2.057,
+    "precio marca 3": 0.427,
+    "precio marca 4": -0.363,
+    "precio marca 5": -3.671
+   },
+   {
+    "share": "share marca 2",
+    "precio marca 1": 1.674,
+    "precio marca 2": -2.821,
+    "precio marca 3": 1.887,
+    "precio marca 4": 0.42,
+    "precio marca 5": -0.759
+   },
+   {
+    "share": "share marca 3",
+    "precio marca 1": 3.648,
+    "precio marca 2": 1.23,
+    "precio marca 3": 9.508,
+    "precio marca 4": 2.51,
+    "precio marca 5": 1.316
+   },
+   {
+    "share": "share marca 4",
+    "precio marca 1": 0.622,
+    "precio marca 2": 1.421,
+    "precio marca 3": -1.095,
+    "precio marca 4": -1.943,
+    "precio marca 5": 4.342
+   },
+   {
+    "share": "share marca 5",
+    "precio marca 1": -0.253,
+    "precio marca 2": 0.902,
+    "precio marca 3": -2.434,
+    "precio marca 4": 0.512,
+    "precio marca 5": -1.266
+   }
+  ],
+  "diag_elasticidad": [
+   {
+    "especificacion": "precios + promos (sin penalizacion)",
+    "columnas": 10,
+    "propia_marca_1": -8.93,
+    "propia_marca_2": -2.82,
+    "propia_marca_3": 9.51,
+    "propia_marca_4": -1.94,
+    "propia_marca_5": -1.27,
+    "todas_negativas": false
+   },
+   {
+    "especificacion": "precios + promos (L2, C=1)",
+    "columnas": 10,
+    "propia_marca_1": -7.85,
+    "propia_marca_2": -2.77,
+    "propia_marca_3": 4.93,
+    "propia_marca_4": -1.81,
+    "propia_marca_5": -1.22,
+    "todas_negativas": false
+   },
+   {
+    "especificacion": "+ lealtad por marca",
+    "columnas": 15,
+    "propia_marca_1": -9.89,
+    "propia_marca_2": -3.92,
+    "propia_marca_3": 15.71,
+    "propia_marca_4": -4.17,
+    "propia_marca_5": -1.35,
+    "todas_negativas": false
+   },
+   {
+    "especificacion": "+ lealtad + ultima marca",
+    "columnas": 16,
+    "propia_marca_1": -9.44,
+    "propia_marca_2": -3.91,
+    "propia_marca_3": 17.02,
+    "propia_marca_4": -4.29,
+    "propia_marca_5": -1.23,
+    "todas_negativas": false
+   },
+   {
+    "especificacion": "+ lealtad + segmento",
+    "columnas": 16,
+    "propia_marca_1": -9.83,
+    "propia_marca_2": -3.92,
+    "propia_marca_3": 13.95,
+    "propia_marca_4": -4.35,
+    "propia_marca_5": -1.45,
+    "todas_negativas": false
+   }
+  ],
+  "lecturas": {
+   "umbral": "El umbral optimo es el ratio costo/margen, asi que va de 0.05 a 0.50 en esta rejilla y contacta entre el 9.7% y el 97.6% de las visitas. Con el 0.5 de la convencion se contactaria el 9.7% de las visitas y se capturaria el 24.5% de las compras: fijar el umbral en 0.5 no es conservador, es renunciar a la mayor parte del valor. La probabilidad maxima del modelo en test es 0.9903.",
+   "shap": "El driver dominante es tasa_compra_historica (|SHAP| medio 0.3551), seguido de n_compras_previas, dias_desde_ultima_compra, gap_vs_ultima_marca. Los tres primeros concentran el 51.7% de la importancia del top 12.",
+   "captura": "Con presupuesto para el 10% de las visitas, el valor esperado completo captura el 31.7% del ingreso real de test, frente al 28.2% de la politica historica (+3.5 puntos) y al 29.0% de usar solo la propension (+2.7). Encadenar M2 y M3 detras de M1 aporta sobre ordenar por probabilidad de compra.",
+   "elasticidades": "Las cinco elasticidades propias son NO todas negativas y la marca mas elastica es la 1 (-8.930): un 1% de aumento de su precio le cuesta ese % de share. Con alguna propia positiva el modelo no se puede usar para fijar precios. Las cruzadas positivas son sustitucion: cuanto share gana una marca cuando sube el precio de otra, que es exactamente lo que P3 necesita para no canibalizarse.",
+   "diag": "El signo de la elasticidad propia es el mismo en las 5 especificaciones para 5 de 5 marcas. Las marcas [1, 2, 4, 5] salen siempre negativas (identificables) y la(s) marca(s) [3] sale(n) siempre positiva(s). Un signo que sobrevive a regularizacion, controles de lealtad y segmento no es un accidente de ajuste: es lo que dice este dato observacional.",
+   "contra_baseline": "Sobre las mismas filas de test, en el decil superior el modelo da lift x2.50 y la politica historica x2.46: +0.04. El modelo gana en todos los cortes. La comparacion importa porque el x2.43 del EDA se midio sobre el panel completo, no sobre test."
+  }
+ },
+ "decisiones": {
+  "supuestos": [
+   {
+    "parametro": "c_j (costo unitario)",
+    "valor": "(1 - 30%) x precio medio de la marca",
+    "de_donde_sale": "SUPUESTO: margen bruto declarado; el dataset no trae costos"
+   },
+   {
+    "parametro": "m_j (margen unitario)",
+    "valor": "precio - c_j, entre 0.418 y 0.796",
+    "de_donde_sale": "derivado del supuesto anterior; sube si sube el precio"
+   },
+   {
+    "parametro": "a (costo de contacto)",
+    "valor": "0.3230 = 20% del margen de una venta media",
+    "de_donde_sale": "SUPUESTO declarado, con sensibilidad en P1"
+   },
+   {
+    "parametro": "d_j (costo de un dia-promo)",
+    "valor": "3.2302 = 2.0x el margen de una venta media",
+    "de_donde_sale": "SUPUESTO declarado; P2 lo usa como costo fijo por dia-marca"
+   },
+   {
+    "parametro": "B (presupuesto promocional)",
+    "valor": "el costo del calendario observado",
+    "de_donde_sale": "DECISION: P2 reasigna, no aumenta (conclusion del EDA)"
+   },
+   {
+    "parametro": "T_j (tope de dias en promo, R5)",
+    "valor": "90 dias por marca",
+    "de_donde_sale": "DECISION de salud de marca: ninguna marca en promo mas de la mitad del horizonte"
+   },
+   {
+    "parametro": "rho (piso de margen, R6)",
+    "valor": "10% sobre el costo",
+    "de_donde_sale": "SUPUESTO declarado; acota el precio por abajo en P3"
+   }
+  ],
+  "margenes": [
+   {
+    "marca": 1,
+    "precio_medio": 1.392,
+    "costo_unitario": 0.974,
+    "margen_unitario": 0.418,
+    "precio_minimo_R6": 1.072
+   },
+   {
+    "marca": 2,
+    "precio_medio": 1.781,
+    "costo_unitario": 1.247,
+    "margen_unitario": 0.534,
+    "precio_minimo_R6": 1.371
+   },
+   {
+    "marca": 3,
+    "precio_medio": 2.007,
+    "costo_unitario": 1.405,
+    "margen_unitario": 0.602,
+    "precio_minimo_R6": 1.545
+   },
+   {
+    "marca": 4,
+    "precio_medio": 2.16,
+    "costo_unitario": 1.512,
+    "margen_unitario": 0.648,
+    "precio_minimo_R6": 1.663
+   },
+   {
+    "marca": 5,
+    "precio_medio": 2.655,
+    "costo_unitario": 1.858,
+    "margen_unitario": 0.796,
+    "precio_minimo_R6": 2.044
+   }
+  ],
+  "costos": {
+   "contacto": 0.323,
+   "promo_dia": 3.2302,
+   "cantidad_media": 2.6936
+  },
+  "p1": {
+   "frontera": [
+    {
+     "presupuesto_pct_visitas": 2.0,
+     "tope_contactos": 264,
+     "contactos_usados": 264,
+     "objetivo_neto": 379.52,
+     "margen_bruto": 464.8,
+     "ingreso_real_capturado": 1250.1,
+     "margen_marginal_por_contacto": null
+    },
+    {
+     "presupuesto_pct_visitas": 5.0,
+     "tope_contactos": 660,
+     "contactos_usados": 660,
+     "objetivo_neto": 553.34,
+     "margen_bruto": 766.53,
+     "ingreso_real_capturado": 2215.56,
+     "margen_marginal_por_contacto": 0.4389
+    },
+    {
+     "presupuesto_pct_visitas": 8.0,
+     "tope_contactos": 1056,
+     "contactos_usados": 1056,
+     "objetivo_neto": 618.71,
+     "margen_bruto": 959.82,
+     "ingreso_real_capturado": 2729.42,
+     "margen_marginal_por_contacto": 0.1651
+    },
+    {
+     "presupuesto_pct_visitas": 10.0,
+     "tope_contactos": 1320,
+     "contactos_usados": 1320,
+     "objetivo_neto": 631.42,
+     "margen_bruto": 1057.81,
+     "ingreso_real_capturado": 3047.98,
+     "margen_marginal_por_contacto": 0.0481
+    },
+    {
+     "presupuesto_pct_visitas": 15.0,
+     "tope_contactos": 1979,
+     "contactos_usados": 1398,
+     "objetivo_neto": 632.0,
+     "margen_bruto": 1083.58,
+     "ingreso_real_capturado": 3129.8,
+     "margen_marginal_por_contacto": 0.0074
+    },
+    {
+     "presupuesto_pct_visitas": 20.0,
+     "tope_contactos": 2639,
+     "contactos_usados": 1398,
+     "objetivo_neto": 632.0,
+     "margen_bruto": 1083.58,
+     "ingreso_real_capturado": 3129.8,
+     "margen_marginal_por_contacto": null
+    },
+    {
+     "presupuesto_pct_visitas": 30.0,
+     "tope_contactos": 3959,
+     "contactos_usados": 1398,
+     "objetivo_neto": 632.0,
+     "margen_bruto": 1083.58,
+     "ingreso_real_capturado": 3129.8,
+     "margen_marginal_por_contacto": null
+    },
+    {
+     "presupuesto_pct_visitas": 50.0,
+     "tope_contactos": 6598,
+     "contactos_usados": 1398,
+     "objetivo_neto": 632.0,
+     "margen_bruto": 1083.58,
+     "ingreso_real_capturado": 3129.8,
+     "margen_marginal_por_contacto": null
+    }
+   ],
+   "politicas": [
+    {
+     "politica": "azar",
+     "contactos": 2639,
+     "margen_esperado": 809.5,
+     "objetivo_neto": -42.95,
+     "ingreso_real_capturado": 3340.22,
+     "tasa_compra_real": 0.2353,
+     "lift_margen_vs_azar": 1.0,
+     "ganancia_neta_vs_azar": 0.0
+    },
+    {
+     "politica": "politica historica (tasa pasada)",
+     "contactos": 2639,
+     "margen_esperado": 1162.29,
+     "objetivo_neto": 309.84,
+     "ingreso_real_capturado": 2905.6,
+     "tasa_compra_real": 0.1823,
+     "lift_margen_vs_azar": 1.44,
+     "ganancia_neta_vs_azar": 352.79
+    },
+    {
+     "politica": "solo propension (pi)",
+     "contactos": 2639,
+     "margen_esperado": 1251.44,
+     "objetivo_neto": 398.99,
+     "ingreso_real_capturado": 4632.87,
+     "tasa_compra_real": 0.2891,
+     "lift_margen_vs_azar": 1.55,
+     "ganancia_neta_vs_azar": 441.94
+    },
+    {
+     "politica": "P1 (margen esperado)",
+     "contactos": 2639,
+     "margen_esperado": 1367.61,
+     "objetivo_neto": 515.16,
+     "ingreso_real_capturado": 4183.5,
+     "tasa_compra_real": 0.2626,
+     "lift_margen_vs_azar": 1.69,
+     "ganancia_neta_vs_azar": 558.11
+    }
+   ],
+   "verificacion": [
+    {
+     "medida": "objetivo del greedy",
+     "valor": 339.3932
+    },
+    {
+     "medida": "objetivo del LP relajado",
+     "valor": 339.3932
+    },
+    {
+     "medida": "brecha",
+     "valor": 0.0
+    },
+    {
+     "medida": "variables fraccionarias en el LP",
+     "valor": 0.0
+    },
+    {
+     "medida": "visitas en la muestra",
+     "valor": 3000.0
+    }
+   ],
+   "contactos_utiles": 1398,
+   "pct_visitas_utiles": 10.6,
+   "marcas_ofrecidas": {
+    "1": 40,
+    "2": 282,
+    "3": 113,
+    "4": 394,
+    "5": 569
+   },
+   "lectura": "Con el mismo presupuesto de 2639 contactos, P1 deja un objetivo neto de 515.16 frente a 309.84 de la politica historica: +66.3% (+205.32 en unidades de margen). Y el dato que ordena la discusion: contactar al azar deja un objetivo **negativo** (-42.95), es decir destruye valor, porque el costo de contacto supera el margen esperado de una visita promedio. Ordenar por propension sola da 398.99, asi que elegir por **margen** y no por probabilidad aporta +116.17 adicionales."
+  },
+  "p2": {
+   "reasignacion": [
+    {
+     "marca": 1,
+     "dias_observados": 48,
+     "dias_optimos": 17,
+     "cambio": -31,
+     "valor_medio_por_dia": 2.4029
+    },
+    {
+     "marca": 2,
+     "dias_observados": 57,
+     "dias_optimos": 18,
+     "cambio": -39,
+     "valor_medio_por_dia": 2.4335
+    },
+    {
+     "marca": 3,
+     "dias_observados": 15,
+     "dias_optimos": 0,
+     "cambio": -15,
+     "valor_medio_por_dia": -3.6949
+    },
+    {
+     "marca": 4,
+     "dias_observados": 5,
+     "dias_optimos": 0,
+     "cambio": -5,
+     "valor_medio_por_dia": -0.219
+    },
+    {
+     "marca": 5,
+     "dias_observados": 0,
+     "dias_optimos": 90,
+     "cambio": 90,
+     "valor_medio_por_dia": 6.8303
+    }
+   ],
+   "valor_observado": -183.84,
+   "valor_optimo": 585.21,
+   "ganancia": 769.06,
+   "dias_presupuesto": 125,
+   "error_aditivo": 0.0023,
+   "ganancia_verificada": 767.27,
+   "lectura": "Con el mismo presupuesto de 125 dias-promo, reasignarlos vale 585.21 frente a -183.84 del calendario observado: **+769.06** en unidades de margen. El calendario observado tiene valor **negativo**: tal como esta asignado, promocionar cuesta mas margen del que genera. El optimo usa 125 dias-promo y los movimientos son marca 1: 48→17, marca 2: 57→18, marca 3: 15→0, marca 4: 5→0, marca 5: 0→90. El tope R5 de 90 dias esta activo para la(s) marca(s) [5]: sin ese limite de salud de marca el optimo concentraria aun mas."
+  },
+  "p3": {
+   "sin_r7": [
+    {
+     "marca": 1,
+     "precio_observado": 1.401,
+     "precio_elegido": 1.28,
+     "cambio_pct": -8.6,
+     "ganancia_aditiva": 144.51,
+     "congelada": false
+    },
+    {
+     "marca": 2,
+     "precio_observado": 1.786,
+     "precio_elegido": 1.786,
+     "cambio_pct": 0.0,
+     "ganancia_aditiva": 0.0,
+     "congelada": false
+    },
+    {
+     "marca": 3,
+     "precio_observado": 2.056,
+     "precio_elegido": 2.056,
+     "cambio_pct": 0.0,
+     "ganancia_aditiva": 0.0,
+     "congelada": true
+    },
+    {
+     "marca": 4,
+     "precio_observado": 2.24,
+     "precio_elegido": 2.023,
+     "cambio_pct": -9.7,
+     "ganancia_aditiva": 356.3,
+     "congelada": false
+    },
+    {
+     "marca": 5,
+     "precio_observado": 2.73,
+     "precio_elegido": 2.8,
+     "cambio_pct": 2.6,
+     "ganancia_aditiva": 39.21,
+     "congelada": false
+    }
+   ],
+   "con_r7": [
+    {
+     "marca": 1,
+     "precio_observado": 1.401,
+     "precio_elegido": 1.28,
+     "cambio_pct": -8.6,
+     "ganancia_aditiva": 144.51,
+     "congelada": false
+    },
+    {
+     "marca": 2,
+     "precio_observado": 1.786,
+     "precio_elegido": 1.786,
+     "cambio_pct": 0.0,
+     "ganancia_aditiva": 0.0,
+     "congelada": false
+    },
+    {
+     "marca": 3,
+     "precio_observado": 2.056,
+     "precio_elegido": 2.056,
+     "cambio_pct": 0.0,
+     "ganancia_aditiva": 0.0,
+     "congelada": true
+    },
+    {
+     "marca": 4,
+     "precio_observado": 2.24,
+     "precio_elegido": 2.1,
+     "cambio_pct": -6.2,
+     "ganancia_aditiva": 231.56,
+     "congelada": false
+    },
+    {
+     "marca": 5,
+     "precio_observado": 2.73,
+     "precio_elegido": 2.8,
+     "cambio_pct": 2.6,
+     "ganancia_aditiva": 39.21,
+     "congelada": false
+    }
+   ],
+   "costo_r7": 124.74,
+   "respuesta": [
+    {
+     "marca": 1,
+     "precio": 1.28,
+     "es_observado": false,
+     "margen_total": 5975.81,
+     "margen_de_la_marca": 505.08,
+     "share_medio": 0.2083,
+     "pi_media": 0.2484,
+     "delta_vs_observado": 144.51
+    },
+    {
+     "marca": 1,
+     "precio": 1.34,
+     "es_observado": false,
+     "margen_total": 5895.57,
+     "margen_de_la_marca": 480.26,
+     "share_medio": 0.1784,
+     "pi_media": 0.2428,
+     "delta_vs_observado": 64.27
+    },
+    {
+     "marca": 1,
+     "precio": 1.4,
+     "es_observado": false,
+     "margen_total": 5833.17,
+     "margen_de_la_marca": 377.63,
+     "share_medio": 0.1229,
+     "pi_media": 0.2371,
+     "delta_vs_observado": 1.87
+    },
+    {
+     "marca": 1,
+     "precio": 1.401,
+     "es_observado": true,
+     "margen_total": 5831.3,
+     "margen_de_la_marca": 377.62,
+     "share_medio": 0.1227,
+     "pi_media": 0.237,
+     "delta_vs_observado": 0.0
+    },
+    {
+     "marca": 1,
+     "precio": 1.47,
+     "es_observado": false,
+     "margen_total": 5654.45,
+     "margen_de_la_marca": 384.35,
+     "share_medio": 0.116,
+     "pi_media": 0.2303,
+     "delta_vs_observado": -176.85
+    },
+    {
+     "marca": 2,
+     "precio": 1.786,
+     "es_observado": true,
+     "margen_total": 5871.04,
+     "margen_de_la_marca": 1148.18,
+     "share_medio": 0.3166,
+     "pi_media": 0.237,
+     "delta_vs_observado": 0.0
+    },
+    {
+     "marca": 2,
+     "precio": 1.803,
+     "es_observado": false,
+     "margen_total": 5857.37,
+     "margen_de_la_marca": 1138.47,
+     "share_medio": 0.3089,
+     "pi_media": 0.2358,
+     "delta_vs_observado": -13.67
+    },
+    {
+     "marca": 2,
+     "precio": 1.852,
+     "es_observado": false,
+     "margen_total": 5800.52,
+     "margen_de_la_marca": 1171.35,
+     "share_medio": 0.3047,
+     "pi_media": 0.2323,
+     "delta_vs_observado": -70.52
+    },
+    {
+     "marca": 2,
+     "precio": 1.9,
+     "es_observado": false,
+     "margen_total": 5724.76,
+     "margen_de_la_marca": 1207.79,
+     "share_medio": 0.3039,
+     "pi_media": 0.2288,
+     "delta_vs_observado": -146.28
+    },
+    {
+     "marca": 3,
+     "precio": 2.056,
+     "es_observado": true,
+     "margen_total": 5784.31,
+     "margen_de_la_marca": 456.02,
+     "share_medio": 0.082,
+     "pi_media": 0.237,
+     "delta_vs_observado": 0.0
+    },
+    {
+     "marca": 4,
+     "precio": 2.023,
+     "es_observado": false,
+     "margen_total": 6143.69,
+     "margen_de_la_marca": 1027.67,
+     "share_medio": 0.191,
+     "pi_media": 0.2601,
+     "delta_vs_observado": 356.3
+    },
+    {
+     "marca": 4,
+     "precio": 2.1,
+     "es_observado": false,
+     "margen_total": 6018.95,
+     "margen_de_la_marca": 1100.61,
+     "share_medio": 0.1899,
+     "pi_media": 0.2517,
+     "delta_vs_observado": 231.56
+    },
+    {
+     "marca": 4,
+     "precio": 2.147,
+     "es_observado": false,
+     "margen_total": 5939.94,
+     "margen_de_la_marca": 1140.15,
+     "share_medio": 0.1893,
+     "pi_media": 0.2467,
+     "delta_vs_observado": 152.55
+    },
+    {
+     "marca": 4,
+     "precio": 2.188,
+     "es_observado": false,
+     "margen_total": 5874.47,
+     "margen_de_la_marca": 1176.63,
+     "share_medio": 0.1896,
+     "pi_media": 0.2424,
+     "delta_vs_observado": 87.08
+    },
+    {
+     "marca": 4,
+     "precio": 2.24,
+     "es_observado": true,
+     "margen_total": 5787.39,
+     "margen_de_la_marca": 1190.32,
+     "share_medio": 0.1852,
+     "pi_media": 0.2371,
+     "delta_vs_observado": 0.0
+    },
+    {
+     "marca": 4,
+     "precio": 2.26,
+     "es_observado": false,
+     "margen_total": 5750.53,
+     "margen_de_la_marca": 1199.01,
+     "share_medio": 0.1843,
+     "pi_media": 0.2351,
+     "delta_vs_observado": -36.86
+    },
+    {
+     "marca": 5,
+     "precio": 2.483,
+     "es_observado": false,
+     "margen_total": 5577.27,
+     "margen_de_la_marca": 2394.01,
+     "share_medio": 0.3139,
+     "pi_media": 0.2438,
+     "delta_vs_observado": -223.91
+    },
+    {
+     "marca": 5,
+     "precio": 2.585,
+     "es_observado": false,
+     "margen_total": 5673.49,
+     "margen_de_la_marca": 2420.86,
+     "share_medio": 0.2724,
+     "pi_media": 0.241,
+     "delta_vs_observado": -127.69
+    },
+    {
+     "marca": 5,
+     "precio": 2.657,
+     "es_observado": false,
+     "margen_total": 5734.27,
+     "margen_de_la_marca": 2469.55,
+     "share_medio": 0.2569,
+     "pi_media": 0.2391,
+     "delta_vs_observado": -66.91
+    },
+    {
+     "marca": 5,
+     "precio": 2.728,
+     "es_observado": false,
+     "margen_total": 5800.27,
+     "margen_de_la_marca": 2570.18,
+     "share_medio": 0.2562,
+     "pi_media": 0.2371,
+     "delta_vs_observado": -0.91
+    },
+    {
+     "marca": 5,
+     "precio": 2.73,
+     "es_observado": true,
+     "margen_total": 5801.18,
+     "margen_de_la_marca": 2573.22,
+     "share_medio": 0.2562,
+     "pi_media": 0.2371,
+     "delta_vs_observado": 0.0
+    },
+    {
+     "marca": 5,
+     "precio": 2.8,
+     "es_observado": false,
+     "margen_total": 5840.39,
+     "margen_de_la_marca": 2686.79,
+     "share_medio": 0.2575,
+     "pi_media": 0.2352,
+     "delta_vs_observado": 39.21
+    }
+   ],
+   "ganancia_verificada": 579.68,
+   "marcas_congeladas": [
+    3
+   ],
+   "lectura": "El objetivo aditivo prometia +415.28 y la simulacion conjunta da +579.68: 39.6% de diferencia, y el signo importa. La simulacion conjunta da **mas** que la suma de las partes: las elasticidades cruzadas trabajan a favor (mover dos precios a la vez refuerza el efecto), asi que el objetivo aditivo es una cota **inferior** y el procedimiento es conservador. La cifra que se reporta al negocio es la de la simulacion conjunta, no la del objetivo."
+  },
+  "curvas": {
+   "1": {
+    "puntos": [
+     {
+      "factor_precio": 0.9,
+      "cambio_precio_pct": -10.0,
+      "pi_media": 0.2502,
+      "share_marca_1": 0.192,
+      "margen_total": 6047.11,
+      "margen_marca_1": 438.17,
+      "elasticidad_share": -3.903,
+      "delta_margen_total": 262.59
+     },
+     {
+      "factor_precio": 0.95,
+      "cambio_precio_pct": -5.0,
+      "pi_media": 0.2437,
+      "share_marca_1": 0.1673,
+      "margen_total": 5925.37,
+      "margen_marca_1": 432.88,
+      "elasticidad_share": -4.229,
+      "delta_margen_total": 140.85
+     },
+     {
+      "factor_precio": 1.0,
+      "cambio_precio_pct": 0.0,
+      "pi_media": 0.2371,
+      "share_marca_1": 0.1381,
+      "margen_total": 5784.52,
+      "margen_marca_1": 400.96,
+      "elasticidad_share": null,
+      "delta_margen_total": 0.0
+     },
+     {
+      "factor_precio": 1.05,
+      "cambio_precio_pct": 5.0,
+      "pi_media": 0.2304,
+      "share_marca_1": 0.1247,
+      "margen_total": 5605.84,
+      "margen_marca_1": 397.99,
+      "elasticidad_share": -1.941,
+      "delta_margen_total": -178.68
+     },
+     {
+      "factor_precio": 1.1,
+      "cambio_precio_pct": 10.0,
+      "pi_media": 0.2247,
+      "share_marca_1": 0.1115,
+      "margen_total": 5449.0,
+      "margen_marca_1": 395.49,
+      "elasticidad_share": -1.926,
+      "delta_margen_total": -335.52
+     }
+    ],
+    "identificada": true,
+    "lectura": "Marca 1: subir el precio un 5% mueve su share un -9.7% (elasticidad de arco -1.941) y el margen total del horizonte en -178.68. El optimo de esta curva esta en un factor de 0.90. Elasticidad identificada en la Fase 4: la curva se puede usar para fijar precio."
+   },
+   "3": {
+    "puntos": [
+     {
+      "factor_precio": 0.9,
+      "cambio_precio_pct": -10.0,
+      "pi_media": 0.2183,
+      "share_marca_3": 0.0746,
+      "margen_total": 5563.56,
+      "margen_marca_3": 302.92,
+      "elasticidad_share": 0.869,
+      "delta_margen_total": -220.96
+     },
+     {
+      "factor_precio": 0.95,
+      "cambio_precio_pct": -5.0,
+      "pi_media": 0.2274,
+      "share_marca_3": 0.0764,
+      "margen_total": 5671.18,
+      "margen_marca_3": 371.07,
+      "elasticidad_share": 1.297,
+      "delta_margen_total": -113.34
+     },
+     {
+      "factor_precio": 1.0,
+      "cambio_precio_pct": 0.0,
+      "pi_media": 0.2371,
+      "share_marca_3": 0.0817,
+      "margen_total": 5784.52,
+      "margen_marca_3": 455.58,
+      "elasticidad_share": null,
+      "delta_margen_total": 0.0
+     },
+     {
+      "factor_precio": 1.05,
+      "cambio_precio_pct": 5.0,
+      "pi_media": 0.2474,
+      "share_marca_3": 0.0836,
+      "margen_total": 5915.12,
+      "margen_marca_3": 533.03,
+      "elasticidad_share": 0.465,
+      "delta_margen_total": 130.6
+     },
+     {
+      "factor_precio": 1.1,
+      "cambio_precio_pct": 10.0,
+      "pi_media": 0.2584,
+      "share_marca_3": 0.0829,
+      "margen_total": 6052.19,
+      "margen_marca_3": 602.31,
+      "elasticidad_share": 0.147,
+      "delta_margen_total": 267.67
+     }
+    ],
+    "identificada": false,
+    "lectura": "Marca 3: subir el precio un 5% mueve su share un +2.3% (elasticidad de arco +0.465) y el margen total del horizonte en +130.60. El optimo de esta curva esta en un factor de 1.10. ATENCION: la Fase 4 no pudo identificar la elasticidad propia de esta marca (positiva en las 5 especificaciones), asi que esta curva describe el dato observacional, no una relacion causal utilizable para fijar precio."
+   },
+   "4": {
+    "puntos": [
+     {
+      "factor_precio": 0.9,
+      "cambio_precio_pct": -10.0,
+      "pi_media": 0.2608,
+      "share_marca_4": 0.1912,
+      "margen_total": 6156.85,
+      "margen_marca_4": 1021.3,
+      "elasticidad_share": -0.313,
+      "delta_margen_total": 372.33
+     },
+     {
+      "factor_precio": 0.95,
+      "cambio_precio_pct": -5.0,
+      "pi_media": 0.2486,
+      "share_marca_4": 0.1897,
+      "margen_total": 5974.32,
+      "margen_marca_4": 1126.7,
+      "elasticidad_share": -0.464,
+      "delta_margen_total": 189.8
+     },
+     {
+      "factor_precio": 1.0,
+      "cambio_precio_pct": 0.0,
+      "pi_media": 0.2371,
+      "share_marca_4": 0.1854,
+      "margen_total": 5784.52,
+      "margen_marca_4": 1191.39,
+      "elasticidad_share": null,
+      "delta_margen_total": 0.0
+     },
+     {
+      "factor_precio": 1.05,
+      "cambio_precio_pct": 5.0,
+      "pi_media": 0.226,
+      "share_marca_4": 0.1822,
+      "margen_total": 5588.62,
+      "margen_marca_4": 1238.37,
+      "elasticidad_share": -0.345,
+      "delta_margen_total": -195.9
+     },
+     {
+      "factor_precio": 1.1,
+      "cambio_precio_pct": 10.0,
+      "pi_media": 0.2153,
+      "share_marca_4": 0.1825,
+      "margen_total": 5386.2,
+      "margen_marca_4": 1285.61,
+      "elasticidad_share": -0.156,
+      "delta_margen_total": -398.32
+     }
+    ],
+    "identificada": true,
+    "lectura": "Marca 4: subir el precio un 5% mueve su share un -1.7% (elasticidad de arco -0.345) y el margen total del horizonte en -195.90. El optimo de esta curva esta en un factor de 0.90. Elasticidad identificada en la Fase 4: la curva se puede usar para fijar precio."
+   },
+   "5": {
+    "puntos": [
+     {
+      "factor_precio": 0.9,
+      "cambio_precio_pct": -10.0,
+      "pi_media": 0.2441,
+      "share_marca_5": 0.3081,
+      "margen_total": 5498.38,
+      "margen_marca_5": 2273.31,
+      "elasticidad_share": -1.666,
+      "delta_margen_total": -286.14
+     },
+     {
+      "factor_precio": 0.95,
+      "cambio_precio_pct": -5.0,
+      "pi_media": 0.2408,
+      "share_marca_5": 0.2736,
+      "margen_total": 5656.17,
+      "margen_marca_5": 2410.64,
+      "elasticidad_share": -0.719,
+      "delta_margen_total": -128.35
+     },
+     {
+      "factor_precio": 1.0,
+      "cambio_precio_pct": 0.0,
+      "pi_media": 0.2371,
+      "share_marca_5": 0.2641,
+      "margen_total": 5784.52,
+      "margen_marca_5": 2587.78,
+      "elasticidad_share": null,
+      "delta_margen_total": 0.0
+     },
+     {
+      "factor_precio": 1.05,
+      "cambio_precio_pct": 5.0,
+      "pi_media": 0.2333,
+      "share_marca_5": 0.2607,
+      "margen_total": 5856.3,
+      "margen_marca_5": 2776.73,
+      "elasticidad_share": -0.257,
+      "delta_margen_total": 71.78
+     },
+     {
+      "factor_precio": 1.1,
+      "cambio_precio_pct": 10.0,
+      "pi_media": 0.2295,
+      "share_marca_5": 0.2583,
+      "margen_total": 5910.58,
+      "margen_marca_5": 2946.59,
+      "elasticidad_share": -0.22,
+      "delta_margen_total": 126.06
+     }
+    ],
+    "identificada": true,
+    "lectura": "Marca 5: subir el precio un 5% mueve su share un -1.3% (elasticidad de arco -0.257) y el margen total del horizonte en +71.78. El optimo de esta curva esta en un factor de 1.10. Elasticidad identificada en la Fase 4: la curva se puede usar para fijar precio."
+   }
+  },
+  "elasticidad_segmento": [
+   {
+    "segmento": 1,
+    "visitas": 4777,
+    "pi_base": 0.185,
+    "share_base": 0.1336,
+    "margen_base": 1443.5,
+    "pi_alto": 0.1819,
+    "share_alto": 0.1327,
+    "margen_alto": 1419.39,
+    "elasticidad_share": -0.142,
+    "delta_margen": -24.11,
+    "nombre": "Dependiente · ingreso bajo"
+   },
+   {
+    "segmento": 2,
+    "visitas": 6658,
+    "pi_base": 0.273,
+    "share_base": 0.326,
+    "margen_base": 3381.4,
+    "pi_alto": 0.2689,
+    "share_alto": 0.3223,
+    "margen_alto": 3456.89,
+    "elasticidad_share": -0.228,
+    "delta_margen": 75.49,
+    "nombre": "Independiente · ingreso medio"
+   },
+   {
+    "segmento": 3,
+    "visitas": 1761,
+    "pi_base": 0.2423,
+    "share_base": 0.3844,
+    "margen_base": 959.61,
+    "pi_alto": 0.2381,
+    "share_alto": 0.3751,
+    "margen_alto": 980.02,
+    "elasticidad_share": -0.481,
+    "delta_margen": 20.41,
+    "nombre": "Otra ocupacion · ingreso alto"
+   }
+  ],
+  "sensibilidad": [
+   {
+    "margen_bruto": 0.2,
+    "costo_contacto": 0.2153,
+    "costo_promo_dia": 2.1527,
+    "p1_contactos": 1477,
+    "p1_objetivo": 464.65,
+    "p2_ganancia": 527.37,
+    "p2_dias_marca_5": 90,
+    "p2_dias_marca_1_2": 35
+   },
+   {
+    "margen_bruto": 0.3,
+    "costo_contacto": 0.323,
+    "costo_promo_dia": 3.2302,
+    "p1_contactos": 1398,
+    "p1_objetivo": 632.0,
+    "p2_ganancia": 769.06,
+    "p2_dias_marca_5": 90,
+    "p2_dias_marca_1_2": 35
+   },
+   {
+    "margen_bruto": 0.4,
+    "costo_contacto": 0.4308,
+    "costo_promo_dia": 4.3077,
+    "p1_contactos": 1346,
+    "p1_objetivo": 803.46,
+    "p2_ganancia": 1012.5,
+    "p2_dias_marca_5": 90,
+    "p2_dias_marca_1_2": 35
+   }
+  ],
+  "kpis": [
+   {
+    "kpi": "Lift de conversion en el decil superior",
+    "linea_base": "x2.46 (politica por tasa historica)",
+    "con_el_modelo": "x2.50",
+    "delta": "+0.04",
+    "como_se_mide": "A/B: decil superior del modelo vs. decil superior de la politica actual, misma semana, mismos vendedores",
+    "estado": "PROYECCION hasta tener el test"
+   },
+   {
+    "kpi": "Margen incremental por targeting (P1)",
+    "linea_base": "309.84 (politica vigente, mismo presupuesto)",
+    "con_el_modelo": "515.16",
+    "delta": "+205.32 (+66.3%)",
+    "como_se_mide": "grupo de control: 10% de la cartera asignada por la politica vigente durante el piloto",
+    "estado": "PROYECCION hasta tener el grupo de control"
+   },
+   {
+    "kpi": "Ahorro / reasignacion promocional (P2)",
+    "linea_base": "-183.84 (calendario observado)",
+    "con_el_modelo": "585.21",
+    "delta": "+769.06 con el mismo numero de dias-promo",
+    "como_se_mide": "A/B geografico o por cartera: calendario reasignado en un grupo, calendario actual en el otro",
+    "estado": "PROYECCION hasta tener el test"
+   },
+   {
+    "kpi": "Margen incremental por pricing (P3)",
+    "linea_base": "5784.52 (precios observados)",
+    "con_el_modelo": "6364.20",
+    "delta": "+579.68 (+10.0%)",
+    "como_se_mide": "test de precio por region o canal; es el unico KPI que **exige** experimento, porque la elasticidad es observacional",
+    "estado": "PROYECCION; sin test de precio no se recomienda ejecutar"
+   },
+   {
+    "kpi": "Estabilidad del modelo en produccion",
+    "linea_base": "PSI de las features = 0 al desplegar",
+    "con_el_modelo": "umbral de alerta PSI > 0.2; drift de la tasa de compra > 2 pp",
+    "delta": "—",
+    "como_se_mide": "monitoreo mensual contra la distribucion de train (dias 1-550) y contra la tasa base 0.2498",
+    "estado": "requisito de operacion, no de captura"
+   }
+  ],
+  "impacto": [
+   {
+    "area": "Comercial / Ventas",
+    "decision_que_habilita": "a quien contactar y con que marca",
+    "cifra_de_esta_fase": "1398 contactos sobre 218 clientes; objetivo 632.00",
+    "sub_problema": "P1"
+   },
+   {
+    "area": "Marketing",
+    "decision_que_habilita": "a que marca y en que dias promocionar",
+    "cifra_de_esta_fase": "reasignar 125 dias-promo vale +769.06",
+    "sub_problema": "P2"
+   },
+   {
+    "area": "Pricing",
+    "decision_que_habilita": "que precio por marca, y si diferenciar por segmento",
+    "cifra_de_esta_fase": "plan de precios m1: -8.6%, m4: -6.2%, m5: +2.6%; elasticidad por segmento con rango 0.339",
+    "sub_problema": "P3"
+   },
+   {
+    "area": "Planeamiento / Inventario",
+    "decision_que_habilita": "demanda esperada por marca en el horizonte",
+    "cifra_de_esta_fase": "margen esperado por marca: m1: 401, m2: 1149, m3: 456, m4: 1191, m5: 2588",
+    "sub_problema": "M1xM2xM3"
+   }
+  ],
+  "lecturas": {
+   "sensibilidad": "Con el margen bruto entre 20% y 40%, el objetivo de P1 va de 464.65 a 803.46 y la ganancia de P2 de 527.37 a 1012.50. En los tres casos P2 concentra la promocion en la marca 5 por encima de las marcas 1 y 2, asi que la recomendacion no depende del supuesto de margen. Las **cifras** dependen del supuesto; la **decision** es lo que hay que mirar, y es la misma en los tres escenarios.",
+   "kpis": "Cuatro de los cinco KPIs son **proyecciones** hasta que exista medicion contrafactual, y asi estan etiquetados. Sumadas, las tres palancas proyectan +1554.06 unidades de margen sobre un margen base de 5784.52 en el horizonte de test (+26.9%), pero esa suma solo se vuelve captura demostrada con A/B o grupo de control. Decirlo asi es parte del entregable: una proyeccion presentada como resultado es la forma mas rapida de perder la confianza del negocio.",
+   "elasticidad_segmento": "La elasticidad de la marca 5 va de -0.481 a -0.142 entre segmentos (rango 0.339); el mas sensible es el segmento 3. La diferencia es pequenia: el precio diferenciado por segmento no se sostiene en el dato, y la palanca por segmento es la promocion dirigida, no el precio."
+  }
+ }
+};

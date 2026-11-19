@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propensión de Compra · Ferreycorp</title>
+<style>
+:root{
+  --bg:#f7f8fa; --panel:#ffffff; --ink:#1a202c; --ink-soft:#4a5568; --ink-mute:#718096;
+  --line:#e2e8f0; --primary:#2b6cb0; --accent:#dd6b20; --good:#38a169; --bad:#e53e3e;
+  --muted:#a0aec0; --purple:#6b46c1; --pink:#d53f8c; --shadow:0 1px 3px rgba(0,0,0,.06);
+  --radius:10px;
+}
+:root[data-theme="dark"]{
+  --bg:#12151a; --panel:#1a1f27; --ink:#e8edf4; --ink-soft:#b4c0d0; --ink-mute:#8695a8;
+  --line:#2a3240; --primary:#63a4e0; --accent:#f6ad55; --good:#68d391; --bad:#fc8181;
+  --muted:#5a6778; --purple:#b794f4; --pink:#f687b3; --shadow:0 1px 3px rgba(0,0,0,.4);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#12151a; --panel:#1a1f27; --ink:#e8edf4; --ink-soft:#b4c0d0; --ink-mute:#8695a8;
+    --line:#2a3240; --primary:#63a4e0; --accent:#f6ad55; --good:#68d391; --bad:#fc8181;
+    --muted:#5a6778; --purple:#b794f4; --pink:#f687b3; --shadow:0 1px 3px rgba(0,0,0,.4);
+  }
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px; margin:0 auto; padding:0 16px 64px}
+header{border-bottom:1px solid var(--line); background:var(--panel); padding:22px 0 0}
+.head-top{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap}
+h1{margin:0; font-size:22px; letter-spacing:-.2px}
+h1 span{color:var(--ink-mute); font-weight:400}
+.sub{margin:4px 0 0; color:var(--ink-soft); font-size:13px}
+button{font:inherit; cursor:pointer}
+.ghost{background:transparent; border:1px solid var(--line); color:var(--ink-soft);
+  padding:6px 12px; border-radius:8px}
+.ghost:hover{border-color:var(--primary); color:var(--primary)}
+.notice{margin:16px 0 0; padding:10px 14px; border-left:3px solid var(--accent);
+  background:color-mix(in srgb, var(--accent) 8%, transparent); border-radius:0 8px 8px 0;
+  font-size:13px; color:var(--ink-soft)}
+nav{display:flex; gap:2px; margin-top:18px; overflow-x:auto; scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{background:none; border:0; border-bottom:2px solid transparent; color:var(--ink-mute);
+  padding:10px 14px; font-size:14px; white-space:nowrap}
+nav button[aria-selected="true"]{color:var(--primary); border-bottom-color:var(--primary); font-weight:600}
+section[hidden]{display:none}
+h2{font-size:17px; margin:30px 0 4px; letter-spacing:-.2px}
+h3{font-size:14px; margin:22px 0 8px; color:var(--ink-soft); text-transform:uppercase;
+  letter-spacing:.06em; font-weight:700}
+p.read{color:var(--ink-soft); font-size:13.5px; margin:8px 0 0; max-width:92ch}
+.cards{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); margin-top:14px}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:14px; box-shadow:var(--shadow)}
+.card .k{font-size:11.5px; color:var(--ink-mute); text-transform:uppercase; letter-spacing:.05em}
+.card .v{font-size:25px; font-weight:650; margin-top:4px; letter-spacing:-.5px}
+.card .n{font-size:12px; color:var(--ink-mute); margin-top:2px}
+.panel{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:16px; box-shadow:var(--shadow); margin-top:14px}
+.grid2{display:grid; gap:14px; grid-template-columns:1fr 1fr}
+@media (max-width:820px){.grid2{grid-template-columns:1fr}}
+table{width:100%; border-collapse:collapse; font-size:13px}
+th,td{text-align:right; padding:7px 9px; border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--ink-mute); font-weight:600; font-size:11.5px; text-transform:uppercase;
+  letter-spacing:.04em; white-space:nowrap}
+tbody tr:hover{background:color-mix(in srgb, var(--primary) 5%, transparent)}
+td.num{font-variant-numeric:tabular-nums}
+.tag{display:inline-block; padding:2px 8px; border-radius:20px; font-size:11px; font-weight:600}
+.tag.good{background:color-mix(in srgb,var(--good) 16%,transparent); color:var(--good)}
+.tag.bad{background:color-mix(in srgb,var(--bad) 16%,transparent); color:var(--bad)}
+.tag.warn{background:color-mix(in srgb,var(--accent) 16%,transparent); color:var(--accent)}
+.tag.mute{background:color-mix(in srgb,var(--muted) 20%,transparent); color:var(--ink-mute)}
+.controls{display:flex; gap:18px; flex-wrap:wrap; align-items:flex-end;
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:14px 16px; margin-top:14px; box-shadow:var(--shadow)}
+.ctl{display:flex; flex-direction:column; gap:5px; min-width:190px}
+.ctl label{font-size:11.5px; color:var(--ink-mute); text-transform:uppercase; letter-spacing:.05em}
+.ctl output{font-size:13px; color:var(--primary); font-weight:600; font-variant-numeric:tabular-nums}
+input[type=range]{accent-color:var(--primary); width:100%}
+.segbtns{display:flex; gap:4px; flex-wrap:wrap}
+.segbtns button{border:1px solid var(--line); background:transparent; color:var(--ink-soft);
+  padding:6px 11px; border-radius:7px; font-size:12.5px}
+.segbtns button[aria-pressed="true"]{background:var(--primary); border-color:var(--primary); color:#fff}
+.switch{display:flex; align-items:center; gap:8px; font-size:13px; color:var(--ink-soft)}
+.chart{width:100%; overflow:visible}
+.chart text{fill:var(--ink-mute); font-size:10.5px}
+.chart .axis{stroke:var(--line); stroke-width:1}
+.chart .lbl{fill:var(--ink-soft); font-size:11px}
+.chart .val{fill:var(--ink); font-size:10.5px; font-variant-numeric:tabular-nums}
+.legend{display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--ink-soft); margin-top:8px}
+.legend i{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:5px}
+.fases{display:grid; gap:8px; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); margin-top:14px}
+.fase{background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--good);
+  border-radius:8px; padding:10px 12px}
+.fase b{font-size:13px} .fase span{display:block; font-size:12px; color:var(--ink-mute); margin-top:3px}
+code{background:color-mix(in srgb,var(--muted) 18%,transparent); padding:1px 5px;
+  border-radius:4px; font-size:12px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+footer{margin-top:40px; padding-top:16px; border-top:1px solid var(--line);
+  color:var(--ink-mute); font-size:12px}
+ul.tight{margin:8px 0 0; padding-left:20px; color:var(--ink-soft); font-size:13.5px}
+ul.tight li{margin:4px 0}
+.hint{font-size:12px; color:var(--ink-mute); margin-top:6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="head-top">
+      <div>
+        <h1>Propensión de Compra <span>· Ferreycorp</span></h1>
+        <p class="sub" id="meta-sub">cargando…</p>
+      </div>
+      <button class="ghost" id="theme">tema</button>
+    </div>
+    <div class="notice" id="aviso"></div>
+    <nav id="tabs" role="tablist"></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="tab-resumen"></section>
+  <section id="tab-eda" hidden></section>
+  <section id="tab-segmentos" hidden></section>
+  <section id="tab-modelos" hidden></section>
+  <section id="tab-decisiones" hidden></section>
+  <section id="tab-arquitectura" hidden></section>
+</main>
+
+<footer class="wrap">
+  <span id="foot"></span>
+</footer>
+
+<script src="data.js"></script>
+<script>
+"use strict";
+const D = window.FERREYROS_DATA;
+const $ = (s, r=document) => r.querySelector(s);
+const el = (t, a={}, kids=[]) => {
+  const n = document.createElement(t);
+  for (const [k,v] of Object.entries(a)) {
+    if (k === "html") n.innerHTML = v; else if (k === "text") n.textContent = v;
+    else n.setAttribute(k, v);
+  }
+  (Array.isArray(kids)?kids:[kids]).forEach(c => c && n.append(c));
+  return n;
+};
+const n0 = x => (x==null||isNaN(x)) ? "—" : Number(x).toLocaleString("es-PE",{maximumFractionDigits:0});
+const n2 = x => (x==null||isNaN(x)) ? "—" : Number(x).toLocaleString("es-PE",{minimumFractionDigits:2,maximumFractionDigits:2});
+const n4 = x => (x==null||isNaN(x)) ? "—" : Number(x).toFixed(4);
+const pct = x => (x==null||isNaN(x)) ? "—" : Number(x).toFixed(1)+"%";
+const sgn = x => (x>=0?"+":"") + n2(x);
+const CSSV = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const PAL = () => [CSSV("--primary"),CSSV("--accent"),CSSV("--good"),CSSV("--purple"),CSSV("--pink"),CSSV("--muted")];
+
+/* ---------- SVG helpers ---------- */
+const SVGNS = "http://www.w3.org/2000/svg";
+function svg(tag, attrs={}) {
+  const n = document.createElementNS(SVGNS, tag);
+  for (const [k,v] of Object.entries(attrs)) n.setAttribute(k, v);
+  return n;
+}
+function frame(w, h, pad) {
+  const s = svg("svg", {class:"chart", viewBox:`0 0 ${w} ${h}`, preserveAspectRatio:"xMidYMid meet"});
+  return {s, w, h, pad, ix:w-pad.l-pad.r, iy:h-pad.t-pad.b};
+}
+function yAxis(f, min, max, ticks=4, fmt=n2) {
+  for (let i=0;i<=ticks;i++){
+    const v = min + (max-min)*i/ticks, y = f.pad.t + f.iy - (f.iy*i/ticks);
+    f.s.append(svg("line",{x1:f.pad.l, x2:f.pad.l+f.ix, y1:y, y2:y, class:"axis",
+      "stroke-dasharray": i?"2 4":"0", opacity: i?0.5:1}));
+    const t = svg("text",{x:f.pad.l-7, y:y+3.5, "text-anchor":"end"}); t.textContent = fmt(v);
+    f.s.append(t);
+  }
+}
+/** Grouped bars. series = [{name, values, color}] */
+function barChart(host, {labels, series, fmt=n2, yfmt=n2, baseZero=true, rotate=false}) {
+  host.innerHTML = "";
+  const f = frame(760, 260, {l:52,r:12,t:14,b:rotate?74:34});
+  const all = series.flatMap(s=>s.values.filter(v=>v!=null && !isNaN(v)));
+  let max = Math.max(...all, 0), min = baseZero ? Math.min(...all, 0) : Math.min(...all);
+  if (max === min) max = min + 1;
+  const pad = (max-min)*0.12; max += pad; if (min < 0) min -= pad;
+  const y = v => f.pad.t + f.iy - (v-min)/(max-min)*f.iy;
+  yAxis(f, min, max, 4, yfmt);
+  const gw = f.ix/labels.length, bw = Math.min(42, gw*0.74/series.length);
+  labels.forEach((lb,i)=>{
+    const cx = f.pad.l + gw*i + gw/2;
+    series.forEach((s,j)=>{
+      const v = s.values[i]; if (v==null||isNaN(v)) return;
+      const x = cx - (series.length*bw)/2 + j*bw;
+      const y0 = y(Math.max(0,min)), yv = y(v);
+      f.s.append(svg("rect",{x, y:Math.min(y0,yv), width:bw-2, height:Math.max(1,Math.abs(yv-y0)),
+        fill:s.color, rx:2}));
+      const t = svg("text",{x:x+(bw-2)/2, y:(v>=0?yv-4:yv+11), "text-anchor":"middle", class:"val"});
+      t.textContent = fmt(v); f.s.append(t);
+    });
+    const t = svg("text",{x:cx, y:f.pad.t+f.iy+16, "text-anchor":rotate?"end":"middle", class:"lbl"});
+    if (rotate) t.setAttribute("transform", `rotate(-28 ${cx} ${f.pad.t+f.iy+16})`);
+    t.textContent = lb; f.s.append(t);
+  });
+  host.append(f.s);
+  if (series.length>1) host.append(legend(series));
+}
+function legend(series) {
+  const d = el("div",{class:"legend"});
+  series.forEach(s=>d.append(el("span",{html:`<i style="background:${s.color}"></i>${s.name}`})));
+  return d;
+}
+/** Lines. series = [{name, color, dash, points:[[x,y],...]}] */
+function lineChart(host, {series, xlabel="", ylabel="", xfmt=n2, yfmt=n2, marker=null, zero=false}) {
+  host.innerHTML = "";
+  const f = frame(760, 270, {l:56,r:14,t:14,b:42});
+  const xs = series.flatMap(s=>s.points.map(p=>p[0])), ys = series.flatMap(s=>s.points.map(p=>p[1]));
+  let xmin=Math.min(...xs), xmax=Math.max(...xs), ymin=Math.min(...ys), ymax=Math.max(...ys);
+  if (zero) { ymin = Math.min(ymin,0); ymax = Math.max(ymax,0); }
+  const py=(ymax-ymin)*0.12||1; ymin-=py; ymax+=py; if (xmax===xmin) xmax=xmin+1;
+  const X = v => f.pad.l + (v-xmin)/(xmax-xmin)*f.ix;
+  const Y = v => f.pad.t + f.iy - (v-ymin)/(ymax-ymin)*f.iy;
+  yAxis(f, ymin, ymax, 4, yfmt);
+  if (ymin < 0 && ymax > 0) f.s.append(svg("line",{x1:f.pad.l,x2:f.pad.l+f.ix,y1:Y(0),y2:Y(0),
+    class:"axis", opacity:.9}));
+  for (let i=0;i<=4;i++){
+    const v = xmin+(xmax-xmin)*i/4;
+    const t = svg("text",{x:X(v), y:f.pad.t+f.iy+16, "text-anchor":"middle", class:"lbl"});
+    t.textContent = xfmt(v); f.s.append(t);
+  }
+  series.forEach(s=>{
+    const d = s.points.map((p,i)=>`${i?"L":"M"}${X(p[0]).toFixed(1)} ${Y(p[1]).toFixed(1)}`).join(" ");
+    f.s.append(svg("path",{d, fill:"none", stroke:s.color, "stroke-width":s.width||2.2,
+      "stroke-dasharray": s.dash||"0", "stroke-linejoin":"round"}));
+    if (s.dots !== false) s.points.forEach(p=>f.s.append(svg("circle",{cx:X(p[0]), cy:Y(p[1]), r:3, fill:s.color})));
+  });
+  if (marker != null) f.s.append(svg("line",{x1:X(marker), x2:X(marker), y1:f.pad.t, y2:f.pad.t+f.iy,
+    stroke:CSSV("--bad"), "stroke-width":1.6, "stroke-dasharray":"4 3"}));
+  if (xlabel){ const t=svg("text",{x:f.pad.l+f.ix/2, y:f.h-6, "text-anchor":"middle", class:"lbl"});
+    t.textContent=xlabel; f.s.append(t); }
+  if (ylabel){ const t=svg("text",{x:12, y:f.pad.t+f.iy/2, "text-anchor":"middle", class:"lbl",
+    transform:`rotate(-90 12 ${f.pad.t+f.iy/2})`}); t.textContent=ylabel; f.s.append(t); }
+  host.append(f.s);
+  if (series.length>1) host.append(legend(series));
+}
+function hbars(host, rows, {fmt=n4, color=null}={}) {
+  host.innerHTML = "";
+  const h = Math.max(120, rows.length*22+24);
+  const f = frame(760, h, {l:200,r:70,t:8,b:8});
+  const max = Math.max(...rows.map(r=>Math.abs(r.value)))||1;
+  rows.forEach((r,i)=>{
+    const y = f.pad.t + i*22, w = Math.abs(r.value)/max*f.ix;
+    f.s.append(svg("rect",{x:f.pad.l, y, width:Math.max(1,w), height:15, rx:2,
+      fill:r.color || color || CSSV("--primary")}));
+    const lb = svg("text",{x:f.pad.l-8, y:y+11.5, "text-anchor":"end", class:"lbl"});
+    lb.textContent = r.label; f.s.append(lb);
+    const vl = svg("text",{x:f.pad.l+w+7, y:y+11.5, class:"val"}); vl.textContent = fmt(r.value);
+    f.s.append(vl);
+  });
+  host.append(f.s);
+}
+function heatmap(host, {rows, cols, matrix, fmt=n2, mark=null}) {
+  host.innerHTML = "";
+  const cw = 104, ch = 38;
+  const f = frame(150+cols.length*cw, 40+rows.length*ch, {l:150,r:0,t:30,b:10});
+  const lim = Math.max(...matrix.flat().map(Math.abs))||1;
+  cols.forEach((c,j)=>{
+    const t = svg("text",{x:f.pad.l+cw*j+cw/2, y:20, "text-anchor":"middle", class:"lbl"});
+    t.textContent = c; f.s.append(t);
+  });
+  rows.forEach((r,i)=>{
+    const t = svg("text",{x:f.pad.l-10, y:f.pad.t+ch*i+ch/2+4, "text-anchor":"end", class:"lbl"});
+    t.textContent = r; f.s.append(t);
+    cols.forEach((c,j)=>{
+      const v = matrix[i][j], a = Math.min(0.85, Math.abs(v)/lim*0.85+0.05);
+      const fill = v>=0 ? CSSV("--primary") : CSSV("--bad");
+      f.s.append(svg("rect",{x:f.pad.l+cw*j+2, y:f.pad.t+ch*i+2, width:cw-4, height:ch-4, rx:3,
+        fill, "fill-opacity":a,
+        stroke: (mark && mark(i,j)) ? CSSV("--accent") : "none", "stroke-width":2}));
+      const tv = svg("text",{x:f.pad.l+cw*j+cw/2, y:f.pad.t+ch*i+ch/2+4, "text-anchor":"middle",
+        class:"val", "font-weight": (mark && mark(i,j)) ? 700 : 400});
+      tv.textContent = fmt(v); f.s.append(tv);
+    });
+  });
+  host.append(f.s);
+}
+function scatter(host, {points, groups, xlabel, ylabel}) {
+  host.innerHTML = "";
+  const f = frame(760, 400, {l:48,r:12,t:12,b:38});
+  const xs = points.map(p=>p.x), ys = points.map(p=>p.y);
+  const xmin=Math.min(...xs), xmax=Math.max(...xs), ymin=Math.min(...ys), ymax=Math.max(...ys);
+  const X = v => f.pad.l + (v-xmin)/(xmax-xmin)*f.ix, Y = v => f.pad.t+f.iy-(v-ymin)/(ymax-ymin)*f.iy;
+  yAxis(f, ymin, ymax, 4, n0);
+  const pal = PAL();
+  points.forEach(p=>f.s.append(svg("circle",{cx:X(p.x), cy:Y(p.y), r:3.2,
+    fill:pal[(p.g-1)%pal.length], "fill-opacity":.72})));
+  groups.forEach((g,i)=>{
+    const sub = points.filter(p=>p.g===g.id);
+    if (!sub.length) return;
+    const mx = sub.reduce((a,p)=>a+p.x,0)/sub.length, my = sub.reduce((a,p)=>a+p.y,0)/sub.length;
+    f.s.append(svg("path",{d:`M${X(mx)-7} ${Y(my)-7}L${X(mx)+7} ${Y(my)+7}M${X(mx)+7} ${Y(my)-7}L${X(mx)-7} ${Y(my)+7}`,
+      stroke:pal[(g.id-1)%pal.length], "stroke-width":3.4, "stroke-linecap":"round"}));
+  });
+  if (xlabel){const t=svg("text",{x:f.pad.l+f.ix/2,y:f.h-6,"text-anchor":"middle",class:"lbl"});
+    t.textContent=xlabel;f.s.append(t);}
+  host.append(f.s);
+  host.append(legend(groups.map((g,i)=>({name:`${g.id} · ${g.name}`, color:pal[(g.id-1)%pal.length]}))));
+}
+function waterfall(host, base, steps) {
+  host.innerHTML = "";
+  const f = frame(760, 280, {l:60,r:12,t:16,b:56});
+  const total = base + steps.reduce((a,s)=>a+s.value,0);
+  const bars = [{label:"margen base", value:base, kind:"base"}, ...steps.map(s=>({...s,kind:"step"})),
+                {label:"total proyectado", value:total, kind:"total"}];
+  const max = Math.max(total, base)*1.14;
+  const Y = v => f.pad.t + f.iy - v/max*f.iy;
+  yAxis(f, 0, max, 4, n0);
+  const gw = f.ix/bars.length, bw = Math.min(78, gw*0.62);
+  let acc = 0;
+  bars.forEach((b,i)=>{
+    const x = f.pad.l + gw*i + (gw-bw)/2;
+    let y0, y1, fill;
+    if (b.kind === "base") { y0 = Y(0); y1 = Y(base); acc = base; fill = CSSV("--muted"); }
+    else if (b.kind === "total") { y0 = Y(0); y1 = Y(total); fill = CSSV("--primary"); }
+    else { y0 = Y(acc); acc += b.value; y1 = Y(acc); fill = b.value>=0?CSSV("--good"):CSSV("--bad"); }
+    f.s.append(svg("rect",{x, y:Math.min(y0,y1), width:bw, height:Math.max(2,Math.abs(y1-y0)), rx:3, fill}));
+    const tv = svg("text",{x:x+bw/2, y:Math.min(y0,y1)-5, "text-anchor":"middle", class:"val"});
+    tv.textContent = (b.kind==="step"?sgn(b.value):n0(b.value)); f.s.append(tv);
+    const tl = svg("text",{x:x+bw/2, y:f.pad.t+f.iy+18, "text-anchor":"middle", class:"lbl"});
+    tl.textContent = b.label; f.s.append(tl);
+    if (b.kind === "step") f.s.append(svg("line",{x1:x+bw, x2:x+bw+(gw-bw), y1:y1, y2:y1,
+      stroke:CSSV("--muted"), "stroke-dasharray":"3 3", "stroke-width":1}));
+  });
+  host.append(f.s);
+}
+/* ---------- tables ---------- */
+function table(host, rows, cols, {align={}, cell=null}={}) {
+  host.innerHTML = "";
+  const t = el("table");
+  t.append(el("thead",{},el("tr",{},cols.map(c=>el("th",{text:c.t})))));
+  const tb = el("tbody");
+  rows.forEach(r=>{
+    const tr = el("tr");
+    cols.forEach(c=>{
+      const raw = c.f ? c.f(r) : r[c.k];
+      const td = el("td",{class: (typeof r[c.k] === "number" ? "num":"")});
+      if (c.html) td.innerHTML = raw;
+      else if (typeof raw === "string" && raw.includes("**")) td.innerHTML = md(raw);
+      else td.textContent = raw;
+      tr.append(td);
+    });
+    tb.append(tr);
+  });
+  t.append(tb);
+  host.append(t);
+}
+const card = (k,v,n) => el("div",{class:"card"},[el("div",{class:"k",text:k}),
+  el("div",{class:"v",html:v}), n?el("div",{class:"n",html:n}):null]);
+const panel = (title, ...kids) => {
+  const p = el("div",{class:"panel"});
+  if (title) p.append(el("h3",{text:title}));
+  kids.flat().forEach(k=>k&&p.append(k));
+  return p;
+};
+// Las lecturas vienen de Python con **negrita** en markdown: convertirla aqui
+// evita que el asterisco llegue a la pagina.
+const md = t => String(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+const read = txt => el("p",{class:"read",html:md(txt)});
+const chartBox = () => el("div",{class:"cbox"});
+
+/* ---------- tabs ---------- */
+const TABS = [["resumen","Resumen"],["eda","EDA"],["segmentos","Segmentos"],
+  ["modelos","Modelos"],["decisiones","Decisiones"],["arquitectura","Arquitectura"]];
+function initTabs() {
+  const nav = $("#tabs");
+  TABS.forEach(([id,label],i)=>{
+    const b = el("button",{role:"tab","aria-selected":i===0?"true":"false",text:label});
+    b.onclick = () => {
+      TABS.forEach(([j])=>{ $("#tab-"+j).hidden = j!==id; });
+      [...nav.children].forEach(c=>c.setAttribute("aria-selected", c===b ? "true":"false"));
+      location.hash = id;
+    };
+    nav.append(b);
+  });
+  const h = location.hash.replace("#","");
+  if (h && TABS.some(([id])=>id===h)) nav.children[TABS.findIndex(([id])=>id===h)].click();
+}
+$("#theme").onclick = () => {
+  const cur = document.documentElement.getAttribute("data-theme");
+  const dark = cur ? cur === "dark"
+    : matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.setAttribute("data-theme", dark ? "light":"dark");
+  try { localStorage.setItem("tema", dark?"light":"dark"); } catch(e){}
+  renderAll();
+};
+try { const t = localStorage.getItem("tema"); if (t) document.documentElement.setAttribute("data-theme", t); } catch(e){}
+
+/* ================= RESUMEN ================= */
+function renderResumen() {
+  const s = D.resumen, host = $("#tab-resumen"); host.innerHTML = "";
+  const gan = s.ganancia_p1 + s.ganancia_p2 + s.ganancia_p3;
+  host.append(el("h2",{text:"De 58,693 visitas a tres decisiones ejecutables"}));
+  host.append(read(`El modelo de propensión (M1) es el punto de partida, no el entregable. Lo que
+    el negocio ejecuta son tres decisiones: <b>a quién contactar</b> (P1), <b>qué marca promocionar
+    cada día</b> (P2) y <b>a qué precio vender</b> (P3). Las cifras están en unidades de margen
+    sobre el horizonte de test (días 551–730), con un margen bruto supuesto del 30%.`));
+  const cards = el("div",{class:"cards"});
+  cards.append(card("Tasa de compra", n4(s.tasa_base), "24.94% de las visitas"));
+  cards.append(card("PR-AUC de M1", n4(s.pr_auc), `azar ${n4(s.pr_auc_azar)} · ×${(s.pr_auc/s.pr_auc_azar).toFixed(2)}`));
+  cards.append(card("Lift decil superior", "×"+n2(s.lift_top10), `política vigente ×${n2(s.lift_baseline)}`));
+  cards.append(card("Ingreso capturado", pct(s.captura_top10), `con el 10% de las visitas · vigente ${pct(s.captura_historica_top10)}`));
+  cards.append(card("Margen base", n0(s.margen_base), "horizonte de test"));
+  cards.append(card("Ganancia proyectada", `<span style="color:var(--good)">${sgn(gan)}</span>`,
+    `${pct(100*gan/s.margen_base)} sobre el margen base`));
+  host.append(cards);
+
+  host.append(panel("Captura de valor por palanca",
+    (()=>{const b=chartBox(); waterfall(b, s.margen_base, [
+      {label:"P1 targeting", value:s.ganancia_p1},
+      {label:"P2 calendario", value:s.ganancia_p2},
+      {label:"P3 pricing", value:s.ganancia_p3}]); return b;})(),
+    read(`<b>P2 es la palanca más grande y la más barata:</b> no pide presupuesto nuevo, pide
+      reasignar los ${D.decisiones.p2.dias_presupuesto} días-promoción que ya se gastan. P1 aporta
+      sobre ordenar por probabilidad, y P3 es la que exige un experimento antes de ejecutarse.`)));
+
+  host.append(el("h3",{text:"Estado de las fases"}));
+  const fs = el("div",{class:"fases"});
+  D.meta.fases.forEach(f=>fs.append(el("div",{class:"fase"},[
+    el("b",{text:f.fase}), el("span",{html:`<span class="tag ${f.estado==="congelado"?"good":"mute"}">${f.estado}</span> ${f.detalle}`})])));
+  host.append(fs);
+
+  host.append(panel("Lo que NO es una medición",
+    read(D.decisiones.lecturas.kpis),
+    el("ul",{class:"tight",html:`
+      <li><b>Cuatro de los cinco KPIs son proyecciones.</b> Se vuelven captura demostrada con A/B
+        o grupo de control, no antes.</li>
+      <li><b>Falta el dato de costos</b> (<code>c_j</code>, <code>a</code>, <code>d_j</code>,
+        <code>B</code>): todo está en unidades de margen bajo un supuesto declarado.</li>
+      <li><b>La elasticidad de la marca 3 no está identificada</b> y por eso P3 congela su precio.</li>`})));
+}
+
+/* ================= EDA ================= */
+function renderEDA() {
+  const host = $("#tab-eda"); host.innerHTML = "";
+  const m = D.eda.marcas;
+  host.append(el("h2",{text:"El hallazgo central: la promoción está mal asignada"}));
+  host.append(read(`Dos preguntas distintas que suelen confundirse. El <b>lift de share</b> mide si
+    el descuento mueve la preferencia entre marcas (canibalización). El <b>Δ incidencia</b> mide si
+    el descuento hace que la compra ocurra (expansión de mercado). No coinciden, y la función
+    objetivo necesita las dos.`));
+
+  const b1 = chartBox();
+  barChart(b1, {labels:m.map(r=>"marca "+r.marca),
+    series:[
+      {name:"Δ incidencia (pp) con promo", values:m.map(r=>r.delta_pp), color:CSSV("--primary")},
+      {name:"días en promo (% del horizonte)", values:m.map(r=>r.frecuencia_promo*100), color:CSSV("--muted")}],
+    fmt:x=>n2(x)});
+  host.append(panel("Respuesta a la promoción contra inversión en promoción", b1,
+    read(D.eda.lecturas.promo)));
+
+  host.append(panel("Las cinco marcas",
+    (()=>{const h=el("div"); table(h, m, [
+      {t:"Marca", f:r=>"marca "+r.marca},
+      {t:"Share compras", f:r=>pct(r.share_compras_pct)},
+      {t:"Share ingreso", f:r=>pct(r.share_ingreso_pct)},
+      {t:"Precio medio", f:r=>n2(r.precio_pagado_medio)},
+      {t:"Puntos precio", f:r=>n0(r.n_puntos_precio)},
+      {t:"% días promo", f:r=>pct(r.frecuencia_promo*100)},
+      {t:"Lift share", f:r=>"×"+n2(r.lift)},
+      {t:"Δ incidencia", f:r=>sgn(r.delta_pp)+" pp"},
+      {t:"Efecto", html:true, f:r=>`<span class="tag ${r.efecto.includes("expande")?"good":"mute"}">${r.efecto}</span>`},
+    ]); return h;})(),
+    read(`<b>Marca 5:</b> 35.8% del ingreso, el mayor efecto incremental de promoción y casi nunca
+      se promociona. <b>Marca 3:</b> su lift de share (×1.86) la hacía parecer la más elástica, pero
+      no mueve la incidencia (z=0.7) — su descuento se paga con compras que habrían ocurrido igual.`)));
+
+  host.append(panel("Dinámica temporal: lo que parecía estacionalidad",
+    (()=>{const h=el("div"); table(h, D.eda.temporal, [
+      {t:"Pregunta", k:"pregunta"}, {t:"Medida", k:"medida"},
+      {t:"Veredicto", html:true, f:r=>`<span class="tag ${r.veredicto==="si"?"warn":"mute"}">${r.veredicto}</span>`},
+      {t:"Consecuencia", k:"consecuencia"}]); return h;})(),
+    read(D.eda.lecturas.temporal)));
+
+  host.append(panel("Anomalías: descritas y decididas, nunca filtradas en silencio",
+    (()=>{const h=el("div"); table(h, D.eda.anomalias, [
+      {t:"Anomalía", k:"anomalia"}, {t:"Hallazgo", k:"hallazgo"}, {t:"Decisión", k:"decision"}]); return h;})(),
+    read(D.eda.lecturas.anomalias)));
+
+  const b2 = chartBox();
+  barChart(b2, {labels:D.eda.baseline.map(r=>"top "+r.top_pct_clientes+"%"),
+    series:[{name:"lift sobre la tasa base", values:D.eda.baseline.map(r=>r.lift_vs_base), color:CSSV("--accent")}],
+    fmt:x=>"×"+n2(x)});
+  host.append(panel("El baseline que M1 tiene que superar", b2,
+    read(`Ordenar clientes por su tasa de compra histórica ya da <b>×2.43</b> en el decil superior.
+      Ese es el piso: un modelo que no lo supera no aporta nada sobre una consulta SQL.`)));
+}
+
+/* ================= SEGMENTOS ================= */
+let SEG = 1;
+function renderSegmentos() {
+  const host = $("#tab-segmentos"); host.innerHTML = "";
+  const S = D.segmentos;
+  host.append(el("h2",{text:`M0 · ${S.k} segmentos que valen por la acción, no por la predicción`}));
+  host.append(read(`K-Means sobre la demografía a nivel cliente. <code>k=3</code> se eligió por codo
+    y por <b>estabilidad</b> (ARI 1.0 en remuestreos, frente a 0.79 con k=9), no por silhouette.
+    Los tres segmentos resultaron ser exactamente los tres niveles de ocupación.`));
+
+  const ctr = el("div",{class:"controls"});
+  const seg = el("div",{class:"ctl"},[el("label",{text:"segmento"})]);
+  const btns = el("div",{class:"segbtns"});
+  S.perfil.forEach(r=>{
+    const b = el("button",{"aria-pressed":r.segmento===SEG?"true":"false",
+      text:`${r.segmento} · ${S.nombres[r.segmento]}`});
+    b.onclick = () => { SEG = r.segmento; renderSegmentos(); };
+    btns.append(b);
+  });
+  seg.append(btns); ctr.append(seg); host.append(ctr);
+
+  const p = S.perfil.find(r=>r.segmento===SEG), c = S.comportamiento.find(r=>r.segmento===SEG);
+  const pr = S.promo.find(r=>r.segmento===SEG), mk = S.marcas.find(r=>r.segmento===SEG);
+  const cards = el("div",{class:"cards"});
+  cards.append(card("Clientes", n0(p.clientes), pct(p.pct_clientes)+" de la cartera"));
+  cards.append(card("Ingreso medio", n0(p.ingreso_medio), `edad ${n2(p.edad_media)} · educación ${n2(p.educacion_media)}`));
+  cards.append(card("Tasa de compra", n4(c.tasa_compra), `IC95 ${n4(c.ic95_inf)}–${n4(c.ic95_sup)}`));
+  cards.append(card("Ticket medio", n2(c.ticket_medio), pct(c.pct_ingreso)+" del ingreso"));
+  cards.append(card("Respuesta a promo", sgn(pr.delta_pp)+" pp", `z=${n2(pr.z)} · ${pr.responde}`));
+  host.append(cards);
+
+  const b1 = chartBox();
+  barChart(b1, {labels:[1,2,3,4,5].map(j=>"marca "+j),
+    series:[{name:"desvío vs. share global (pp)", values:[1,2,3,4,5].map(j=>mk["desvio_marca_"+j]),
+      color:CSSV("--primary")}], fmt:x=>sgn(x), baseZero:true});
+  host.append(panel(`Mezcla de marcas del segmento ${SEG}`, b1, read(D.segmentos.lecturas.marcas)));
+
+  const b2 = chartBox();
+  barChart(b2, {labels:S.comportamiento.map(r=>`${r.segmento} · ${S.nombres[r.segmento]}`),
+    series:[{name:"tasa de compra", values:S.comportamiento.map(r=>r.tasa_compra), color:CSSV("--primary")},
+            {name:"% del ingreso /100", values:S.comportamiento.map(r=>r.pct_ingreso/100), color:CSSV("--accent")}],
+    fmt:n4, rotate:true});
+  host.append(panel("Los tres segmentos, comparados", b2, read(D.segmentos.lecturas.comportamiento)));
+
+  const b3 = chartBox();
+  scatter(b3, {points:S.pca.map(r=>({x:r.pc1,y:r.pc2,g:r.segmento})),
+    groups:S.perfil.map(r=>({id:r.segmento,name:S.nombres[r.segmento]})), xlabel:"PC1 · nivel socioeconómico"});
+  host.append(panel("PCA: los segmentos son cortes de un espacio continuo", b3,
+    read(`Las dos primeras componentes explican el 52.7% de la varianza. Que la nube se vea continua
+      no es un defecto: es la propiedad del dato, y es la razón de que el segmento sirva para
+      <b>accionar campañas</b> y no para predecir.`)));
+}
+
+/* ================= MODELOS ================= */
+let RATIO_IDX = 3;
+function renderModelos() {
+  const host = $("#tab-modelos"); host.innerHTML = "";
+  const M = D.modelos;
+  host.append(el("h2",{text:"Tres modelos encadenados, porque la función objetivo los necesita"}));
+  host.append(read(`<b>M1</b> incidencia → <code>π</code>. <b>M2</b> elección de marca sobre las
+    14,638 compras → <code>q</code> y las elasticidades. <b>M3</b> cantidad → <code>λ</code>.
+    Su producto por el precio es el valor esperado de una visita.`));
+
+  const cards = el("div",{class:"cards"});
+  cards.append(card("M1 · PR-AUC", n4(M.m1.pr_auc), `azar ${n4(M.m1.pr_auc_azar)} · ROC ${n4(M.m1.roc_auc)}`));
+  cards.append(card("M2 · accuracy", n4(M.m2.accuracy), `clase mayoritaria ${n4(M.m2.accuracy_clase_mayoritaria)}`));
+  cards.append(card("M3 · MAE", n4(M.m3.mae), `baseline de la media ${n4(M.m3.mae_baseline_media)}`));
+  cards.append(card("Accuracy de M1 en 0.5", n4(M.m1["accuracy_en_0.5"]),
+    `"nunca compra" da ${n4(M.m1.accuracy_de_no_comprar_nunca)} → por eso no se usa`));
+  host.append(cards);
+
+  const g = el("div",{class:"grid2"});
+  const b1 = chartBox();
+  lineChart(b1, {series:[
+      {name:"precision-recall", color:CSSV("--primary"), points:M.curva_pr.map(r=>[r.recall,r.precision]), dots:false},
+      {name:"azar", color:CSSV("--bad"), dash:"5 4", dots:false,
+       points:[[0,D.resumen.pr_auc_azar],[1,D.resumen.pr_auc_azar]]}],
+    xlabel:"recall", ylabel:"precision", xfmt:n2, yfmt:n2});
+  g.append(panel("M1 · curva precision-recall", b1));
+  const b2 = chartBox();
+  lineChart(b2, {series:[
+      {name:"observada", color:CSSV("--primary"), points:M.calibracion.map(r=>[r.predicha,r.observada])},
+      {name:"calibración perfecta", color:CSSV("--muted"), dash:"4 4", dots:false,
+       points:[[0,0],[Math.max(...M.calibracion.map(r=>r.predicha)),Math.max(...M.calibracion.map(r=>r.predicha))]]}],
+    xlabel:"probabilidad predicha", ylabel:"frecuencia observada", xfmt:n2, yfmt:n2});
+  g.append(panel("M1 · calibración por decil", b2));
+  host.append(g);
+
+  const b3 = chartBox();
+  hbars(b3, M.shap.map(r=>({label:r.feature, value:r.importancia_shap,
+    color: r.efecto_medio>=0?CSSV("--primary"):CSSV("--accent")})));
+  host.append(panel("Drivers globales (SHAP)", b3,
+    read(D.modelos.lecturas.shap + ` <b>Lo que no aparece es igual de informativo:</b> ninguna
+      variable demográfica ni el segmento están en el top 12 — la demografía segmenta pero no
+      predice, y eso lo dijeron tres fases por separado.`)));
+
+  /* umbral interactivo */
+  const ctr = el("div",{class:"controls"});
+  const c1 = el("div",{class:"ctl"});
+  const out = el("output");
+  const rng = el("input",{type:"range",min:"0",max:String(M.umbral.length-1),step:"1",value:String(RATIO_IDX)});
+  c1.append(el("label",{text:"ratio costo de contacto / margen"}), rng, out);
+  ctr.append(c1);
+  const res = el("div",{class:"cards"});
+  const pinta = () => {
+    const r = M.umbral[RATIO_IDX];
+    out.textContent = `costo/margen = ${n2(r.ratio_costo_margen)} → umbral ${n2(r.umbral_optimo)}`;
+    res.innerHTML = "";
+    res.append(card("Umbral óptimo", n2(r.umbral_optimo), "= costo/margen, no 0.5"));
+    res.append(card("Visitas contactadas", pct(r.pct_visitas_contactadas), n0(r.contactos)+" contactos"));
+    res.append(card("Compras capturadas", pct(r.recall*100), n0(r.compras_capturadas)+" compras"));
+    res.append(card("Precisión", n4(r.precision), ""));
+    res.append(card("Valor neto / 1000 visitas", n2(r.valor_neto_por_1000), "en unidades de margen"));
+  };
+  rng.oninput = e => { RATIO_IDX = +e.target.value; pinta(); };
+  pinta();
+  host.append(panel("El umbral de operación lo fija la optimización, no la convención", ctr, res,
+    read(D.modelos.lecturas.umbral)));
+
+  const b4 = chartBox();
+  const pols = [...new Set(M.captura.map(r=>r.politica))];
+  const buds = [...new Set(M.captura.map(r=>r.presupuesto))];
+  barChart(b4, {labels:buds, series:pols.map((p,i)=>({name:p, color:PAL()[i],
+    values:buds.map(b=>M.captura.find(r=>r.presupuesto===b&&r.politica===p).pct_del_ingreso)})),
+    fmt:x=>pct(x)});
+  host.append(panel("Ingreso real capturado por política", b4, read(D.modelos.lecturas.captura)));
+
+  const E = M.elasticidades;
+  const b5 = chartBox();
+  heatmap(b5, {rows:E.map(r=>r.share.replace("share marca","share m")),
+    cols:[1,2,3,4,5].map(j=>"precio m"+j),
+    matrix:E.map(r=>[1,2,3,4,5].map(j=>r["precio marca "+j])),
+    mark:(i,j)=>i===j});
+  host.append(panel("M2 · elasticidades propias (recuadro) y cruzadas", b5,
+    read(D.modelos.lecturas.elasticidades + " " + D.modelos.lecturas.diag)));
+}
+
+/* ================= DECISIONES ================= */
+let BUD = 3, MARGEN = 1, R7 = true, MARCA = "5";
+function renderDecisiones() {
+  const host = $("#tab-decisiones"); host.innerHTML = "";
+  const X = D.decisiones;
+  host.append(el("h2",{text:"P1 · P2 · P3 — las tres decisiones"}));
+  host.append(read(`Los parámetros de negocio que faltan (<code>c_j</code>, <code>a</code>,
+    <code>d_j</code>, <code>B</code>, <code>ρ</code>) entran como <b>supuestos declarados</b>. Mové
+    los controles: cada combinación está precomputada.`));
+
+  /* --- controles --- */
+  const ctr = el("div",{class:"controls"});
+  const cB = el("div",{class:"ctl"}), oB = el("output");
+  const rB = el("input",{type:"range",min:"0",max:String(X.p1.frontera.length-1),step:"1",value:String(BUD)});
+  cB.append(el("label",{text:"presupuesto de contacto"}), rB, oB);
+  const cM = el("div",{class:"ctl"});
+  const bM = el("div",{class:"segbtns"});
+  X.sensibilidad.forEach((r,i)=>{
+    const b = el("button",{"aria-pressed":i===MARGEN?"true":"false",text:pct(r.margen_bruto*100)});
+    b.onclick = () => { MARGEN = i; renderDecisiones(); };
+    bM.append(b);
+  });
+  cM.append(el("label",{text:"margen bruto supuesto"}), bM);
+  const cR = el("div",{class:"ctl"});
+  const sw = el("label",{class:"switch"});
+  const chk = el("input",{type:"checkbox"}); if (R7) chk.setAttribute("checked","");
+  chk.onchange = e => { R7 = e.target.checked; renderDecisiones(); };
+  sw.append(chk, el("span",{text:"R7: ordenar precios por marca"}));
+  cR.append(el("label",{text:"restricción activable"}), sw);
+  ctr.append(cB, cM, cR);
+  host.append(ctr);
+
+  /* --- P1 --- */
+  const p1cards = el("div",{class:"cards"});
+  const b1 = chartBox();
+  const pintaP1 = () => {
+    const f = X.p1.frontera[BUD];
+    oB.textContent = `${pct(f.presupuesto_pct_visitas)} de las visitas → ${n0(f.contactos_usados)} contactos`;
+    p1cards.innerHTML = "";
+    p1cards.append(card("Contactos", n0(f.contactos_usados), `tope ${n0(f.tope_contactos)}`));
+    p1cards.append(card("Objetivo neto", n2(f.objetivo_neto), "margen menos costo de contacto"));
+    p1cards.append(card("Margen bruto", n2(f.margen_bruto), ""));
+    p1cards.append(card("Ingreso real capturado", n0(f.ingreso_real_capturado), "sobre el horizonte de test"));
+    p1cards.append(card("Margen marginal", f.margen_marginal_por_contacto==null?"—":n4(f.margen_marginal_por_contacto),
+      "por contacto adicional"));
+    lineChart(b1, {series:[{name:"objetivo neto", color:CSSV("--primary"),
+        points:X.p1.frontera.map(r=>[r.contactos_usados, r.objetivo_neto])}],
+      xlabel:"contactos", ylabel:"objetivo neto", xfmt:n0, yfmt:n0,
+      marker:X.p1.frontera[BUD].contactos_usados, zero:true});
+  };
+  rB.oninput = e => { BUD = +e.target.value; pintaP1(); };
+  pintaP1();
+  host.append(panel("P1 · targeting — frontera de presupuesto", p1cards, b1,
+    read(`El punto de saturación está en <b>${n0(X.p1.contactos_utiles)} contactos</b>
+      (${pct(X.p1.pct_visitas_utiles)} de las visitas): más allá, ninguna visita tiene margen
+      esperado mayor que su costo de contacto. Ese es el presupuesto que hace falta.`)));
+
+  const b2 = chartBox();
+  const corto = {"azar":"azar", "politica historica (tasa pasada)":"política vigente",
+    "solo propension (pi)":"solo propensión", "P1 (margen esperado)":"P1 · margen esperado"};
+  barChart(b2, {labels:X.p1.politicas.map(r=>corto[r.politica]||r.politica),
+    series:[{name:"objetivo neto", values:X.p1.politicas.map(r=>r.objetivo_neto),
+      color:CSSV("--primary")}], fmt:n2});
+  host.append(panel("P1 contra las políticas que tiene que batir", b2,
+    read(X.p1.lectura),
+    (()=>{const h=el("div"); table(h, X.p1.verificacion, [{t:"Verificación",k:"medida"},
+      {t:"Valor", f:r=>typeof r.valor==="number"?(Math.abs(r.valor)<1e-6?r.valor.toExponential(2):n4(r.valor)):r.valor}]);
+      return h;})(),
+    read(`<b>Optimalidad verificada, no citada:</b> el greedy alcanza el óptimo del LP relajado con
+      cero variables fraccionarias. P1 se entrega como modelo base resuelto de forma <b>exacta</b>.`)));
+
+  /* --- P2 --- */
+  const sen = X.sensibilidad[MARGEN];
+  const b3 = chartBox();
+  barChart(b3, {labels:X.p2.reasignacion.map(r=>"marca "+r.marca),
+    series:[{name:"días observados", values:X.p2.reasignacion.map(r=>r.dias_observados), color:CSSV("--muted")},
+            {name:"días óptimos (P2)", values:X.p2.reasignacion.map(r=>r.dias_optimos), color:CSSV("--good")}],
+    fmt:n0});
+  const p2cards = el("div",{class:"cards"});
+  p2cards.append(card("Calendario observado", n2(X.p2.valor_observado),
+    X.p2.valor_observado<0?'<span class="tag bad">destruye margen</span>':""));
+  p2cards.append(card("Calendario óptimo", n2(X.p2.valor_optimo), "mismos días-promoción"));
+  p2cards.append(card("Ganancia", `<span style="color:var(--good)">${sgn(X.p2.ganancia)}</span>`,
+    `verificada en simulación conjunta: ${sgn(X.p2.ganancia_verificada)}`));
+  p2cards.append(card("Error de la aproximación", pct(X.p2.error_aditivo*100), "aditiva vs. conjunta"));
+  p2cards.append(card(`Con margen ${pct(sen.margen_bruto*100)}`, sgn(sen.p2_ganancia),
+    `marca 5: ${n0(sen.p2_dias_marca_5)} días · marcas 1+2: ${n0(sen.p2_dias_marca_1_2)}`));
+  host.append(panel("P2 · calendario promocional (MILP con R5)", p2cards, b3,
+    (()=>{const h=el("div"); table(h, X.p2.reasignacion, [
+      {t:"Marca", f:r=>"marca "+r.marca}, {t:"Días observados", k:"dias_observados"},
+      {t:"Días óptimos", k:"dias_optimos"}, {t:"Cambio", f:r=>sgn(r.cambio).replace(".00","")},
+      {t:"Valor por día", html:true, f:r=>`<span class="tag ${r.valor_medio_por_dia>0?"good":"bad"}">${sgn(r.valor_medio_por_dia)}</span>`}]);
+      return h;})(),
+    read(X.p2.lectura)));
+
+  /* --- P3 --- */
+  const plan = R7 ? X.p3.con_r7 : X.p3.sin_r7;
+  const b4 = chartBox();
+  const marcas = [...new Set(X.p3.respuesta.map(r=>r.marca))];
+  lineChart(b4, {series:marcas.map((j,i)=>({name:"marca "+j, color:PAL()[i],
+      points:X.p3.respuesta.filter(r=>r.marca===j).map(r=>[r.precio, r.delta_vs_observado])})),
+    xlabel:"punto de la escalera de precios", ylabel:"Δ margen", xfmt:n2, yfmt:n0, zero:true});
+  host.append(panel(`P3 · precio sobre la escalera discreta ${R7?"con":"sin"} R7`,
+    (()=>{const h=el("div"); table(h, plan, [
+      {t:"Marca", f:r=>"marca "+r.marca},
+      {t:"Precio observado", f:r=>n2(r.precio_observado)},
+      {t:"Precio elegido", f:r=>n2(r.precio_elegido)},
+      {t:"Cambio", f:r=>sgn(r.cambio_pct)+"%"},
+      {t:"Ganancia aditiva", f:r=>sgn(r.ganancia_aditiva)},
+      {t:"Estado", html:true, f:r=>r.congelada
+        ? '<span class="tag warn">congelada: elasticidad no identificada</span>'
+        : '<span class="tag mute">optimizable</span>'}]); return h;})(),
+    b4,
+    el("div",{class:"cards"},[
+      card("Costo de imponer R7", n2(X.p3.costo_r7), "unidades de margen"),
+      card("Ganancia verificada", sgn(X.p3.ganancia_verificada), "simulación conjunta con R7"),
+      card("Banda de confianza", "±10%", "del precio observado")]),
+    read(X.p3.lectura + ` El ordenamiento de precios (R7) es una <b>decisión de modelado</b>, no un
+      hecho del dato: los rangos observados se solapan. Apagalo con el interruptor y mirá cuánto
+      cuesta mantener la jerarquía de marcas.`)));
+
+  /* --- curvas de propensión --- */
+  const cC = el("div",{class:"controls"});
+  const bC = el("div",{class:"segbtns"});
+  Object.keys(X.curvas).forEach(j=>{
+    const b = el("button",{"aria-pressed":j===MARCA?"true":"false",text:"marca "+j});
+    b.onclick = () => { MARCA = j; renderDecisiones(); };
+    bC.append(b);
+  });
+  cC.append(el("div",{class:"ctl"},[el("label",{text:"curva de propensión · marca"}), bC]));
+  const cur = X.curvas[MARCA];
+  const b5 = chartBox();
+  lineChart(b5, {series:[
+      {name:`Δ margen total`, color: cur.identificada?CSSV("--primary"):CSSV("--muted"),
+       dash: cur.identificada?"0":"5 4",
+       points:cur.puntos.map(r=>[r.cambio_precio_pct, r.delta_margen_total])}],
+    xlabel:"cambio de precio (%)", ylabel:"Δ margen", xfmt:x=>sgn(x)+"%", yfmt:n0, zero:true});
+  host.append(panel("¿Qué pasa si muevo el precio un 5%?", cC, b5,
+    read((cur.identificada?"":'<span class="tag warn">elasticidad no identificada</span> ') + cur.lectura)));
+
+  /* --- supuestos y KPIs --- */
+  host.append(panel("Los supuestos, declarados",
+    (()=>{const h=el("div"); table(h, X.supuestos, [{t:"Parámetro",k:"parametro"},
+      {t:"Valor",k:"valor"},{t:"De dónde sale",k:"de_donde_sale"}]); return h;})()));
+
+  host.append(panel("KPIs de captura de valor",
+    (()=>{const h=el("div"); table(h, X.kpis, [
+      {t:"KPI",k:"kpi"},{t:"Línea base",k:"linea_base"},{t:"Con el modelo",k:"con_el_modelo"},
+      {t:"Delta",k:"delta"},{t:"Cómo se mide",k:"como_se_mide"},
+      {t:"Estado", html:true, f:r=>`<span class="tag ${r.estado.startsWith("PROYECCION")?"warn":"mute"}">${r.estado}</span>`}]);
+      return h;})(),
+    read(X.lecturas.kpis)));
+
+  host.append(panel("Qué decide cada área",
+    (()=>{const h=el("div"); table(h, X.impacto, [{t:"Área",k:"area"},
+      {t:"Decisión que habilita",k:"decision_que_habilita"},{t:"Cifra",k:"cifra_de_esta_fase"},
+      {t:"Sub-problema",k:"sub_problema"}]); return h;})()));
+}
+
+/* ================= ARQUITECTURA ================= */
+function renderArquitectura() {
+  const host = $("#tab-arquitectura"); host.innerHTML = "";
+  host.append(el("h2",{text:"Fase 6 · cómo esto corre todas las noches"}));
+  host.append(read(`La nube como decisión, no como adorno: cada servicio lleva al lado la
+    alternativa que se descartó. El detalle completo está en
+    <code>docs/arquitectura-despliegue.md</code>.`));
+
+  const capas = [
+    ["Lake y gobierno","GCS + BigQuery (GCP)","cobra por consulta, no por cluster encendido"],
+    ["Procesamiento (cluster)","Dataproc Serverless (GCP)","pega al lake sin egreso; Spark sin administrar"],
+    ["Orquestación (flow)","Cloud Composer / Airflow","hace falta backfill histórico, donde Airflow gana"],
+    ["Feature store","offline + online con una sola definición","es el control E10 llevado a producción"],
+    ["Entrenamiento y registro","Vertex AI + MLflow","el entrenamiento vive donde viven los datos"],
+    ["Inferencia","batch nocturno + endpoint REST","la decisión es diaria; el tiempo real se agrega si hay caso"],
+    ["Identidad","Entra ID (Azure)","la organización ya administra identidades ahí"],
+    ["Consumo","Power BI (Azure) + CRM","es lo que la fuerza comercial ya usa"],
+    ["Alertas","Teams + Azure Monitor","las alertas llegan donde la gente ya mira"],
+  ];
+  host.append(panel("Arquitectura multi-cloud por capas",
+    (()=>{const h=el("div"); table(h, capas.map(c=>({capa:c[0],servicio:c[1],por_que:c[2]})),
+      [{t:"Capa",k:"capa"},{t:"Servicio",k:"servicio"},{t:"Por qué este",k:"por_que"}]); return h;})(),
+    read(`<b>La regla que ordena la tabla:</b> el dato pesado se queda en una sola nube (GCP) y lo
+      que cruza es metadato y resultados — identidad, alertas, el extracto de Power BI. Son
+      kilobytes, así que el egreso es irrelevante. Mover features entre nubes todos los días sería
+      la versión caricaturesca del multi-cloud.`)));
+
+  const mon = [
+    ["PSI de features","distribución de train (días 1–550)","PSI > 0.2 en el top 10 de SHAP","revisar fuente; reentrenar"],
+    ["Drift de la tasa base","0.2498 en train","desvío > 2 pp por 2 semanas","reentrenar y revisar el umbral"],
+    ["PR-AUC en producción","0.4776 en test","caída > 15% relativa","reentrenar; si no recupera, revisar encuadre"],
+    ["Frescura del dato","—","ingesta con más de 36 h","no publicar lista de contacto"],
+  ];
+  host.append(panel("Monitoreo: qué dispara una acción",
+    (()=>{const h=el("div"); table(h, mon.map(m=>({s:m[0],b:m[1],u:m[2],a:m[3]})),
+      [{t:"Señal",k:"s"},{t:"Línea base",k:"b"},{t:"Umbral de alerta",k:"u"},{t:"Acción",k:"a"}]); return h;})(),
+    read(`El reentrenamiento se dispara por calendario o por degradación, <b>nunca a mano</b>. Y no
+      reajusta el split ni las features admisibles: si eso cambia, se reescribe el contrato.`)));
+
+  host.append(panel("PoC de dos semanas · criterios de aceptación binarios",
+    el("ul",{class:"tight",html:`
+      <li>Las features del job de Spark coinciden <b>fila a fila</b> con las del notebook
+        (<code>verify_reference_fit</code> y <code>verify_no_leakage</code> pasan sobre la salida).</li>
+      <li><code>framing.verify_frozen</code> y <code>segmentation.verify_frozen</code> pasan contra
+        los artefactos publicados en el registro.</li>
+      <li>El DAG corre 7 días seguidos sin intervención y publica antes de las 6 am.</li>
+      <li>El PR-AUC del batch sobre dato nuevo está dentro del 15% de 0.4776.</li>
+      <li><b>Cortar una fuente produce alerta y no-publicación</b>, no una lista silenciosamente
+        mala. Este es el criterio que separa un PoC de una demo.</li>
+      <li>El endpoint responde p95 &lt; 300 ms con los tres factores SHAP.</li>`}),
+    read(`Costo: Dataproc y Cloud Run por uso; Composer es el costo fijo relevante. Alternativa
+      consciente para un PoC con presupuesto ajustado: Cloud Run Jobs + Cloud Scheduler por
+      céntimos, a cambio de perder backfill cómodo.`)));
+
+  host.append(panel("Mejoras futuras, en orden de valor desbloqueado",
+    el("ul",{class:"tight",html:`
+      <li><b>Test A/B de precio sobre la marca 3.</b> Es lo único que resuelve el límite duro de la
+        Fase 4; sin experimento, P3 no toca esa palanca.</li>
+      <li><b>Grupo de control permanente para P1.</b> Convierte cuatro KPIs de proyección en
+        medición.</li>
+      <li><b>Uplift modelling.</b> M1 responde <i>¿comprará?</i>; la pregunta de negocio es
+        <i>¿comprará <b>porque</b> lo contactamos?</i>.</li>
+      <li><b>Feature store en línea</b>, <b>optimizador como servicio</b>, <b>reentrenamiento por
+        drift con shadow deployment</b> y <b>elasticidades jerárquicas por segmento</b>.</li>`})));
+
+  host.append(panel("Qué NO recomiendo",
+    el("ul",{class:"tight",html:`
+      <li>Un endpoint en tiempo real como pieza central: la decisión es diaria.</li>
+      <li>Un data mesh con dominios: con un pipeline y un equipo es ceremonia sin beneficio.</li>
+      <li>Migrar todo a Databricks desde el día 1: es la respuesta a un problema que todavía no existe.</li>
+      <li>Reentrenar diariamente: la tasa de compra es plana tras los primeros 90 días.</li>`})));
+}
+
+/* ---------- boot ---------- */
+function renderAll() {
+  renderResumen(); renderEDA(); renderSegmentos(); renderModelos();
+  renderDecisiones(); renderArquitectura();
+}
+function boot() {
+  if (!D) {
+    document.body.innerHTML = '<div class="wrap"><h1>Falta data.js</h1>' +
+      '<p>Generalo con <code>uv run python -c "import sys; sys.path.insert(0,\'src\'); ' +
+      'from ferreyros import dashboard; dashboard.export_all()"</code></p></div>';
+    return;
+  }
+  $("#meta-sub").innerHTML = `${n0(D.meta.filas)} visitas · ${n0(D.meta.clientes)} clientes ·
+    ${n0(D.meta.dias)} días · split día ${D.meta.split_day} · generado ${D.meta.generado}`;
+  $("#aviso").innerHTML = `<b>Escenarios precomputados.</b> ${D.meta.aviso} Todas las
+    combinaciones de los controles se calcularon al generar <code>data.js</code>; las cifras están
+    en unidades de margen bajo el supuesto declarado, porque el dataset no contiene costos.`;
+  $("#foot").innerHTML = `Huellas congeladas · encuadre train <code>${D.meta.huellas.encuadre_train}</code> ·
+    test <code>${D.meta.huellas.encuadre_test}</code> · segmentos <code>${D.meta.huellas.segmentos}</code>
+    &nbsp;|&nbsp; Prueba técnica Data Scientist · Ferreycorp`;
+  initTabs();
+  renderAll();
+}
+boot();
+</script>
+</body>
+</html>

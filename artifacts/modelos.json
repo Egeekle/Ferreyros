@@ -1,0 +1,57 @@
+{
+  "fecha": "2026-11-19",
+  "split_day": 550,
+  "m1": {
+    "modelo": "logistica C=0.03",
+    "features": 59,
+    "pr_auc_test": 0.4776,
+    "roc_auc_test": 0.6931,
+    "brier": 0.1671,
+    "lift_top10": 2.5,
+    "lift_top10_politica_historica": 2.46,
+    "pr_auc_cv_estricta": 0.5273
+  },
+  "m2": {
+    "modelo_prediccion": "random forest",
+    "modelo_elasticidades": "logit multinomial sin penalizacion",
+    "log_loss_test": 0.7418,
+    "accuracy_test": 0.7822,
+    "elasticidades_propias": {
+      "1": -8.93,
+      "2": -2.821,
+      "3": 9.508,
+      "4": -1.943,
+      "5": -1.266
+    },
+    "marcas_identificadas": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "marcas_no_identificadas": [
+      3
+    ]
+  },
+  "m3": {
+    "modelo": "poisson",
+    "mae_test": 0.979,
+    "rmse_test": 1.3959,
+    "mae_baseline": 1.1768
+  },
+  "umbral": {
+    "regla": "umbral = costo de contacto / margen por compra",
+    "desvio_maximo_verificado": 0.055,
+    "contactos_en_0.5_pct": 9.7
+  },
+  "captura_de_valor_top10_pct": {
+    "azar (proporcional)": 10.0,
+    "politica historica": 28.2,
+    "solo propension (M1)": 29.0,
+    "valor esperado (M1xM2xM3)": 31.7
+  },
+  "features_descartadas": [
+    "semana",
+    "mes"
+  ]
+}

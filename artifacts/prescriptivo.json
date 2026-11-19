@@ -1,0 +1,173 @@
+{
+  "fecha": "2026-11-19",
+  "supuestos": {
+    "margen_bruto": 0.3,
+    "costo_contacto": 0.323,
+    "costo_promo_dia": 3.2302,
+    "tope_promo_por_marca": 90,
+    "margen_minimo_rho": 0.1,
+    "banda_precio": 0.1
+  },
+  "horizonte": {
+    "visitas": 13196,
+    "dias": [
+      551,
+      730
+    ],
+    "margen_base": 5784.52,
+    "ingreso_real": 18836.35
+  },
+  "p1": {
+    "contactos": 1398,
+    "clientes": 218,
+    "objetivo": 632.0,
+    "optimo_verificado": true,
+    "brecha_vs_lp": -1.7053025658242404e-13,
+    "ganancia_vs_politica_historica_pct": 66.3,
+    "contactos_utiles": 1398,
+    "pct_visitas_utiles": 10.6,
+    "marcas_ofrecidas": {
+      "1": 40,
+      "2": 282,
+      "3": 113,
+      "4": 394,
+      "5": 569
+    }
+  },
+  "p2": {
+    "dias_promo_presupuesto": 125,
+    "valor_observado": -183.84,
+    "valor_optimo": 585.21,
+    "ganancia": 769.06,
+    "ganancia_verificada": 767.27,
+    "error_aditivo": 0.0023,
+    "dias_por_marca": {
+      "1": 17,
+      "2": 18,
+      "3": 0,
+      "4": 0,
+      "5": 90
+    },
+    "valor_por_dia_marca": {
+      "1": 2.4029,
+      "2": 2.4335,
+      "3": -3.6949,
+      "4": -0.219,
+      "5": 6.8303
+    }
+  },
+  "p3": {
+    "banda": 0.1,
+    "plan_con_r7": {
+      "1": 1.28,
+      "2": 1.786,
+      "3": 2.056,
+      "4": 2.1,
+      "5": 2.8
+    },
+    "plan_sin_r7": {
+      "1": 1.28,
+      "2": 1.786,
+      "3": 2.056,
+      "4": 2.023,
+      "5": 2.8
+    },
+    "ganancia_verificada": 579.68,
+    "costo_de_r7": 124.74,
+    "marcas_congeladas": [
+      3
+    ]
+  },
+  "elasticidades_curva": {
+    "1": {
+      "arco_5pct": -1.941,
+      "identificada": true
+    },
+    "3": {
+      "arco_5pct": 0.465,
+      "identificada": false
+    },
+    "4": {
+      "arco_5pct": -0.345,
+      "identificada": true
+    },
+    "5": {
+      "arco_5pct": -0.257,
+      "identificada": true
+    }
+  },
+  "sensibilidad": [
+    {
+      "margen_bruto": 0.2,
+      "costo_contacto": 0.2153,
+      "costo_promo_dia": 2.1527,
+      "p1_contactos": 1477,
+      "p1_objetivo": 464.65,
+      "p2_ganancia": 527.37,
+      "p2_dias_marca_5": 90,
+      "p2_dias_marca_1_2": 35
+    },
+    {
+      "margen_bruto": 0.3,
+      "costo_contacto": 0.323,
+      "costo_promo_dia": 3.2302,
+      "p1_contactos": 1398,
+      "p1_objetivo": 632.0,
+      "p2_ganancia": 769.06,
+      "p2_dias_marca_5": 90,
+      "p2_dias_marca_1_2": 35
+    },
+    {
+      "margen_bruto": 0.4,
+      "costo_contacto": 0.4308,
+      "costo_promo_dia": 4.3077,
+      "p1_contactos": 1346,
+      "p1_objetivo": 803.46,
+      "p2_ganancia": 1012.5,
+      "p2_dias_marca_5": 90,
+      "p2_dias_marca_1_2": 35
+    }
+  ],
+  "kpis": [
+    {
+      "kpi": "Lift de conversion en el decil superior",
+      "linea_base": "x2.46 (politica por tasa historica)",
+      "con_el_modelo": "x2.50",
+      "delta": "+0.04",
+      "como_se_mide": "A/B: decil superior del modelo vs. decil superior de la politica actual, misma semana, mismos vendedores",
+      "estado": "PROYECCION hasta tener el test"
+    },
+    {
+      "kpi": "Margen incremental por targeting (P1)",
+      "linea_base": "309.84 (politica vigente, mismo presupuesto)",
+      "con_el_modelo": "515.16",
+      "delta": "+205.32 (+66.3%)",
+      "como_se_mide": "grupo de control: 10% de la cartera asignada por la politica vigente durante el piloto",
+      "estado": "PROYECCION hasta tener el grupo de control"
+    },
+    {
+      "kpi": "Ahorro / reasignacion promocional (P2)",
+      "linea_base": "-183.84 (calendario observado)",
+      "con_el_modelo": "585.21",
+      "delta": "+769.06 con el mismo numero de dias-promo",
+      "como_se_mide": "A/B geografico o por cartera: calendario reasignado en un grupo, calendario actual en el otro",
+      "estado": "PROYECCION hasta tener el test"
+    },
+    {
+      "kpi": "Margen incremental por pricing (P3)",
+      "linea_base": "5784.52 (precios observados)",
+      "con_el_modelo": "6364.20",
+      "delta": "+579.68 (+10.0%)",
+      "como_se_mide": "test de precio por region o canal; es el unico KPI que **exige** experimento, porque la elasticidad es observacional",
+      "estado": "PROYECCION; sin test de precio no se recomienda ejecutar"
+    },
+    {
+      "kpi": "Estabilidad del modelo en produccion",
+      "linea_base": "PSI de las features = 0 al desplegar",
+      "con_el_modelo": "umbral de alerta PSI > 0.2; drift de la tasa de compra > 2 pp",
+      "delta": "—",
+      "como_se_mide": "monitoreo mensual contra la distribucion de train (dias 1-550) y contra la tasa base 0.2498",
+      "estado": "requisito de operacion, no de captura"
+    }
+  ]
+}

@@ -1,0 +1,269 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Documentación · Modelo de Propensión de Compra · Ferreycorp</title>
+<style>
+@page { size: A4; margin: 17mm 15mm 16mm; }
+*{box-sizing:border-box}
+body{font:10.5pt/1.5 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:#1a202c; margin:0}
+h1{font-size:21pt; margin:0 0 4px; letter-spacing:-.4px}
+h2{font-size:14pt; margin:22px 0 6px; color:#2b6cb0; border-bottom:2px solid #e2e8f0;
+  padding-bottom:4px; break-after:avoid}
+h3{font-size:11pt; margin:14px 0 4px; break-after:avoid}
+p{margin:6px 0; text-align:justify}
+.lead{color:#4a5568; font-size:11pt}
+.muted{color:#718096}
+table{width:100%; border-collapse:collapse; font-size:8.6pt; margin:8px 0; break-inside:avoid}
+th,td{border-bottom:1px solid #e2e8f0; padding:4px 6px; text-align:left; vertical-align:top}
+th{background:#f7fafc; color:#4a5568; font-size:7.8pt; text-transform:uppercase;
+  letter-spacing:.04em}
+td.n, th.n{text-align:right; font-variant-numeric:tabular-nums}
+figure{margin:10px 0; break-inside:avoid; text-align:center}
+figure img{max-width:100%; border:1px solid #e2e8f0; border-radius:4px}
+figcaption{font-size:8pt; color:#718096; margin-top:4px; text-align:left}
+.cards{display:flex; gap:8px; flex-wrap:wrap; margin:10px 0}
+.card{flex:1 1 150px; border:1px solid #e2e8f0; border-radius:6px; padding:8px 10px}
+.card b{display:block; font-size:16pt; letter-spacing:-.5px}
+.card span{font-size:7.8pt; color:#718096; text-transform:uppercase; letter-spacing:.04em}
+.card em{display:block; font-size:8pt; color:#4a5568; font-style:normal; margin-top:2px}
+.callout{border-left:3px solid #dd6b20; background:#fffaf0; padding:8px 12px; margin:10px 0;
+  break-inside:avoid; font-size:9.6pt}
+.callout.good{border-color:#38a169; background:#f0fff4}
+.callout.bad{border-color:#e53e3e; background:#fff5f5}
+ul{margin:6px 0; padding-left:18px} li{margin:3px 0}
+code{background:#edf2f7; padding:1px 4px; border-radius:3px; font-size:8.6pt;
+  font-family:ui-monospace,Menlo,monospace}
+.page{break-after:page}
+header.portada{height:235mm; display:flex; flex-direction:column; justify-content:center}
+header.portada h1{font-size:30pt}
+.meta{margin-top:26px; font-size:9pt; color:#4a5568}
+footer{position:fixed; bottom:-10mm; left:0; right:0; font-size:7.5pt; color:#a0aec0}
+</style></head><body>
+
+<header class="portada page">
+  <div class="kicker muted">Prueba Técnica · Data Scientist</div>
+  <h1>Modelo de Propensión de Compra</h1>
+  <p class="lead">De 58 693 visitas a tres decisiones ejecutables: a quién contactar,
+     qué marca promocionar y a qué precio vender.</p>
+  <div class="meta">
+    <b>Ferreycorp</b> · documentación de la solución<br>
+    19 de noviembre de 2026<br><br>
+    Dataset: 58 693 visitas · 500 clientes · 730 días · 5 marcas<br>
+    Split temporal congelado en el día 550 ·
+    huellas <code>47959243b182b9af</code> / <code>842f57dd85e58abc</code><br>
+    Contenido: 6 notebooks ejecutables, 13 módulos, dashboard interactivo y 4 contratos congelados.
+  </div>
+</header>
+
+<h2>1 · Resumen ejecutivo</h2>
+<p>El enunciado pide un modelo de propensión de compra. Este trabajo lo entrega, pero
+parte de una observación que cambia el orden de todo lo demás: <b>un modelo de propensión no
+es una decisión</b>. Predecir quién compra no dice a quién contactar con un presupuesto
+limitado, ni qué marca promocionar, ni a qué precio vender. Por eso la solución se estructuró
+primero como un <b>problema de optimización</b> y la capa de machine learning existe para
+estimar sus parámetros.</p>
+<div class="cards"><div class="card"><span>Tasa de compra</span><b>0.2494</b><em>24.94% de 58 693 visitas</em></div><div class="card"><span>PR-AUC de M1</span><b>0.4776</b><em>azar 0.2480 · ×1.93</em></div><div class="card"><span>Lift decil superior</span><b>×2.50</b><em>política vigente ×2.46</em></div><div class="card"><span>Ingreso capturado</span><b>31.7%</b><em>con el 10% de las visitas (vigente 28.2%)</em></div><div class="card"><span>Ganancia proyectada</span><b>+1 554.06</b><em>26.9% sobre el margen base</em></div></div>
+<div class="callout good"><b>El resultado que más valor tiene no es el modelo:</b> es que el
+calendario promocional actual, tal como está asignado, <b>destruye margen</b>
+(-183.84 unidades en el horizonte de test). Reasignar los mismos
+125 días-promoción —sin presupuesto adicional— vale
+<b>+769.06</b>.</div>
+<p>Las cinco conclusiones que un ejecutivo necesita:</p>
+<ul>
+<li><b>La promoción está mal asignada.</b> La marca 5 aporta el 35.8% del ingreso, tiene el
+  mayor efecto incremental (+6.90 pp de incidencia) y se promociona el
+  3.6% de los días. La marca 3 se promociona más y su
+  descuento <b>no mueve la incidencia</b>.</li>
+<li><b>Contactar al azar destruye valor.</b> Con el costo de contacto supuesto, una política
+  aleatoria deja objetivo neto negativo. El targeting no es una mejora marginal: es la
+  diferencia entre una campaña que paga y una que no.</li>
+<li><b>El umbral de 0.5 cuesta dinero.</b> El umbral óptimo es <code>costo/margen</code> y se
+  verificó sobre test. Con 0.5 se contactaría el 9.7% de las visitas y se capturaría el 24.5%
+  de las compras.</li>
+<li><b>La demografía segmenta pero no predice.</b> Los segmentos separan 8 puntos de tasa de
+  compra y <b>23.6 puntos</b> de preferencia de marca: sirven para accionar campañas, no para
+  predecir.</li>
+<li><b>Todo esto es una proyección hasta que haya grupo de control.</b> Cuatro de los cinco
+  KPIs están etiquetados como tales, con el experimento que los convertiría en medición.</li>
+</ul>
+
+<h2>2 · Objetivos y encuadre</h2>
+<p><b>Objetivo de negocio:</b> aumentar el margen de contribución de la cartera decidiendo mejor
+tres cosas que hoy se deciden por costumbre — a quién se contacta, qué se promociona y a qué
+precio se vende.</p>
+<p><b>Objetivo técnico:</b> estimar <code>π</code> (probabilidad de compra), <code>q</code>
+(elección de marca) y <code>λ</code> (cantidad) con validación honesta, y usarlos para resolver
+los tres sub-problemas de decisión.</p>
+<p><b>Unidad de análisis:</b> <code>cliente × visita</code>, verificada única sobre
+<code>(id, dia_visita)</code>. <b>Validación:</b> split temporal del día 550,
+congelado antes de ajustar nada. Un <code>train_test_split</code> aleatorio sería inválido: con
+~117 visitas por cliente repartiría visitas del mismo cliente entre train y test e inflaría
+todas las métricas.</p>
+
+<h2>3 · Arquitectura de la solución</h2>
+<p>Dos capas. La <b>prescriptiva</b> decide; la <b>predictiva</b> estima los coeficientes que la
+primera necesita.</p>
+<pre style="background:#f7fafc;border:1px solid #e2e8f0;border-radius:5px;padding:9px;font-size:8.4pt">
+max  Σ_ijt  x_ijt · π_it · q_ijt · λ_ijt · Σ_k (y_jtk · m_jk)  −  a·Σ x_ijt  −  Σ d_j·z_jt
+
+x_ijt  ofrecer la marca j al cliente i en t      →  P1 · targeting
+z_jt   promocionar la marca j en t               →  P2 · calendario
+y_jtk  vender la marca j al punto de precio k    →  P3 · pricing
+
+R1 un precio por marca · R2 presupuesto · R3 una oferta por visita · R4 fatiga
+R5 tope de días en promoción · R6 piso de margen · R7 arquitectura de marcas (activable)
+</pre>
+<p>La discretización del precio sobre la <b>escalera observada</b> (21 a 44 puntos por marca) es
+lo que convierte un MINLP intratable en un MILP resoluble. Y P1 —el modelo base entregable—
+resulta <b>exactamente resoluble</b>: su LP relajado es integral, de modo que el greedy por
+margen esperado es el óptimo. Eso no se cita del papel, se verifica en el notebook 05.</p>
+<table class=""><thead><tr><th>Fase</th><th>Decisión que cierra</th><th>Cómo se verificó</th></tr></thead><tbody><tr><td>0 · Encuadre</td><td>unidad de análisis, targets, features admisibles y split del día 550</td><td>contrato congelado con huella SHA-256; <code>verify_frozen</code> corre al inicio de cada fase</td></tr><tr><td>1 · EDA</td><td>qué parámetros del problema son estimables y con qué forma</td><td>44 cifras de referencia reproducidas; 13 controles de tratamiento</td></tr><tr><td>2 · Features</td><td>68 variables derivadas sin fuga; preprocesamiento en <code>Pipeline</code></td><td>control E10: el ajuste solo en train cambia 48 parámetros del escalador</td></tr><tr><td>3 · Segmentación (M0)</td><td>k = 3 segmentos, congelados con huella</td><td>elegido por codo y <b>estabilidad</b> (ARI 1.0 vs 0.79 en k=9), no por silhouette</td></tr><tr><td>4 · Modelos</td><td>M1 logística, M2 random forest, M3 Poisson</td><td>comparación pareada fold a fold; validación con cliente nuevo <b>y</b> día futuro</td></tr><tr><td>5 · Prescriptiva</td><td>P1 targeting, P2 calendario, P3 precio</td><td>optimalidad de P1 verificada contra el LP; P2 y P3 verificados en simulación conjunta</td></tr><tr><td>6 · Despliegue</td><td>arquitectura multi-cloud, batch nocturno y endpoint</td><td><code>score_batch.py</code> y <code>serve_api.py</code> ejecutables hoy</td></tr></tbody></table>
+
+<h2>4 · Datos y análisis exploratorio</h2>
+<p>El EDA no describe el dataset: produce los parámetros del problema de optimización. Cada
+hallazgo cierra con su consecuencia; un gráfico sin consecuencia no entró al entregable.</p>
+<table class=""><thead><tr><th>Marca</th><th>Share compras</th><th>Share ingreso</th><th>% días promo</th><th>Lift de share</th><th>Δ incidencia</th><th>Lectura</th></tr></thead><tbody><tr><td>marca 1</td><td>9.2%</td><td>7.6%</td><td>34.4%</td><td>×1.08</td><td>+3.16 pp</td><td>expande el mercado</td></tr><tr><td>marca 2</td><td>31.0%</td><td>26.3%</td><td>31.6%</td><td>×1.39</td><td>+3.93 pp</td><td>expande el mercado</td></tr><tr><td>marca 3</td><td>5.7%</td><td>7.3%</td><td>4.3%</td><td>×1.86</td><td>+0.64 pp</td><td>no distinguible del ruido</td></tr><tr><td>marca 4</td><td>20.0%</td><td>23.0%</td><td>11.8%</td><td>×1.16</td><td>+2.46 pp</td><td>expande el mercado</td></tr><tr><td>marca 5</td><td>34.0%</td><td>35.8%</td><td>3.6%</td><td>×1.66</td><td>+6.90 pp</td><td>expande el mercado</td></tr></tbody></table>
+<p>Las dos columnas de la derecha son preguntas distintas que suelen confundirse. El
+<b>lift de share</b> mide canibalización entre marcas; la <b>Δ incidencia</b> mide si el
+descuento crea una compra que no habría ocurrido. La marca 3 tiene el lift de share más alto
+(×1.86) y no mueve la incidencia (z = 0.7): su descuento se paga con volumen ya vendido.</p>
+<figure><img src="../docs/figuras/eda_promo_incidencia.png" style="width:100%"><figcaption>Efecto bruto de la promoción sobre la incidencia, marca por marca. La marca 5 suma +6.90 pp con 24 días de promoción en 730.</figcaption></figure>
+<div class="callout"><b>Dinámica temporal:</b> lo que parecía estacionalidad semanal y mensual
+<b>no se repite entre los dos años</b> del panel (correlaciones de +0.10 y +0.11). Lo único real
+es un régimen de arranque de 90 días, donde el 88% de las visitas aún no tiene historial. Sin
+esa prueba de réplica, el EDA habría declarado una estacionalidad inexistente.</div>
+<figure><img src="../docs/figuras/eda_baseline.png" style="width:100%"><figcaption>El baseline que M1 tiene que superar: ordenar por tasa histórica ya da ×2.43 en el decil superior.</figcaption></figure>
+
+<h2>5 · Segmentación de clientes (M0)</h2>
+<p>K-Means sobre la demografía a nivel cliente, con <code>k = 3</code> elegido por codo y por
+<b>reproducibilidad</b> (ARI medio 1.0 sobre remuestreos, frente a 0.79 con k = 9). La silhouette
+prefería k = 9; la estabilidad decidió, porque un segmento que cambia de integrantes según la
+muestra no sirve para planificar una campaña.</p>
+<table class=""><thead><tr><th>Segmento</th><th>Clientes</th><th>Ingreso medio</th><th>Tasa de compra</th><th>Ticket</th><th>% del ingreso</th></tr></thead><tbody><tr><td>1 · Dependiente · ingreso bajo</td><td>184</td><td>90 914</td><td>0.2019</td><td>5.18</td><td>26.6%</td></tr><tr><td>2 · Independiente · ingreso medio</td><td>248</td><td>127 190</td><td>0.2814</td><td>5.71</td><td>58.0%</td></tr><tr><td>3 · Otra ocupacion · ingreso alto</td><td>68</td><td>183 660</td><td>0.2550</td><td>6.41</td><td>15.4%</td></tr></tbody></table>
+<div class="callout"><b>Hallazgo:</b> los tres segmentos son exactamente los tres niveles de
+ocupación, y el ingreso, la edad y la educación se ordenan detrás. Y una advertencia declarada:
+cambiar la codificación de esa variable produce particiones <b>sin relación</b> entre sí
+(ARI 0.027). La segmentación es una elección del modelador, no un descubrimiento del dato; la
+elegida gana en cohesión y en separación de comportamiento, y eso está medido.</div>
+<figure><img src="../docs/figuras/m0_marcas_por_segmento.png" style="width:100%"><figcaption>Preferencia de marca por segmento: hasta 23.6 puntos de desvío contra el share global. Aquí es donde el segmento cambia decisiones.</figcaption></figure>
+
+<h2>6 · Modelos de predicción</h2>
+<p>Tres modelos encadenados, con la progresión de complejidad que el método exige y el resultado
+que midió, no el que se esperaba.</p>
+<table class=""><thead><tr><th>Modelo</th><th>Elegido</th><th>Métrica en test</th><th>Contra qué</th></tr></thead><tbody><tr><td>M1 · incidencia (π)</td><td>logística regularizada C=0.03</td><td>PR-AUC 0.4776</td><td>azar 0.2480</td></tr><tr><td>M2 · elección de marca (q)</td><td>random forest</td><td>accuracy 0.7822</td><td>clase mayoritaria 0.3407</td></tr><tr><td>M3 · cantidad (λ)</td><td>Poisson</td><td>MAE 0.9790</td><td>baseline de la media 1.1768</td></tr></tbody></table>
+<p>En M1 la complejidad <b>no</b> paga: la comparación pareada fold a fold da +0.0117 para el
+random forest con error estándar 0.0139 (t = 0.84). En M2 sí paga, y por un margen claro. Recorrer
+la progresión sirvió justamente para que la respuesta fuera distinta en cada caso.</p>
+<div class="callout bad"><b>Advertencia metodológica que vale para todo el proyecto:</b>
+<code>GroupKFold</code> por cliente <b>no es el límite pesimista</b> en un panel. Deja fuera al
+cliente pero entrena con los mismos días, y como los 500 clientes comparten calendario, precios y
+promociones, el modelo ya vio las condiciones de demanda de la validación: infla el PR-AUC del
+random forest en <b>0.24</b>. Todas las decisiones se tomaron con un esquema que cruza
+<b>cliente nuevo y día futuro</b>.</div>
+<figure><img src="../docs/figuras/m1_shap.png" style="width:100%"><figcaption>Drivers globales de M1. Los tres primeros son historial de comportamiento; ninguna variable demográfica aparece en el top 12.</figcaption></figure>
+<h3>El umbral de operación</h3>
+<p>El umbral no se fija en 0.5: es el que iguala margen esperado y costo de contacto, es decir
+<code>costo/margen</code>. La regla se verificó sobre test — el óptimo empírico se desvía como
+máximo 0.055 del teórico.</p>
+<table class=""><thead><tr><th>costo/margen</th><th>umbral óptimo</th><th>visitas contactadas</th><th>compras capturadas</th><th>valor neto /1000</th></tr></thead><tbody><tr><td>0.05</td><td>0.05</td><td>97.6%</td><td>99.1%</td><td>196.86</td></tr><tr><td>0.10</td><td>0.10</td><td>84.7%</td><td>92.2%</td><td>144.05</td></tr><tr><td>0.15</td><td>0.15</td><td>60.4%</td><td>77.6%</td><td>102.01</td></tr><tr><td>0.20</td><td>0.20</td><td>41.4%</td><td>63.1%</td><td>73.80</td></tr><tr><td>0.30</td><td>0.30</td><td>22.7%</td><td>42.7%</td><td>37.95</td></tr><tr><td>0.40</td><td>0.40</td><td>13.2%</td><td>28.9%</td><td>18.81</td></tr><tr><td>0.50</td><td>0.50</td><td>9.7%</td><td>24.5%</td><td>12.05</td></tr></tbody></table>
+<h3>Elasticidades y el límite que no se resolvió</h3>
+<p>El logit multinomial entrega las elasticidades propias y cruzadas que P3 necesita. Cuatro de
+las cinco propias salen negativas, como deben.</p>
+<div class="callout bad"><b>La elasticidad propia de la marca 3 sale positiva</b> en las cinco
+especificaciones probadas (con y sin regularización, con controles de lealtad, con la última
+marca comprada, con el segmento). No es un accidente de ajuste: tiene 21 puntos de precio, 14.4%
+de rango relativo y el 5.1% de las compras. Sin variación de precio independiente de la demanda,
+lo que se mide no es respuesta al precio sino <b>la reacción del precio a la demanda</b>. P3
+congela su precio; lo primero que vale pedirle al negocio es un test A/B sobre esa marca.</div>
+<figure><img src="../docs/figuras/m2_elasticidades.png" style="width:100%"><figcaption>Matriz de elasticidades: la diagonal (recuadro) es la propia; la marca 3 es la que no está identificada.</figcaption></figure>
+
+<h2>7 · Capa prescriptiva: las tres decisiones</h2>
+<h3>P1 · Targeting</h3>
+<p>Selecciona a quién contactar y con qué marca, bajo presupuesto y fatiga. Su optimalidad está
+<b>verificada</b>: el greedy alcanza el óptimo del LP relajado con cero variables fraccionarias.</p>
+<table class=""><thead><tr><th>Política</th><th>Contactos</th><th>Margen esperado</th><th>Objetivo neto</th><th>Ingreso real capturado</th></tr></thead><tbody><tr><td>azar</td><td>2 639</td><td>809.50</td><td>-42.95</td><td>3 340</td></tr><tr><td>politica historica (tasa pasada)</td><td>2 639</td><td>1 162.29</td><td>309.84</td><td>2 906</td></tr><tr><td>solo propension (pi)</td><td>2 639</td><td>1 251.44</td><td>398.99</td><td>4 633</td></tr><tr><td>P1 (margen esperado)</td><td>2 639</td><td>1 367.61</td><td>515.16</td><td>4 184</td></tr></tbody></table>
+<p>El punto de saturación está en <b>1 398 contactos</b>
+(10.6% de las visitas): más allá, ninguna visita tiene margen
+esperado mayor que su costo de contacto. Ese es el presupuesto que el negocio necesita, y no más.</p>
+<figure><img src="../docs/figuras/p1_frontera.png" style="width:100%"><figcaption>Frontera de presupuesto de P1: el objetivo neto satura y el margen marginal por contacto cae un orden de magnitud.</figcaption></figure>
+<h3>P2 · Calendario promocional</h3>
+<p>MILP con el tope de días por marca (R5) y el presupuesto del calendario observado: la pregunta
+no es cuánto gastar, es dónde.</p>
+<table class=""><thead><tr><th>Marca</th><th>Días observados</th><th>Días óptimos</th><th>Cambio</th><th>Valor por día-promo</th></tr></thead><tbody><tr><td>marca 1</td><td>48</td><td>17</td><td>-31</td><td>+2.4029</td></tr><tr><td>marca 2</td><td>57</td><td>18</td><td>-39</td><td>+2.4335</td></tr><tr><td>marca 3</td><td>15</td><td>0</td><td>-15</td><td>-3.6949</td></tr><tr><td>marca 4</td><td>5</td><td>0</td><td>-5</td><td>-0.2190</td></tr><tr><td>marca 5</td><td>0</td><td>90</td><td>+90</td><td>+6.8303</td></tr></tbody></table>
+<div class="callout good">Reasignar los mismos 125 días-promoción
+lleva el valor del calendario de <b>-183.84</b> a
+<b>585.21</b>. Verificado como simulación conjunta (+767.27),
+con un error de la aproximación aditiva del 0.2%.</div>
+<figure><img src="../docs/figuras/p2_reasignacion.png" style="width:100%"><figcaption>P2: el presupuesto promocional se mueve de las marcas 1 y 2 hacia la marca 5, que es la que responde.</figcaption></figure>
+<h3>P3 · Precio</h3>
+<p>MILP sobre la escalera discreta, con piso de margen (R6) y una <b>banda de confianza de ±10%</b>
+alrededor del precio observado. La banda no es timidez: sin ella el óptimo se va al extremo de la
+grilla, que es la firma de un optimizador explotando al modelo donde no se validó.</p>
+<table class=""><thead><tr><th>Marca</th><th>Precio observado</th><th>Precio elegido</th><th>Cambio</th><th>Estado</th></tr></thead><tbody><tr><td>marca 1</td><td>1.401</td><td>1.280</td><td>-8.6%</td><td>optimizable</td></tr><tr><td>marca 2</td><td>1.786</td><td>1.786</td><td>+0.0%</td><td>optimizable</td></tr><tr><td>marca 3</td><td>2.056</td><td>2.056</td><td>+0.0%</td><td>congelada: elasticidad no identificada</td></tr><tr><td>marca 4</td><td>2.240</td><td>2.100</td><td>-6.2%</td><td>optimizable</td></tr><tr><td>marca 5</td><td>2.730</td><td>2.800</td><td>+2.6%</td><td>optimizable</td></tr></tbody></table>
+<p>Imponer R7 (ordenamiento de precios entre marcas) cuesta <b>124.74</b> unidades
+de margen. El brief lo anticipó como decisión de modelado, no como hecho del dato: ahora es una
+cifra que el negocio puede aceptar o rechazar sabiendo qué compra.</p>
+<figure><img src="../docs/figuras/p3_respuesta_precio.png" style="width:100%"><figcaption>Respuesta del margen por punto de precio (□ = precio observado). La marca 3 aparece como un único punto: su precio está congelado.</figcaption></figure>
+
+<h2>8 · Captura de valor</h2>
+<figure><img src="../docs/figuras/p5_waterfall.png" style="width:100%"><figcaption>Las tres palancas sobre el margen base del horizonte de test.</figcaption></figure>
+<table class=""><thead><tr><th>KPI</th><th>Línea base</th><th>Con el modelo</th><th>Delta</th><th>Cómo se mide</th><th>Estado</th></tr></thead><tbody><tr><td>Lift de conversion en el decil superior</td><td>x2.46 (politica por tasa historica)</td><td>x2.50</td><td>+0.04</td><td>A/B: decil superior del modelo vs. decil superior de la politica actual, misma semana, mismos vendedores</td><td>PROYECCION hasta tener el test</td></tr><tr><td>Margen incremental por targeting (P1)</td><td>309.84 (politica vigente, mismo presupuesto)</td><td>515.16</td><td>+205.32 (+66.3%)</td><td>grupo de control: 10% de la cartera asignada por la politica vigente durante el piloto</td><td>PROYECCION hasta tener el grupo de control</td></tr><tr><td>Ahorro / reasignacion promocional (P2)</td><td>-183.84 (calendario observado)</td><td>585.21</td><td>+769.06 con el mismo numero de dias-promo</td><td>A/B geografico o por cartera: calendario reasignado en un grupo, calendario actual en el otro</td><td>PROYECCION hasta tener el test</td></tr><tr><td>Margen incremental por pricing (P3)</td><td>5784.52 (precios observados)</td><td>6364.20</td><td>+579.68 (+10.0%)</td><td>test de precio por region o canal; es el unico KPI que **exige** experimento, porque la elasticidad es observacional</td><td>PROYECCION; sin test de precio no se recomienda ejecutar</td></tr><tr><td>Estabilidad del modelo en produccion</td><td>PSI de las features = 0 al desplegar</td><td>umbral de alerta PSI > 0.2; drift de la tasa de compra > 2 pp</td><td>—</td><td>monitoreo mensual contra la distribucion de train (dias 1-550) y contra la tasa base 0.2498</td><td>requisito de operacion, no de captura</td></tr></tbody></table>
+<div class="callout"><b>Cuatro de los cinco KPIs son proyecciones</b>, y así están etiquetados.
+El brief es explícito: sin medición contrafactual no hay captura demostrable. Presentar la suma
+como resultado conseguido es la forma más rápida de perder la confianza del negocio la primera
+vez que no se cumpla.</div>
+<table class=""><thead><tr><th>Área</th><th>Decisión que habilita</th><th>Cifra de esta fase</th><th>Sub-problema</th></tr></thead><tbody><tr><td>Comercial / Ventas</td><td>a quien contactar y con que marca</td><td>1398 contactos sobre 218 clientes; objetivo 632.00</td><td>P1</td></tr><tr><td>Marketing</td><td>a que marca y en que dias promocionar</td><td>reasignar 125 dias-promo vale +769.06</td><td>P2</td></tr><tr><td>Pricing</td><td>que precio por marca, y si diferenciar por segmento</td><td>plan de precios m1: -8.6%, m4: -6.2%, m5: +2.6%; elasticidad por segmento con rango 0.339</td><td>P3</td></tr><tr><td>Planeamiento / Inventario</td><td>demanda esperada por marca en el horizonte</td><td>margen esperado por marca: m1: 401, m2: 1149, m3: 456, m4: 1191, m5: 2588</td><td>M1xM2xM3</td></tr></tbody></table>
+
+<h2>9 · Arquitectura cloud, PoC y mejoras futuras</h2>
+<p>El detalle completo está en <code>docs/arquitectura-despliegue.md</code>. Lo esencial: la
+arquitectura es <b>multi-cloud por capas</b>, con una regla que la ordena — el dato pesado se
+queda en una sola nube y lo que cruza es metadato y resultados.</p>
+<table class=""><thead><tr><th>Capa</th><th>Servicio</th><th>Por qué este y no el del proveedor principal</th></tr></thead><tbody><tr><td>Lake y gobierno</td><td>GCS + BigQuery (GCP)</td><td>cobra por consulta, no por cluster encendido</td></tr><tr><td>Procesamiento · <b>cluster</b></td><td>Dataproc Serverless (GCP)</td><td>pega al lake sin egreso; Spark sin administrar</td></tr><tr><td>Orquestación · <b>flow</b></td><td>Cloud Composer / Airflow</td><td>hace falta backfill histórico, donde Airflow gana</td></tr><tr><td>Feature store</td><td>offline + online, una sola definición</td><td>es el control E10 llevado a producción</td></tr><tr><td>Entrenamiento y registro</td><td>Vertex AI + MLflow</td><td>el entrenamiento vive donde viven los datos</td></tr><tr><td>Inferencia</td><td>batch nocturno + endpoint REST</td><td>la decisión es diaria; el tiempo real se agrega si hay caso</td></tr><tr><td>Identidad</td><td>Entra ID (Azure)</td><td>la organización ya administra identidades ahí</td></tr><tr><td>Consumo</td><td>Power BI (Azure) + CRM</td><td>es lo que la fuerza comercial ya usa</td></tr></tbody></table>
+<h3>PoC de dos semanas · criterios de aceptación binarios</h3>
+<ul>
+<li>Las features del job de Spark coinciden <b>fila a fila</b> con las del notebook.</li>
+<li><code>verify_frozen</code> del encuadre y de los segmentos pasa contra los artefactos publicados.</li>
+<li>El DAG corre 7 días seguidos sin intervención y publica antes de las 6 am.</li>
+<li>El PR-AUC sobre dato nuevo queda dentro del 15% de 0.4776.</li>
+<li><b>Cortar una fuente produce alerta y no-publicación</b>, no una lista silenciosamente mala.
+  Este es el criterio que separa un PoC de una demo.</li>
+</ul>
+<h3>Mejoras futuras, por valor desbloqueado</h3>
+<ul>
+<li><b>Test A/B de precio sobre la marca 3</b> — lo único que resuelve el límite de la Fase 4.</li>
+<li><b>Grupo de control permanente para P1</b> — convierte cuatro KPIs de proyección en medición.</li>
+<li><b>Uplift modelling</b> — M1 responde <i>¿comprará?</i>; el negocio pregunta <i>¿comprará
+  porque lo contactamos?</i>.</li>
+<li>Feature store en línea, optimizador como servicio, reentrenamiento por drift con shadow
+  deployment, elasticidades jerárquicas por segmento.</li>
+</ul>
+
+<h2>10 · Supuestos y límites declarados</h2>
+<table class=""><thead><tr><th>Parámetro</th><th>Valor usado</th><th>De dónde sale</th></tr></thead><tbody><tr><td>c_j (costo unitario)</td><td>(1 - 30%) x precio medio de la marca</td><td>SUPUESTO: margen bruto declarado; el dataset no trae costos</td></tr><tr><td>m_j (margen unitario)</td><td>precio - c_j, entre 0.418 y 0.796</td><td>derivado del supuesto anterior; sube si sube el precio</td></tr><tr><td>a (costo de contacto)</td><td>0.3230 = 20% del margen de una venta media</td><td>SUPUESTO declarado, con sensibilidad en P1</td></tr><tr><td>d_j (costo de un dia-promo)</td><td>3.2302 = 2.0x el margen de una venta media</td><td>SUPUESTO declarado; P2 lo usa como costo fijo por dia-marca</td></tr><tr><td>B (presupuesto promocional)</td><td>el costo del calendario observado</td><td>DECISION: P2 reasigna, no aumenta (conclusion del EDA)</td></tr><tr><td>T_j (tope de dias en promo, R5)</td><td>90 dias por marca</td><td>DECISION de salud de marca: ninguna marca en promo mas de la mitad del horizonte</td></tr><tr><td>rho (piso de margen, R6)</td><td>10% sobre el costo</td><td>SUPUESTO declarado; acota el precio por abajo en P3</td></tr></tbody></table>
+<ul>
+<li><b>No hay costos en el dataset.</b> Todo está en unidades de margen bajo un margen bruto
+  supuesto del 30%, con sensibilidad entre 20% y 40%: las cifras se mueven, la <b>decisión</b> no.</li>
+<li><b>Los precios son observacionales, no experimentales.</b> Las elasticidades son asociativas
+  y exigen validación A/B antes de ejecutar un cambio de precio.</li>
+<li><b>Predict-then-optimize amplifica el error del modelo.</b> Por eso P3 trabaja con banda de
+  confianza y los planes se verifican con simulación conjunta, no con la suma de las partes.</li>
+<li><b>500 clientes es poco</b> para afirmar generalización a clientes nuevos; por eso se reporta
+  el esquema estricto de validación y no el optimista.</li>
+</ul>
+
+<h2>11 · Reproducibilidad</h2>
+<p>Ferreycorp ejecutará la solución, así que correr de extremo a extremo no es un extra:</p>
+<pre style="background:#f7fafc;border:1px solid #e2e8f0;border-radius:5px;padding:9px;font-size:8.6pt">
+uv sync
+uv run jupyter nbconvert --to notebook --execute --inplace notebooks/00_encuadre.ipynb
+uv run jupyter nbconvert --to notebook --execute --inplace notebooks/01_eda.ipynb
+...                                                      notebooks/05_pricing.ipynb
+uv run python scripts/score_batch.py        # lista de contacto del CRM
+uv run python scripts/serve_api.py          # endpoint de scoring puntual
+open dashboard/index.html                   # dashboard interactivo (sin servidor)
+</pre>
+<p>Cuatro contratos congelados en <code>artifacts/</code> con huella SHA-256 garantizan que las
+cifras de este documento, del dashboard y de los notebooks son las mismas: hay una sola fuente y
+tres renderizaciones. Si el dato o el encuadre cambian, las verificaciones fallan en vez de
+producir un número distinto en silencio.</p>
+<footer>Modelo de Propensión de Compra · Ferreycorp · 2026-11-19</footer>
+</body></html>

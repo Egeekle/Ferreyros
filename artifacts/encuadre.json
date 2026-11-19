@@ -1,0 +1,87 @@
+{
+  "contrato": {
+    "unidad_analisis": "cliente x visita",
+    "clave_unidad": [
+      "id",
+      "dia_visita"
+    ],
+    "target_m1": "incidencia_compra",
+    "target_m2": "id_marca",
+    "target_m3": "cantidad",
+    "universo_m1": "todas las visitas (58,693)",
+    "universo_m2_m3": "visitas con incidencia_compra == 1 (14,638)",
+    "split_day": 550,
+    "split_tipo": "temporal (no aleatorio)",
+    "cv_estrategia": "TimeSeriesSplit en train + GroupKFold por id para clientes nuevos",
+    "metrica_principal": "PR-AUC",
+    "metricas_apoyo": [
+      "ROC-AUC",
+      "precision@k",
+      "recall@k"
+    ],
+    "metrica_prohibida": "accuracy (75.1% prediciendo siempre no-compra)",
+    "umbral_decision": "derivado del costo de contacto en P1, no fijado en 0.5",
+    "baseline_tasa_base": 0.2494,
+    "baseline_targeting_lift": 2.43,
+    "fecha_congelado": "2026-11-19"
+  },
+  "unidad_analisis": {
+    "valida": true,
+    "filas": 58693,
+    "clientes": 500,
+    "dias": 730
+  },
+  "features_admisibles": {
+    "columnas_crudas_admisibles": [
+      "ultima_marca_comprada",
+      "ultima_cantidad_comprada",
+      "precio_marca_1",
+      "precio_marca_2",
+      "precio_marca_3",
+      "precio_marca_4",
+      "precio_marca_5",
+      "promo_marca_1",
+      "promo_marca_2",
+      "promo_marca_3",
+      "promo_marca_4",
+      "promo_marca_5",
+      "genero",
+      "estado_civil",
+      "edad",
+      "nivel_educacion",
+      "ingreso_anual",
+      "ocupacion"
+    ],
+    "n_admisibles": 18,
+    "n_excluidas": 5,
+    "prohibidas": [
+      "cantidad",
+      "gasto",
+      "id",
+      "id_marca",
+      "incidencia_compra",
+      "precio_pagado",
+      "tamanio_ciudad"
+    ]
+  },
+  "split": {
+    "split_day": 550,
+    "train": {
+      "filas": 45497,
+      "clientes": 500,
+      "dia_min": 1,
+      "dia_max": 550,
+      "tasa_compra": 0.2498,
+      "fingerprint": "47959243b182b9af"
+    },
+    "test": {
+      "filas": 13196,
+      "clientes": 500,
+      "dia_min": 551,
+      "dia_max": 730,
+      "tasa_compra": 0.248,
+      "fingerprint": "842f57dd85e58abc"
+    },
+    "balanceado": true
+  }
+}
